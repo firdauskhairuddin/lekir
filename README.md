@@ -1,4 +1,4 @@
-# LEKIR
+# LEKIR Vulnerable Framework
 
 LEKIR - Learning Environment for Cybersecurity through Immersive Real-world scenarios
 
