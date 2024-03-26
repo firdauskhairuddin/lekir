@@ -1,0 +1,65 @@
+<?php
+
+class SQLInjectionWAF {
+    // Function to detect and prevent SQL injection
+    public static function preventSQLInjection($input) {
+        // Regular expressions to detect SQL injection patterns
+        $sql_injection_patterns = array(
+            "/\bunion\b.*\bselect\b/i",
+            "/\bselect\b.*\bfrom\b/i",
+            "/\binsert\b.*\binto\b/i",
+            "/\bupdate\b.*\bset\b/i",
+            "/\bdelete\b.*\bfrom\b/i",
+            "/\bdrop\b.*\b(table|database)\b/i",
+            "/\balter\b.*\btable\b/i",
+            "/['\"](or|and)\s*['\"]/",
+            "/\b(and|or)\b\s*\d+\s*=\s*\d+\b/",
+            "/'/"
+        );
+
+        // Check input against each pattern
+        foreach ($sql_injection_patterns as $pattern) {
+            if (preg_match($pattern, $input)) {
+                exit("SQL Injection attempt detected. Access denied.");
+            }
+        }
+
+        // No SQL injection detected, return the input
+        return $input;
+    }
+}
+
+// Check if the 'user_id' parameter is set in the REQUEST (GET or POST) variables. Accept both GET and POST
+if(isset($_POST['user_id'])){
+
+    // Establish a new MySQL database connection
+    $mysqli = new mysqli($DB_HOST, $DB_USER, $DB_PASS, $DB_NAME);
+
+    // Retrieve the 'user_id' parameter from the POST parameter
+    $id = SQLInjectionWAF::preventSQLInjection($_POST['user_id']);
+
+    // Vulnerable code: directly inserting user input into the SQL query
+    // Construct the SQL query to retrieve user information based on the provided user ID
+    // Warning: Vulnerable to SQL injection as user input is not sanitized or validated
+    $query = "SELECT user_id, user_name, user_role FROM user WHERE user_id = '$id';";
+
+    // Execute the SQL query and retrieve the results
+    $result = mysqli_query($mysqli, $query);
+
+    // Loop through each row in the result set
+    while($row = mysqli_fetch_assoc($result)) {
+        // Extract user information from the current row
+        $userid = $row['user_id'];
+        $username = $row['user_name'];
+        $userrole = $row['user_role'];
+
+        // Display user information within HTML <pre> tags
+        echo "<pre>User ID : {$userid}<br />Username : {$username}<br />Role : {$userrole}</pre>";
+    }
+
+    // Close the database connection to free up resources
+    mysqli_close($mysqli);
+
+}
+
+?>

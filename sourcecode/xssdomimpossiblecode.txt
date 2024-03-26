@@ -1,0 +1,9 @@
+<?php
+header("X-XSS-Protection: 1; mode=block");
+?>
+<script>
+function displayMessage() {
+    var userInput = document.getElementById("userInput").value;
+    document.getElementById("output").innerText = "Hello, " + userInput + "! Welcome to our website.";
+}
+</script>

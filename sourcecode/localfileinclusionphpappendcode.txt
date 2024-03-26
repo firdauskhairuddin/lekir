@@ -1,0 +1,14 @@
+<?php
+i
+if(isset($_GET['page'])){
+
+    if(strlen($_GET['page']) > 150){
+
+      echo "<pre>Parameter has a maximum character limit of 150</pre>";
+      exit();
+      
+    }
+
+    include($_GET['page'] . ".php");
+}
+?>

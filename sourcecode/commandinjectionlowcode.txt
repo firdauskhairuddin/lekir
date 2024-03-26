@@ -1,0 +1,20 @@
+<?php
+if(isset($_POST['ip'])){
+
+  $target = $_POST['ip'];
+
+  echo "<code style='color:red;'>ping -c 4 <b>" . htmlentities($target) . "</b></code><br>";
+
+  if( stristr( php_uname( 's' ), 'Windows NT' ) ) {
+      // If window
+      $cmd = shell_exec( 'ping ' . $target );
+  }
+  else {
+      // If linux
+      $cmd = shell_exec( 'ping -c 4 ' . $target );
+  }
+
+  echo "<pre>{$cmd}</pre>";
+
+}
+?>

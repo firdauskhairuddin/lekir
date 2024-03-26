@@ -1,0 +1,9 @@
+<?php
+header("X-XSS-Protection: 0");
+?>
+<script>
+function displayMessage() {
+    var userInput = document.getElementById("userInput").value;
+    document.getElementById("output").innerHTML = "Hello, " + userInput + "! Welcome to Lekir!";
+}
+</script>

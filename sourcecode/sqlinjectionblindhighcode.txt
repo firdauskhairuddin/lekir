@@ -1,0 +1,55 @@
+<?php
+session_start();
+session_regenerate_id(true);
+
+if(isset($_COOKIE['user_id'])){
+
+                        
+  $id = $_COOKIE['user_id'];
+
+  try{
+
+    // Vulnerable code: directly inserting user input into the SQL query
+    $query = "SELECT user_id, user_name, user_role FROM user WHERE user_id = '$id' LIMIT 1;";
+
+    // Execute the query and fetch the results
+    $result = @mysqli_query($mysqli, $query); 
+
+    $num = @mysqli_num_rows( $result );
+
+    if( $num > 0 ) {
+      // If exist
+      $data = '<pre>User ID exists in the database.</pre>';
+    } else {
+
+      // Might sleep a random amount
+      if( rand( 0, 5 ) == 3 ) {
+          sleep( rand( 2, 4 ) );
+      }
+      
+      // User wasn't found, so the page wasn't!
+
+      // If dont exist
+      $data = '<pre>User ID is MISSING from the database.</pre>';
+    }
+      
+    $mysqli->close();
+
+  } catch (Exception $e) {
+
+    // Might sleep a random amount
+    if( rand( 0, 5 ) == 3 ) {
+        sleep( rand( 2, 4 ) );
+    }
+    
+    // User wasn't found, so the page wasn't!
+
+    $data = '<pre>User ID is MISSING from the database.</pre>';
+  }
+
+echo "<code style='color:red;'>&quot; SELECT user_id, user_name, user_role FROM user WHERE user_id = <b>'" . htmlentities($id) . "'</b> &quot;</code><br>";
+
+echo $data;
+
+}
+?>

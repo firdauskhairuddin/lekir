@@ -1,0 +1,28 @@
+-- Prepared Statements
+Prepared statements in PHP provide a way to execute SQL queries safely by separating the query logic from the data. They are particularly useful for preventing SQL injection attacks.
+
+-- Preparation Phase
+1. SQL query is prepared using prepare() method of the database connection object.
+2. Placeholder(s) are used for dynamic data values in the query.
+
+-- Binding Parameters
+1. Data values are bound to the placeholders using bind_param() method.
+2. This step ensures that data is properly sanitized and prevents SQL injection attacks.
+
+-- Execution Phase
+1. The prepared statement is executed using execute() method.
+2. The statement can be executed multiple times with different parameter values without re-parsing the SQL query, improving performance.
+
+-- Fetching Results (Optional):
+1. If the query returns data, results can be fetched using bind_result() or get_result() methods.
+2. Data can then be retrieved from the result set.
+
+--Closing Statement
+After execution, the statement should be closed using close() method.
+
+--Benefits
+1. Security: Protects against SQL injection attacks.
+2. Performance: Allows reuse of prepared statements with different parameters, reducing overhead.
+3. Readability: Separates SQL logic from data, making the code more maintainable.
+
+Prepared statements are a fundamental practice for secure and efficient database interactions in PHP.

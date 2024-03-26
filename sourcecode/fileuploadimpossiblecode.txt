@@ -1,0 +1,55 @@
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST")
+{
+    if (isset($_FILES["image"]))
+    {
+
+        $filename = $_FILES["image"]["name"];
+        $fileext = strtolower(substr( $filename, strrpos( $filename, '.' ) + 1));
+        $filesize = $_FILES["image"]["size"];
+        $filestype = strtolower($_FILES["image"]["type"]);
+        $filetmp = $_FILES["image"]["tmp_name"];
+
+        $path = getcwd() . '/uploads/';
+        $newfilename = md5( uniqid() . $filename ) . '.' . $fileext;
+
+        $allowedextensions = ['jpg', 'jpeg', 'png', 'gif'];
+        $allowedmime = ['image/jpeg', 'image/png', 'image/gif'];
+
+        if (in_array($fileext, $allowedextensions) && $filesize < 3000000 && in_array($filestype, $allowedmime) && getimagesize($filetmp)) {
+
+          if( $filestype == 'image/jpeg' ) {
+              $img = imagecreatefromjpeg( $filetmp );
+              imagejpeg( $img, $filetmp, 100);
+          } elseif($filestype == 'image/png' ) {
+              $img = imagecreatefrompng( $filetmp );
+              imagepng( $img, $filetmp, 9);
+          } else {
+              $img = imagecreatefromgif( $filetmp );
+              imagegif( $img, $filetmp);
+          }
+          imagedestroy( $img );
+
+          if( rename( $filetmp, ( $path . $newfilename ) ) ) {
+
+            echo "<div class='mt-4'>";
+            echo "<h3>Succefully upload!:</h3>";
+            echo "<center><img src='./uploads/" . htmlentities($newfilename) . "' alt='Uploaded Image' style='witdh:250px;height:250px;'>";
+            echo "<br><br><p>Upload path : <a href=./uploads/" . htmlentities($newfilename) . " target='_blank'>./uploads/" . htmlentities($newfilename) . "</a></p>";
+            echo "<p>Delete this image : <a href=" . htmlentities($_SERVER['REQUEST_URI']) . "?delete=" . htmlentities($newfilename) . ">Delete file</a></p>";
+            echo "</div>";
+
+          }
+        } else {
+            echo "<br><center><p class='text-danger'>Please upload image file only</p></center>";
+        }
+    }
+}
+
+if (isset($_SESSION['message']))
+{
+    echo "<br><center>" . htmlentities($_SESSION['message']) . "</center>";
+    unset($_SESSION['message']);
+}
+
+?>

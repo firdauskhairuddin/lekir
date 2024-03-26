@@ -1,0 +1,17 @@
+<?php
+
+if(isset($_GET['page'])){
+	
+	$file = $_GET['page'];
+
+ 	if($file !="localfileinclusionimposible.php" && $file !="page1.php" && $file !="page2.php" && $file !="page3.php")
+	{
+		echo "Error: File not found";
+	} else {
+
+		include($file);		
+	}
+
+}
+
+?>

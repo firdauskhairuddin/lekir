@@ -1,0 +1,13 @@
+<?php
+header("X-XSS-Protection: 0");
+?>
+<script>
+function displayMessage() {
+    function sanitizeInput(input) {
+          return input.replace(/<script.*?>|on\w+=".*?"/gi, '');
+    }
+    var userInput = document.getElementById("userInput").value;
+    var sanitizedInput = sanitizeInput(userInput);
+    document.getElementById("output").innerHTML = "Hello, <span>" + sanitizedInput + "</span>! Welcome to Lekir!";
+}
+</script>

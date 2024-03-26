@@ -1,0 +1,25 @@
+<?php
+if(isset($_POST['user_id'])){
+                        
+    $id = $_POST['user_id'];
+
+    $data = $mysqli->prepare('SELECT user_id, user_name, user_role FROM user WHERE user_id = ?;');
+    $data->bind_param( 'i', $id );
+    $data->execute();
+    $result = $data->get_result();
+
+    if( $result->num_rows > 0 ) {
+      // If exist
+      $data = '<pre>User ID exists in the database.</pre>';
+    } else {
+      // No user found!
+      header( $_SERVER[ 'SERVER_PROTOCOL' ] . ' 404 Not Found' );
+
+      // If dont exist
+      $data = '<pre>User ID is MISSING from the database.</pre>';
+    }
+      
+    $mysqli->close();
+
+}
+?>

@@ -1,0 +1,12 @@
+<?php
+
+header ("X-XSS-Protection: 0");
+
+if(isset($_GET['search'])){
+
+	$search = htmlentities($_GET[ 'search' ]);
+
+	echo "<pre>Search result : " . $search . "</pre>";
+
+}
+?>
