@@ -1,13 +1,18 @@
-Learning Environment for Cybersecurity through Immersive Real-world scenarios
 Welcome to LEKIR!
+Learning Environment for Cybersecurity through Immersive Real-world scenarios
+
 LEKIR is a deliberately vulnerable web application crafted to assist security professionals in refining their skills and evaluating their tools in a lawful setting. It also contributes to advancing web developers' comprehension of securing web applications. Moreover, LEKIR facilitates both students and instructors in comprehending web application security within a supervised environment.
 
 The goal of LEKIR is to provide a platform for practicing numerous common web vulnerabilities, offering varying levels of difficulty, all presented within a simple and user-friendly interface.
 
 Learning: Providing a platform for individuals to gain hands-on experience and knowledge in cybersecurity concepts and practices.
+
 Exploration: Encouraging users to explore various cybersecurity threats, vulnerabilities, and defense mechanisms in a safe and controlled environment.
+
 Knowledge Transfer: Facilitating the transfer of cybersecurity expertise and skills through interactive modules, simulations, and tutorials
+
 Immersion: Creating immersive and realistic scenarios that mimic real-world cyber attacks and incidents to enhance learning and problem-solving abilities.
+
 Resilience Building: Fostering resilience by allowing users to experiment with different strategies and solutions to mitigate cyber risks and defend against threats.
 
 ![lekir2](https://github.com/firdauskhairuddin/lekir/assets/163268463/5e97ea5d-2ebd-4553-af4a-72d8aca03eef)
