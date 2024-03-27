@@ -1,0 +1,37 @@
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST")
+{
+    if (isset($_FILES["image"]))
+    {
+
+        $filename = $_FILES["image"]["name"];
+        $fileext = substr( $filename, strrpos( $filename, '.' ) + 1);
+        $filesize = $_FILES["image"]["size"];
+        $filetmp = $_FILES["image"]["tmp_name"];
+
+        if((strtolower($fileext) == "jpg" || strtolower($fileext) == "jpeg" || strtolower($fileext) == "png" || strtolower($fileext) == "gif") && $filesize < 3000000 && getimagesize($filetmp))
+        {
+
+            if (move_uploaded_file($filetmp, "uploads/$filename"))
+            {
+
+                echo "<div class='mt-4'>";
+                echo "<h3>Succefully upload!:</h3>";
+                echo "<center><img src='./uploads/" . htmlentities($filename) . "' alt='Uploaded Image' style='witdh:250px;height:250px;'>";
+                echo "<br><br><p>Upload path : <a href=./uploads/" . htmlentities($filename) . " target='_blank'>./uploads/" . htmlentities($filename) . "</a></p>";
+                echo "<p>Delete this image : <a href=" . htmlentities($_SERVER['REQUEST_URI']) . "?delete=" . htmlentities($filename) . ">Delete file</a></p>";
+                echo "</div>";
+
+            }
+            else
+            {
+                echo "<br><center><p class='text-danger'>Image was not uploaded</p></center>";
+            }
+        }
+        else
+        {
+            echo "<br><center><p class='text-danger'>Please upload image file only</p></center>";
+        }
+    }
+}
+?>

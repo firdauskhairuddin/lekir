@@ -1,0 +1,49 @@
+<?php
+session_start();
+session_regenerate_id(true);
+
+// Check if the 'user_id' parameter is set in the POST request. Accept both GET and POST
+if(isset($_POST['user_id'])){
+
+    // Check for valid crsf token
+    if(isset($_POST['csrftoken'])){
+      if($_POST['csrftoken'] !== $_SESSION['csrftoken']){exit('Invalid CRSF Token');}
+    }
+
+    // Establish a new MySQL database connection
+    $mysqli = new mysqli($DB_HOST, $DB_USER, $DB_PASS, $DB_NAME);
+
+    // Declaring variable
+    $id = $_POST['user_id'];
+
+    try {
+        // Construct the SQL query to retrieve user information based on the provided user ID
+        // Warning: Still vulnerable to SQL injection
+        $query = "SELECT user_id, user_name, user_role FROM user WHERE user_id = '$id' LIMIT 1;";
+
+        // Execute the SQL query and retrieve the results
+        $result = mysqli_query($mysqli, $query);
+
+        echo "<code style='color:red;'>&quot; SELECT user_id, user_name, user_role FROM user WHERE user_id = <b>'" . htmlentities($id) . "'</b> &quot;</code><br>";
+        // Loop through each row in the result set
+        while($row = mysqli_fetch_assoc($result)) {
+            // Extract user information from the current row
+            $userid = $row['user_id'];
+            $username = $row['user_name'];
+            $userrole = $row['user_role'];
+
+            // Display user information within HTML <pre> tags
+            echo "<pre>User ID : {$userid}<br />Username : {$username}<br />Role : {$userrole}</pre>";
+        }
+    } catch (Exception $e) {
+    // if error redirect to 500 page
+    header("Location: 500.php");
+        exit();
+    }
+
+    // Close the database connection to free up resources
+    mysqli_close($mysqli);
+
+}
+
+?>

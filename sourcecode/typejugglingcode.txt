@@ -1,0 +1,23 @@
+<?php
+if(isset($_POST['submit'])){
+
+$username = $_POST['username'];  // User input from login form
+$password = $_POST['password'];    // User input from login form
+
+if ($_POST['password'] === "10932435112") {
+    die('Do you think its that easy??');
+}
+// Simulated user credentials
+$stored_username = 'admin';
+$stored_password = sha1(10932435112);
+if ( $_POST['username'] == $stored_username){                                                     
+      if (sha1($_POST['password']) == $stored_password ) {                                                 
+          echo "Login successful!";                                                             
+      } else {                                                                                          
+          echo "Login failed!";                               
+      }                                                                                                 
+  } else {                                                                                              
+     echo "Login failed!";                                   
+  } 
+}
+?>

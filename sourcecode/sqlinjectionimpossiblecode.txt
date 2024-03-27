@@ -1,0 +1,46 @@
+<?php
+
+// Check if the 'user_id' parameter is set in the POST request. Accept both GET and POST
+if(isset($_POST['user_id'])){
+
+    // Establish a new MySQL database connection
+    $mysqli = new mysqli($DB_HOST, $DB_USER, $DB_PASS, $DB_NAME);
+
+    //Declaring variable
+    $id = $_POST['user_id'];
+
+    // Loop through each row in the result set
+    if(is_numeric($id)){
+
+        $data = $mysqli->prepare('SELECT user_id, user_name, user_role FROM user WHERE user_id = ?;');
+        $data->bind_param( 'i', $id );
+        $data->execute();
+        $result = $data->get_result();
+
+        // only 1 result is returned
+        if($result->num_rows > 0 ) {
+          while($row = $result->fetch_assoc()){
+            
+
+          $userid = $row['user_id'];
+          $username = $row['user_name'];
+          $userrole = $row['user_role'];
+
+
+          echo "<pre>User ID : {$userid}<br />Username : {$username}<br />Role : {$userrole}</pre>";
+          }
+
+        } else {
+            echo "<pre>Oppss, no record found</pre>";
+        }
+
+    } else {
+    echo "<pre>Please enter numbers only</pre>";
+    }
+
+    // Close the database connection to free up resources
+    mysqli_close($mysqli);
+
+}
+
+?>

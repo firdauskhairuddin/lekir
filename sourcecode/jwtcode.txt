@@ -1,0 +1,52 @@
+<?php
+-- get-data.php
+require_once 'vendor/autoload.php';
+
+use Firebase\JWT\JWT;
+
+// Your secret key for signing the token
+$secretKey = 'password';
+
+// User information or any other data you want to include in the token
+$userData = [
+    'jwtrole' => 'user'
+];
+
+// Create a token
+$token = JWT::encode($userData, $secretKey, 'HS256');
+
+
+-- ./api/process-token.php
+//verify the token
+if (isset($_POST['token'])) {
+$token = $_POST['token'];
+
+try {
+    $decoded = JWT::decode($token, new Key($secretKey, 'HS256'));
+
+    $role = $decoded->jwtrole;
+
+    session_start();
+    $_SESSION['jwtrole'] = $role;
+
+    header('Location: ../jwt.php');
+    exit();
+}
+
+-- jwt.php
+//logic
+if(isset($_SESSION['jwtrole'])){
+  if($_SESSION['jwtrole'] === 'admin'){
+
+    $data = "FLAG = FLG_H@k1M3TaWP@n!";
+
+  } elseif($_SESSION['jwtrole'] === 'user'){
+
+    $data = "Oppppsss! No permission!";
+
+  } else {
+
+    $data = "Come get your flag!";
+  }
+}
+?>

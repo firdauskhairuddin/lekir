@@ -1,0 +1,10 @@
+<?php
+if (isset($_GET['statement'])) {
+
+    $directory = './idor/';
+    $file = $_GET['statement'];
+    $filePath = $directory . $file.".txt";
+
+    highlight_file($filePath);
+}
+?>

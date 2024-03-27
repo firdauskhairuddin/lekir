@@ -1,0 +1,35 @@
+<?php
+
+// Check if the 'user_id' parameter is set in the POST request. Accept both GET and POST
+if(isset($_POST['user_id'])){
+
+    // Establish a new MySQL database connection
+    $mysqli = new mysqli($DB_HOST, $DB_USER, $DB_PASS, $DB_NAME);
+
+    // Sanitize the user input but still vulnerable to SQL
+    $id = mysqli_real_escape_string($mysqli, $_POST['user_id']);
+
+    // Construct the SQL query to retrieve user information based on the provided user ID
+    // Warning: Still vulnerable to SQL injection
+    $query = "SELECT user_id, user_name, user_role FROM user WHERE user_id = $id;";
+
+    // Execute the SQL query and retrieve the results
+    $result = mysqli_query($mysqli, $query);
+
+    // Loop through each row in the result set
+    while($row = mysqli_fetch_assoc($result)) {
+        // Extract user information from the current row
+        $userid = $row['user_id'];
+        $username = $row['user_name'];
+        $userrole = $row['user_role'];
+
+        // Display user information within HTML <pre> tags
+        echo "<pre>User ID : {$userid}<br />Username : {$username}<br />Role : {$userrole}</pre>";
+    }
+
+    // Close the database connection to free up resources
+    mysqli_close($mysqli);
+
+}
+
+?>

@@ -1,0 +1,12 @@
+<?php
+if(isset($_POST['file']))
+{
+    header('Content-Type: application/download');
+    header('Content-Disposition: attachment; filename= ' . $_POST['file']);
+    header("Content-Length: " . filesize($_POST['file']));
+
+    $fp = fopen($_POST['file'], "r");
+    fpassthru($fp);
+    fclose($fp);
+}
+?>

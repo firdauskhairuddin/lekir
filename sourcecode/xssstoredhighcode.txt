@@ -1,0 +1,67 @@
+<?php
+
+// Disable XSS protection in the browser
+header("X-XSS-Protection: 0");
+
+// Define a function to execute prepared statements
+function executeStatement($mysqli, $query, $params = null) {
+    $stmt = $mysqli->prepare($query);
+    if ($params) {
+        $stmt->bind_param(...$params);
+    }
+    $stmt->execute();
+    return $stmt;
+}
+
+// Check if a 'delete' action is specified in the URL
+if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id'])) {
+    // Delete a record from the 'xss' table based on the provided ID
+    executeStatement($mysqli, 'DELETE FROM xss WHERE xss_id = ?', ['i', $_GET['id']]);
+    // Redirect back to the same page after deletion
+    header("Location: " . $_SERVER['PHP_SELF']);
+    exit();
+}
+
+// Check if the form is submitted
+if (isset($_POST['submit']) && isset($_POST['name'], $_POST['age'], $_POST['job'])) {
+    // Retrieve data from the form
+    $name = $_POST['name'];
+    $age = $_POST['age'];
+    $job = $_POST['job'];
+    
+    // Sanitization
+    $job = preg_replace( '/<(.*)s(.*)c(.*)r(.*)i(.*)p(.*)t/i', '', $job );
+
+    // Insert data into the 'xss' table
+    executeStatement($mysqli, "INSERT INTO xss (xss_name, xss_age, xss_job) VALUES (?, ?, ?)", ['sis', $name, $age, $job]);
+
+    // Redirect back to the same page after insertion
+    header("Location: " . $_SERVER['PHP_SELF']);
+    exit();
+}
+
+// Select data from the 'xss' table with a limit of 10 records
+$query = $mysqli->query('SELECT * FROM xss LIMIT 10');
+
+// Display data in an HTML table
+if ($query && $query->num_rows > 0) {
+
+    // Iterate over each row
+    while ($row = $query->fetch_assoc()) {
+
+        // Output the data for each row
+        echo '<tr>';
+        echo '<td>' . htmlspecialchars($row['xss_name']) . '</td>';
+        echo '<td class="text-muted">' . $row['xss_job'] . '</td>';
+        echo '<td class="text-muted">' . htmlspecialchars($row['xss_age']) . '</td>';
+
+        // Display a "Remove" link to delete the corresponding record
+        echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?action=delete&id=' . htmlspecialchars($row['xss_id']) . '">Remove</a></td>';
+        echo '</tr>';
+    }
+} else {
+    // Display a message if no records are found
+    echo '<tr><td colspan="4"><center>No records found</center></td></tr>';
+}
+
+?>

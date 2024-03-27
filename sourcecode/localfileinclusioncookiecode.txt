@@ -1,0 +1,26 @@
+<?php
+
+setcookie("page", "page1.php", time() + 3600, "/");
+
+if(isset($_COOKIE['page'])){
+
+  if(strlen($_COOKIE['page']) > 150){
+
+    echo "<pre>Parameter has a maximum character limit of 150</pre>";
+    exit();
+
+  }
+
+  if (file_exists($_COOKIE['page'])) {
+
+      include($_COOKIE['page']);
+
+  } else {
+
+      echo "File not found";
+      
+  }
+
+}
+
+?>

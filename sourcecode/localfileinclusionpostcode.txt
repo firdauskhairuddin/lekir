@@ -1,0 +1,14 @@
+<?php
+
+if(isset($_POST['page'])){
+
+	if(strlen($_POST['page']) > 150){
+		echo "<pre>Parameter has a maximum character limit of 150</pre>";
+		exit();
+	}
+	
+	include($_POST['page']);	
+
+}
+
+?>

@@ -1,0 +1,40 @@
+<?php
+if(isset($_POST['ip'])){
+
+    // Check for valid crsf token
+    if(isset($_POST['csrftoken'])){
+      if($_POST['csrftoken'] !== $_SESSION['csrftoken']){exit('Invalid CRSF Token');}
+    }
+    
+    // Retrieve the 'ip' parameter from the request
+    $target = $_POST['ip'];
+    
+    // Remove slashes from the target
+    $target = stripslashes($target);
+    
+    // Split the target into octets
+    $octet = explode(".", $target);
+    
+    // Check if each octet is numeric and if there are exactly 4 octets
+    if((is_numeric($octet[0])) && (is_numeric($octet[1])) && (is_numeric($octet[2])) && (is_numeric($octet[3])) && (sizeof($octet) == 4)){
+        // Reconstruct the target IP address
+        $target = $octet[0] . '.' . $octet[1] . '.' . $octet[2] . '.' . $octet[3];
+        
+        // Execute ping command based on the operating system
+        if(stristr(php_uname('s'), 'Windows NT')){
+            // If running on Windows
+            $cmd = shell_exec('ping '.$target);
+        } else {
+            // If running on Linux
+            $cmd = shell_exec('ping -c 4 '.$_POST['ip']);
+        }
+    } else {
+        // Invalid input if not exactly 4 numeric octets
+        $cmd = "Invalid Input : Please enter a correct IP";
+    }
+    
+    // Display the command used for ping and the result
+    echo "<code style='color:red;'>ping -c 4 <b>" . htmlspecialchars($target) . "</b></code><br>";
+    echo "<pre>{$cmd}</pre>";
+}
+?>

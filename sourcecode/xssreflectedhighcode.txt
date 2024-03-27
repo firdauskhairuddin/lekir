@@ -1,0 +1,12 @@
+<?php
+
+header ("X-XSS-Protection: 0");
+
+if(isset($_GET['search'])){
+
+	$search = preg_replace( '/<(.*)s(.*)c(.*)r(.*)i(.*)p(.*)t/i', '', $_GET[ 'search' ] );
+
+	echo "<pre>Search result : " . $search . "</pre>";
+
+}
+?>

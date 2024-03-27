@@ -1,0 +1,37 @@
+<?php
+
+setcookie("user_id", "1", time() + 3600, "/");
+
+// Check if the 'user_id' parameter is set in the REQUEST (GET or POST) variables. Accept both GET and POST
+if(isset($_COOKIE['user_id'])){
+
+    // Establish a new MySQL database connection
+    $mysqli = new mysqli($DB_HOST, $DB_USER, $DB_PASS, $DB_NAME);
+
+    // Retrieve the 'user_id' parameter from the REQUEST variables (GET or POST)
+    $id = $_COOKIE['user_id'];
+
+    // Vulnerable code: directly inserting user input into the SQL query
+    // Construct the SQL query to retrieve user information based on the provided user ID
+    $query = "SELECT user_id, user_name, user_role FROM user WHERE user_id = '$id';";
+
+    // Execute the SQL query and retrieve the results
+    $result = mysqli_query($mysqli, $query);
+
+    // Loop through each row in the result set
+    while($row = mysqli_fetch_assoc($result)) {
+        // Extract user information from the current row
+        $userid = $row['user_id'];
+        $username = $row['user_name'];
+        $userrole = $row['user_role'];
+
+        // Display user information within HTML <pre> tags
+        echo "<pre>User ID : {$userid}<br />Username : {$username}<br />Role : {$userrole}</pre>";
+    }
+
+    // Close the database connection to free up resources
+    mysqli_close($mysqli);
+
+}
+
+?>

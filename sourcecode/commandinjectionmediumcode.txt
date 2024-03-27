@@ -1,0 +1,28 @@
+<?php
+if(isset($_POST['ip'])){
+
+  $target = $_POST['ip'];
+
+  // Blacklist
+  $substitutions = array(
+      '&&' => '',
+      ';'  => '',
+  );
+
+  // Removing any blacklist character found.
+  $target = str_replace( array_keys( $substitutions ), $substitutions, $target );
+
+  if( stristr( php_uname( 's' ), 'Windows NT' ) ) {
+      // If window
+      $cmd = shell_exec( 'ping ' . $target );
+  }
+  else {
+      // If linux
+      $cmd = shell_exec( 'ping -c 4 ' . $target );
+  }
+
+  echo "<code style='color:red;'>ping -c 4 <b>" . htmlentities($target) . "</b></code><br>";
+  echo "<pre>{$cmd}</pre>";
+
+}
+?>

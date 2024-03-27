@@ -1,0 +1,23 @@
+<?php
+header("X-XSS-Protection: 0");
+?>
+<script>
+function displayMessage() {
+    function escapeHtml(input) {
+        return input.replace(/&/g, '&amp;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;')
+                    .replace(/"/g, '&quot;')
+                    .replace(/'/g, '&#39;');
+    }
+
+    function sanitizeInput(input) {
+        return input.replace(/<script.*?>|on\w+=".*?"/gi, '');
+    }
+
+    var userInput = document.getElementById("userInput").value;
+    var sanitizedInput = sanitizeInput(userInput);
+    var escapedInput = escapeHtml(sanitizedInput);
+    document.getElementById("output").innerHTML = "Hello, " + escapedInput + "! Welcome to our website.";
+}
+</script>

@@ -1,0 +1,40 @@
+<?php
+
+if(isset($_GET['user_id'])){
+                        
+  $id = $_GET['user_id'];
+
+  try{
+
+    // Vulnerable code: directly inserting user input into the SQL query
+    $query = "SELECT user_id, user_name, user_role FROM user WHERE user_id = '$id';";
+
+    // Execute the query and fetch the results
+    $result = @mysqli_query($mysqli, $query); 
+
+    $num = @mysqli_num_rows( $result );
+
+    if( $num > 0 ) {
+      // If exist
+      $data = '<pre>User ID exists in the database.</pre>';
+    } else {
+
+      // If dont exist
+      $data = '<pre>User ID is MISSING from the database.</pre>';
+    }
+      
+    $mysqli->close();
+
+  } catch (Exception $e) {
+
+    header("Location: sqlinjectionblindlow.php");
+    header("HTTP/1.1 500 Internal Server Error");
+    $data = '<pre>User ID is MISSING from the database.</pre>';
+  }
+
+echo "<code style='color:red;'>&quot; SELECT user_id, user_name, user_role FROM user WHERE user_id = <b>'" . htmlentities($id) . "'</b> &quot;</code><br>";
+
+echo $data;
+
+}
+?>
