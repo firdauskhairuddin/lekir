@@ -30,6 +30,9 @@ if(isset($_GET['action']) && $_GET['action'] === "update"){
   echo '<script>window.onload = function() { var myModal = new bootstrap.Modal(document.getElementById("modal-success")); myModal.show(); }</script>';
 }
 
+if(isset($_SESSION['updateMessage'])){
+ unset($_SESSION['updateMessage']); 
+}
 
 ?>
 <!doctype html>
@@ -199,9 +202,11 @@ if(isset($_GET['action']) && $_GET['action'] === "update"){
           <div class="modal-footer">
             <div class="w-100">
               <div class="row">
-                <div class="col"><a href="./systemUpdate.php" class="btn w-100">
+                <div class="col">
+                  <button class="btn w-100"  data-bs-dismiss="modal" >
                     Close
-                  </a></div>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -215,8 +220,3 @@ if(isset($_GET['action']) && $_GET['action'] === "update"){
     <script src="./dist/js/demo.min.js?1684106062" defer></script>
   </body>
 </html>
-<?php
-if(isset($_SESSION['updateMessage'])){
- unset($_SESSION['updateMessage']); 
-}
-?>
