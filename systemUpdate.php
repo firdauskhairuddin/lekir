@@ -28,6 +28,7 @@ function performUpdate($owner, $repo) {
 if(isset($_GET['action']) && $_GET['action'] === "update"){
   $_SESSION['updateMessage'] = performUpdate($repo_owner, $repo_name);
   echo '<script>window.onload = function() { var myModal = new bootstrap.Modal(document.getElementById("modal-success")); myModal.show(); }</script>';
+  unset($_SESSION['updateMessage']);
 }
 ?>
 <!doctype html>
