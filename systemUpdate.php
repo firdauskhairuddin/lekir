@@ -28,7 +28,6 @@ function performUpdate($owner, $repo) {
 if(isset($_GET['action']) && $_GET['action'] === "update"){
   $_SESSION['updateMessage'] = performUpdate($repo_owner, $repo_name);
   echo '<script>window.onload = function() { var myModal = new bootstrap.Modal(document.getElementById("modal-success")); myModal.show(); }</script>';
-  unset($_SESSION['updateMessage']);
 }
 ?>
 <!doctype html>
@@ -141,7 +140,7 @@ if(isset($_GET['action']) && $_GET['action'] === "update"){
                     <h2 class="mb-4">System update</h2>
                     <p> Current Hash : <?php echo $current_hash;?></p>
                     <p> Latest Commit : <?php echo $latest_hash;?></p>
-                    <?php if(isset($_SESSION['updateMessage'])){ echo "<pre>".htmlentities($_SESSION['updateMessage'])."</pre>";} else {if($update->getCurrentCommitHash() !== $update->getLatestCommitHash($repo_owner, $repo_name)){ echo "<pre><center>System update available<center></pre>";}else{echo "<pre><center>Goodnews! system is up to date</center></pre>";}}?>
+                    <?php if(isset($_SESSION['updateMessage'])){ echo "<pre>".htmlentities($_SESSION['updateMessage'])."</pre>"; unset($_SESSION['updateMessage']);} else {if($update->getCurrentCommitHash() !== $update->getLatestCommitHash($repo_owner, $repo_name)){ echo "<pre><center>System update available<center></pre>";}else{echo "<pre><center>Goodnews! system is up to date</center></pre>";}}?>
                   </div>
                   <div class="card-footer bg-transparent mt-auto">
                     <div class="btn-list justify-content-end">
