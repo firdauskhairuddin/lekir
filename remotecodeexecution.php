@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 include('./core/configuration.php');
 include('./core/function.php');
@@ -10,7 +11,6 @@ $secure = new Secure();
 $level = new Level();
 
 ini_set('display_errors', 0);
-header("X-XSS-Protection: 0");
 ?>
 <!doctype html>
 <!--
@@ -103,7 +103,40 @@ header("X-XSS-Protection: 0");
       <div class="page-body">
           <div class="container-xl">
             <div class="row row-cards">
+              <div class="col-lg-8">
+                <div class="card card-lg">
+                  <div class="card-body">
+                        <div class="markdown">
+                          <div>
+                            <h3 class="lh-1">Calculator</h3>
+                          </div>
 
+                          <div class="row g-2 align-items-center">
+                            <form role="form" action="" method="POST">
+                              <div class="mb-3">
+                                <input type="text" class="form-control" name="calculate" autocomplete="off" value="1+1">
+                              </div>
+                              <center><button action="submit" class="btn btn-primary">
+                                Submit
+                              </button>
+                              </center> 
+                            </form>
+                          </div>
+
+                        <center>
+                        <br>
+                        <p>
+                        <?php
+                        if(isset($_POST['calculate'])){
+
+                          eval('print(' . $_POST['calculate'] . ");");
+                        }
+                        ?>
+                        </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
               <div class="col-lg-4">
                 <div class="card">
                   <div class="card-body">
@@ -114,61 +147,21 @@ header("X-XSS-Protection: 0");
                       </div>
                       <div>
                         <small class="text-muted">Information</small>
-                        <h3 class="lh-1">Cross Site Scripting - Reflected</h3>
+                        <h3 class="lh-1">Remote Code Execution</h3>
                       </div>
                     </div>
                     <ul class="list-unstyled space-y-1">
-                      <li><b>Level</b> : <font style="color:green;">Low</font></li>
-                      <li><b>Short Form</b> : XSS</b></li>
-                      <li><b>Injection Point</b> : $_POST['search']</li>
-                      <li><b>Why this happen</b> : Reflected XSS occurs when a web application takes user-supplied data and includes it in the output sent back to the user's browser without properly validating or sanitizing it. This allows an attacker to craft a specially crafted URL or form input that, when clicked or submitted by a victim, executes malicious code in the victim's browser.</li>
-                      <li><b>Read More</b> : <a href="https://firdauskhairuddin.gitbook.io/common-web-vulnerability-php/cross-site-scripting" target="_blank">Link</a></li>
+                      <li><b>Level</b> : Others</b></li>
+                      <li><b>Short Form</b> : RCE</b></li>
+                      <li><b>Injection Point</b> : $_POST['calculate']</b></li>
+                      <li><b>Why this happen</b> : It's a vulnerability that allows an attacker to execute arbitrary code on a target system remotely. Attackers exploit this vulnerability by injecting malicious code into an application or system, often through input fields or file uploads. Once exploited, RCE can lead to complete compromise of the target system, allowing attackers to steal data, install malware, or take control of the system. To prevent RCE vulnerabilities, applications should sanitize user input, validate file uploads, and implement proper security controls to restrict code execution.</li>
+                      <li><b>Read More</b> : <a href="https://firdauskhairuddin.gitbook.io/common-web-vulnerability-php/remote-code-injection" target="_blank">Link</a></li>
                       <br>
-                      <a href="#" class="btn" data-bs-toggle="modal" data-bs-target="#modal-payloads">
-                      View Payload
-                      </a>
                       <a href="#" class="btn" data-bs-toggle="modal" data-bs-target="#modal-simple">
                       View Source
                       </a>
-                    </ul>   
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-8">
-                <div class="card card-lg">
-                  <div class="card-body">
-                        <div class="markdown">
-                          <div>
-                            <h3 class="lh-1">Search</h3>
-                          </div>
-                          <div class="row g-2 align-items-center">
-                            <form role="form" action="" method="POST" >
-                              <div class="mb-3">
-                                <input type="text" class="form-control" name="search" autocomplete="off">
-                              </div>
-                              <center><button action="submit" class="btn btn-primary">
-                                Submit
-                              </button>
-                              </center> 
-                            </form> 
-                          </div>
-
-                        <center>
-                        <br>
-                        <p>
-                        <?php
-
-                        if(isset($_POST['search'])){
-                          echo "<code style='color:red;'>" . htmlentities($_REQUEST['search']) . "</code><br><br>";
-
-                          $search = $_POST['search'];
-
-                          echo "<input type='text' class='form-control' value=".$search.">";
-
-                        }
-                        ?>
-                        </p>
                     </div>
+                    </ul>   
                   </div>
                 </div>
               </div>
@@ -182,12 +175,12 @@ header("X-XSS-Protection: 0");
         <div class="modal-dialog modal-full-width modal-dialog-centered modal-dialog-scrollable" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title">Cross Site Scripting - Source Code</h5>
+              <h5 class="modal-title">Remote Code Execution</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" style="background-color: #E5E4E2;">
               <?php
-              highlight_file('./sourcecode/xssreflectedlowcode.txt');
+              highlight_file('./sourcecode/remotecodeinjectioncode.txt');
               ?>
             </div>
             <div class="modal-footer">
@@ -196,27 +189,6 @@ header("X-XSS-Protection: 0");
           </div>
         </div>
       </div>
-
-      <div class="modal modal-blur fade" id="modal-payloads" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-full-width modal-dialog-centered modal-dialog-scrollable" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Cross Site Scripting - Payload</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body" style="background-color: #E5E4E2;">
-              <?php
-              highlight_file('./payloads/xss_payload.txt');
-              ?>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
-              <a href="./payloads/xss_payload.txt" type="button" class="btn btn-primary" download>Download</a>
-            </div>
-          </div>
-        </div>
-      </div>
-
     </div>
     <!-- Libs JS -->
     <!-- Tabler Core -->

@@ -186,12 +186,10 @@ header("X-XSS-Protection: 0");
               <h5 class="modal-title">Cross Site Scripting - Source Code</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-              <code>
-                <?php
-                highlight_file('./sourcecode/xssreflectedhighcode.txt');
-                ?>
-              </code>
+            <div class="modal-body" style="background-color: #E5E4E2;">
+              <?php
+              highlight_file('./sourcecode/xssreflectedhighcode.txt');
+              ?>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
@@ -208,12 +206,10 @@ header("X-XSS-Protection: 0");
               <h5 class="modal-title">Cross Site Scripting - Payload</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-              <code>
-                <?php
-                highlight_file('./payloads/xss_payload.txt');
-                ?>
-              </code>
+            <div class="modal-body" style="background-color: #E5E4E2;">
+              <?php
+              highlight_file('./payloads/xss_payload.txt');
+              ?>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>

@@ -197,12 +197,10 @@ if (isset($_GET['statement'])) {
               <h5 class="modal-title">Insecure direct object references - Source Code</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-              <code>
-                <?php
-                highlight_file('./sourcecode/idorcode.txt');
-                ?>
-              </code>
+            <div class="modal-body" style="background-color: #E5E4E2;">
+              <?php
+              highlight_file('./sourcecode/idorcode.txt');
+              ?>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>

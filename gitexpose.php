@@ -106,34 +106,39 @@ ini_set('display_errors', 0);
               <div class="col-lg-8">
                 <div class="card card-lg">
                   <div class="card-body">
-                        <div class="markdown">
-                          <div>
-                            <h3 class="lh-1">Calculator</h3>
-                          </div>
+                    <h2><center><a href="./.git/" target="_blank" style="color:blue;">Directory : Git Folder</a></center></h2>
+                    <table class="table table-vcenter card-table">
+                      <thead>
+                          <tr>
+                              <th>.git folder</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <?php
+                          // Directory to scan
+                          $upload_dir = './.git/';
 
-                          <div class="row g-2 align-items-center">
-                            <form role="form" action="" method="POST">
-                              <div class="mb-3">
-                                <input type="text" class="form-control" name="calculate" autocomplete="off" value="1+1">
-                              </div>
-                              <center><button action="submit" class="btn btn-primary">
-                                Submit
-                              </button>
-                              </center> 
-                            </form>
-                          </div>
-
-                        <center>
-                        <br>
-                        <p>
-                        <?php
-                        if(isset($_POST['calculate'])){
-
-                          eval('print(' . $_POST['calculate'] . ");");
-                        }
-                        ?>
-                        </p>
-                    </div>
+                          // Check if directory exists
+                          if (is_dir($upload_dir)) {
+                              // Open directory
+                              if ($dh = opendir($upload_dir)) {
+                                  // Read files in directory
+                                  while (($file = readdir($dh)) !== false) {
+                                      // Exclude special directories
+                                      if ($file != '.' && $file != '..') {
+                                          // Display file name in table row
+                                          echo "<tr><td>$file</td></tr>";
+                                      }
+                                  }
+                                  // Close directory
+                                  closedir($dh);
+                              }
+                          } else {
+                              echo "<tr><td colspan='1'>.git directory does not exist on directory.</td></tr>";
+                          }
+                          ?>
+                      </tbody>
+                    </table>
                   </div>
                 </div>
               </div>
@@ -147,18 +152,18 @@ ini_set('display_errors', 0);
                       </div>
                       <div>
                         <small class="text-muted">Information</small>
-                        <h3 class="lh-1">Remote Code Execution</h3>
+                        <h3 class="lh-1">Expose .git - Source Code Disclosure</h3>
                       </div>
                     </div>
                     <ul class="list-unstyled space-y-1">
                       <li><b>Level</b> : Others</b></li>
-                      <li><b>Short Form</b> : RCE</b></li>
-                      <li><b>Injection Point</b> : $_POST['calculate']</b></li>
-                      <li><b>Why this happen</b> : It's a vulnerability that allows an attacker to execute arbitrary code on a target system remotely. Attackers exploit this vulnerability by injecting malicious code into an application or system, often through input fields or file uploads. Once exploited, RCE can lead to complete compromise of the target system, allowing attackers to steal data, install malware, or take control of the system. To prevent RCE vulnerabilities, applications should sanitize user input, validate file uploads, and implement proper security controls to restrict code execution.</li>
-                      <li><b>Read More</b> : <a href="https://firdauskhairuddin.gitbook.io/common-web-vulnerability-php/remote-code-injection" target="_blank">Link</a></li>
+                      <li><b>Short Form</b> : Expose .git</b></li>
+                      <li><b>Injection Point</b> : .git folder</b></li>
+                      <li><b>Why this happen</b> : Exposing the .git directory means making it accessible from the web, typically unintentionally, which can lead to security vulnerabilities. This directory contains sensitive information about the repository, including commit history, configuration details, and potentially credentials. Attackers can exploit this exposure to gather information or perform attacks such as retrieving source code, identifying vulnerabilities, or conducting reconnaissance for further attacks.</li>
+                      <li><b>Read More</b> : <a href="https://commonvuln.mfbktech.academy/git-of-terror" target="_blank">Link</a></li>
                       <br>
-                      <a href="#" class="btn" data-bs-toggle="modal" data-bs-target="#modal-simple">
-                      View Source
+                      <a href="#" class="btn" data-bs-toggle="modal" data-bs-target="#modal-payloads">
+                      View Payload
                       </a>
                     </div>
                     </ul>   
@@ -171,22 +176,21 @@ ini_set('display_errors', 0);
 
       <?php include('./components/footer.php');?>
 
-      <div class="modal modal-blur fade" id="modal-simple" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal modal-blur fade" id="modal-payloads" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-full-width modal-dialog-centered modal-dialog-scrollable" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title">Local File Inclusion</h5>
+              <h5 class="modal-title">Local File Inclusion - lfi2rce.py</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-              <code>
-                <?php
-                highlight_file('./sourcecode/remotecodeinjectioncode.txt');
-                ?>
-              </code>
+            <div class="modal-body" style="background-color: #E5E4E2;">
+              <?php
+              highlight_file('./payloads/lfi2rce_payload.txt');
+              ?>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+              <a href="./payloads/lfi2rce.py" type="button" class="btn btn-primary" download>Download</a>
             </div>
           </div>
         </div>

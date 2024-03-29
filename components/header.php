@@ -223,8 +223,11 @@
                             <a href="./idor.php" class="dropdown-item">
                               Insecure direct object references (IDOR)
                             </a>
-                            <a href="./remotecodeinjection.php" class="dropdown-item">
-                              Remote Code Injection
+                            <a href="./remotecodeexecution.php" class="dropdown-item">
+                              Remote Code Execution
+                            </a>
+                            <a href="./gitexpose.php" class="dropdown-item">
+                              Expose Git
                             </a>
                           </div>
                         </div>

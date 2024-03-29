@@ -193,12 +193,10 @@ $level = new Level();
               <h5 class="modal-title">Command Injection - Source Code</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-              <code>
-                <?php
-                highlight_file('./sourcecode/commandinjectionlowcode.txt');
-                ?>
-              </code>
+            <div class="modal-body" style="background-color: #E5E4E2;">
+              <?php
+              highlight_file('./sourcecode/commandinjectionlowcode.txt');
+              ?>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
@@ -215,12 +213,10 @@ $level = new Level();
               <h5 class="modal-title">Command Injection - Payload</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-              <code>
-                <?php
-                highlight_file('./payloads/low_command_injection_manual_payload.txt');
-                ?>
-              </code>
+            <div class="modal-body" style="background-color: #E5E4E2;">
+              <?php
+              highlight_file('./payloads/low_command_injection_manual_payload.txt');
+              ?>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
