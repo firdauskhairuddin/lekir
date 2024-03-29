@@ -180,17 +180,17 @@ ini_set('display_errors', 0);
         <div class="modal-dialog modal-full-width modal-dialog-centered modal-dialog-scrollable" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title">Local File Inclusion - lfi2rce.py</h5>
+              <h5 class="modal-title">Git Expose</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" style="background-color: #E5E4E2;">
               <?php
-              highlight_file('./payloads/lfi2rce_payload.txt');
+              highlight_file('./payloads/gitexposepayload.txt');
               ?>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
-              <a href="./payloads/lfi2rce.py" type="button" class="btn btn-primary" download>Download</a>
+              <a href="./payloads/gitexpose.txt" type="button" class="btn btn-primary" download>Download</a>
             </div>
           </div>
         </div>
