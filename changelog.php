@@ -123,6 +123,7 @@ $level = new Level();
                       <ul>
                         <li>Fix code and payload view for dark and light theme</li>
                         <li>Add new vulnerability - .git expose</li>
+                        <li>Fix permission issue on docker vm on systemUpdate to perform code update</li>
                       </ul>
                     </div>
                   </div>
