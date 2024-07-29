@@ -126,6 +126,17 @@ $level = new Level();
                         <li>Fix permission issue on docker vm on systemUpdate to perform code update</li>
                       </ul>
                     </div>
+                    <div class="mb-4">
+                      <h2 class="mb-2">
+                        <span>v1.0.2-Beta</span> –
+                        <small>July 29, 2024</small>
+                      </h2>
+                      <ul>
+                        <li>Fix Dockerfile - php container</li>
+                        <li>Fix docker-compose.yml - remove version tag (depreciated)</li>
+                        <li>Fix setup.sh</li>
+                      </ul>
+                    </div>
                   </div>
                 </div>
               </div>
