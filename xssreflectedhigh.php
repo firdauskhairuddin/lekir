@@ -164,7 +164,7 @@ header("X-XSS-Protection: 0");
 
                           echo "<code style='color:red;'>" . htmlentities($search) . "</code><br>";
 
-                          echo "<pre>Search result : ${search}</pre>";
+                          echo "<pre>Search result : {$search}</pre>";
 
                         }
                         ?>

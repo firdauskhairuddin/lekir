@@ -137,6 +137,18 @@ $level = new Level();
                         <li>Fix setup.sh</li>
                       </ul>
                     </div>
+                    <div class="mb-4">
+                      <h2 class="mb-2">
+                        <span>v1.0.3-Beta</span> –
+                        <small>September 12, 2024</small>
+                      </h2>
+                      <ul>
+                        <li>Fix Dockerfile - Enable directory listing</li>
+                        <li>Fix Dockerfile - Enable server signature header</li>
+                        <li>Fix Dockerfile - Enable server token header</li>
+                        <li>Fix xss challenges</li>
+                      </ul>
+                    </div>
                   </div>
                 </div>
               </div>

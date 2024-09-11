@@ -202,7 +202,6 @@ if(isset($_POST['user_id'])){
                             echo "<pre>User ID : {$userid}<br />Username : {$username}<br />Role : {$userrole}</pre>";
 
                           } 
-                          mysqli_close($mysqli);
                         }
                         ?>
                         </p>

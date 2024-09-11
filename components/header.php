@@ -203,6 +203,48 @@
                             <a href="./xssuseragent.php" class="dropdown-item">
                               XSS - User-Agent
                             </a>
+
+
+                            <a href="./xssreflectedlow.php" class="dropdown-item" style="color:green;">
+                              XSS Reflected - Low
+                            </a>
+                            <a href="./xssreflectedmedium.php" class="dropdown-item" style="color:orange;">
+                              XSS Reflected - Medium
+                            </a>
+                            <a href="./xssreflectedigh.php" class="dropdown-item" style="color:red;">
+                              XSS Reflected - High
+                            </a>
+                            <a href="./xssreflectedimpossible.php" class="dropdown-item" style="color:#8B0000;">
+                              XSS Reflected - Impossible
+                            </a>
+
+
+                            <a href="./xssstoredlow.php" class="dropdown-item" style="color:green;">
+                              XSS Stored - Low
+                            </a>
+                            <a href="./xssstoredmedium.php" class="dropdown-item" style="color:orange;">
+                              XSS Stored - Medium
+                            </a>
+                            <a href="./xssstoredhigh.php" class="dropdown-item" style="color:red;">
+                              XSS Stored - High
+                            </a>
+                            <a href="./xssstoredimpossible.php" class="dropdown-item" style="color:#8B0000;">
+                              XSS Stored - Impossible
+                            </a>
+
+
+                            <a href="./xssdomow.php" class="dropdown-item" style="color:green;">
+                              XSS DOM - Low
+                            </a>
+                            <a href="./xssdommedium.php" class="dropdown-item" style="color:orange;">
+                              XSS DOM - Medium
+                            </a>
+                            <a href="./xssdomhigh.php" class="dropdown-item" style="color:red;">
+                              XSS DOM - High
+                            </a>
+                            <a href="./xssdomimpossible.php" class="dropdown-item" style="color:#8B0000;">
+                              XSS DOM - Impossible
+                            </a>
                           </div>
                         </div>
                         <div class="dropend">

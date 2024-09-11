@@ -23,7 +23,7 @@
                   <li class="list-inline-item">
                     <a href="#" class="link-secondary" rel="noopener">
                     <a href="./changelog.php" class="link-secondary" rel="noopener">
-                      v1.0.2-Beta
+                      v1.0.3-Beta
                     </a>
                   </li>
                 </ul>

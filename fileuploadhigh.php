@@ -235,7 +235,7 @@ if (isset($_GET["delete"]))
             </div>
             <div class="modal-body" style="background-color: #E5E4E2;">
               <?php
-              highlight_file('./sourcecode/fileuploadmediumcode.txt');
+              highlight_file('./sourcecode/fileuploadhighcode.txt');
               ?>
             </div>
             <div class="modal-footer">
