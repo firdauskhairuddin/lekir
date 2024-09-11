@@ -5,22 +5,22 @@ If you discover the .git directory exposed in a browsable location, it's critica
 To address this issue, utilize tools like GitTools:
 
 - Clone the GitTools repository:
-git clone https://github.com/internetwache/GitTools
+git clone https://github.com/arthaud/git-dumper.git
 
 - Navigate to the Dumper directory:
-cd GitTools/Dumper
+cd git-dumper
 
-- Set executable permissions for gitdumper.sh:
-chmod +x gitdumper.sh
+- Install tools requirement
+pip install -r requirement.txt
 
 - Execute the script to dump the .git contents:
-./gitdumper.sh http://target.tld/.git/ dest-dir
+python3 git_dumper.py http://target/.git/ dest-dir
 
 - Change directory to the destination folder:
 cd dest-dir
 
 - Check out the source code:
-git checkout .
+ls
 
 
 This process allows you to access and review the source code obtained from the exposed .git directory. Be sure to investigate thoroughly and address any identified security concerns promptly.

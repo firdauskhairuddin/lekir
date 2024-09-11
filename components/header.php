@@ -204,7 +204,7 @@
                               XSS - User-Agent
                             </a>
 
-
+                            <hr>
                             <a href="./xssreflectedlow.php" class="dropdown-item" style="color:green;">
                               XSS Reflected - Low
                             </a>
@@ -218,7 +218,7 @@
                               XSS Reflected - Impossible
                             </a>
 
-
+                            <hr>
                             <a href="./xssstoredlow.php" class="dropdown-item" style="color:green;">
                               XSS Stored - Low
                             </a>
@@ -232,7 +232,7 @@
                               XSS Stored - Impossible
                             </a>
 
-
+                            <hr>
                             <a href="./xssdomow.php" class="dropdown-item" style="color:green;">
                               XSS DOM - Low
                             </a>
