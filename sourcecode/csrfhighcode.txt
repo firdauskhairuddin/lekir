@@ -1,0 +1,25 @@
+<?php
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+	if (isset($_POST['csrf_token']) && $_POST['csrf_token'] === $_SESSION['token']) {
+		$newUsername = $_POST['username'] ?? '';
+		$newPassword = $_POST['password'] ?? '';
+		file_put_contents('./data/user_credentials.txt', "user:$newUsername pass:$newPassword\n");
+		echo '<p style="color:green;">✅ Credentials changed successfully.</p>';
+	} else {
+		echo '<p style="color:red;">❌ Invalid or expired CSRF token.</p>';
+	}
+}
+?>
+
+<form method="POST" action="">
+	<label>New Username:</label><br>
+	<input type="text" name="username" required><br><br>
+
+	<label>New Password:</label><br>
+	<input type="password" name="password" required><br><br>
+
+	<!-- Hidden CSRF token unique per request -->
+	<input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrf_token) ?>">
+
+	<button type="submit">Change Credentials</button>
+</form>

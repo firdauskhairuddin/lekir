@@ -1,0 +1,22 @@
+<?php
+
+function safeFilter($input) {
+    
+    return str_ireplace("php", "", $input);
+}
+
+$template = "Welcome, {{ input }}!";
+if (isset($_GET['input'])) {
+    
+    $payload = safeFilter($_GET['input']);
+    $rendered = str_replace("{{ input }}", $payload, $template);
+    
+    $output = preg_replace_callback('/\{\{(.*?)\}\}/', function($matches) {
+        return eval("return " . $matches[1] . ";");
+    }, $rendered);
+    
+    echo "<h2>Output:</h2><p>" . $output . "</p>";
+} else {
+    echo "<p>Please pass your payload using the ?input= parameter.</p>";
+}
+?>

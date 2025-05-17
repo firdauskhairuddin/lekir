@@ -1,0 +1,35 @@
+ <?php
+
+$templateDir      = __DIR__ . '/templates';
+$templatePath     = $templateDir . '/high_template.tpl';
+$compiledFile     = $templateDir . '/compiled_template.php';
+
+if (!is_dir($templateDir)) {
+    if (!mkdir($templateDir, 0755, true)) {
+        die('Failed to create templates directory: ' . $templateDir);
+    }
+}
+
+if (!file_exists($templatePath)) {
+    file_put_contents($templatePath, "<h1>Greetings, {{ input }}!</h1>");
+}
+
+if (isset($_GET['input'])) {
+    $payload          = $_GET['input'];
+    $rawTemplate      = file_get_contents($templatePath);
+    $compiledTemplate = str_replace("{{ input }}", $payload, $rawTemplate);
+
+    // Compile without addslashes() so quotes in payload break out
+    file_put_contents($compiledFile,
+        "<?php\n"
+    . "  // Compiled template below\n"
+    . "  echo \"" . $compiledTemplate . "\";\n"
+    . "?>"
+    );
+
+    include $compiledFile;
+    exit;
+} else {
+    echo "Provide an input parameter to exploit.";
+}
+?>
