@@ -1,0 +1,13 @@
+<?php
+if (isset($_GET['name'])) {
+	
+	// Injection: User input is directly passed into eval after a simple string replacement.
+	$name = $_GET['name'];
+	
+	eval("\$output = \"$name\";");
+	echo $output;
+} 
+else {
+	echo "<p>Please provide input using the ?name= parameter.</p>";
+}
+?>

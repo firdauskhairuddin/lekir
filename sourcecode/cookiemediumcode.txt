@@ -1,0 +1,19 @@
+<?php
+session_start();
+include('./core/configuration.php');
+include('./core/function.php');
+
+$session = new Session();
+$session->check_invalid_session();
+
+$secure = new Secure();
+$level = new Level();
+
+if (!isset($_COOKIE['user_role'])) {
+    setcookie("user_role", base64_encode("user"), time() + 3600, "/");
+}
+
+// Role check and verification
+<?php
+$role = base64_decode($_COOKIE['user_role']);
+?>

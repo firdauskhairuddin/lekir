@@ -42,6 +42,15 @@
                         <a class="dropdown-item" href="./fileupload.php">
                           File Upload
                         </a>
+                        <a class="dropdown-item" href="./sstilow.php">
+                          Server Side Template Injection
+                        </a>
+                        <a class="dropdown-item" href="./csrflow.php">
+                          Cross Site Request Forgery
+                        </a>
+                        <a class="dropdown-item" href="./deserializationlow.php">
+                          Cookie Manipulation
+                        </a>
                         <div class="dropend">
                           <a class="dropdown-item dropdown-toggle" href="#sidebar-cards" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false" >
                             Cross Site Scripting
@@ -190,6 +199,57 @@
                         </div>
                         <div class="dropend">
                           <a class="dropdown-item dropdown-toggle" href="#sidebar-cards" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false" >
+                            SSTI
+                          <span class="badge badge-sm bg-green-lt text-uppercase ms-auto">Others</span>
+                          </a>
+                          <div class="dropdown-menu">
+                            <a href="./sstilow.php" class="dropdown-item" style="color:green;">
+                              SSTI - Low
+                            </a>
+                            <a href="./sstimedium.php" class="dropdown-item" style="color:orange;">
+                              SSTI - Medium
+                            </a>
+                            <a href="./sstihigh.php" class="dropdown-item" style="color:red;">
+                              SSTI - High
+                            </a>
+                          </div>
+                        </div>
+                        <div class="dropend">
+                          <a class="dropdown-item dropdown-toggle" href="#sidebar-cards" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false" >
+                            CSRF
+                          <span class="badge badge-sm bg-green-lt text-uppercase ms-auto">Others</span>
+                          </a>
+                          <div class="dropdown-menu">
+                            <a href="./csrflow.php" class="dropdown-item" style="color:green;">
+                              CSRF - Low
+                            </a>
+                            <a href="./csrfmedium.php" class="dropdown-item" style="color:orange;">
+                              CSRF - Medium
+                            </a>
+                            <a href="./csrfhigh.php" class="dropdown-item" style="color:red;">
+                              CSRF - High
+                            </a>
+                          </div>
+                        </div>
+                        <div class="dropend">
+                          <a class="dropdown-item dropdown-toggle" href="#sidebar-cards" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false" >
+                            Cookie Manipulation
+                          <span class="badge badge-sm bg-green-lt text-uppercase ms-auto">Others</span>
+                          </a>
+                          <div class="dropdown-menu">
+                            <a href="./cookielow.php" class="dropdown-item" style="color:green;">
+                              Cookie Manipulation - Low
+                            </a>
+                            <a href="./cookiemedium.php" class="dropdown-item" style="color:orange;">
+                              Cookie Manipulation - Medium
+                            </a>
+                            <a href="./cookiehigh.php" class="dropdown-item" style="color:red;">
+                              Cookie Manipulation - High
+                            </a>
+                          </div>
+                        </div>
+                        <div class="dropend">
+                          <a class="dropdown-item dropdown-toggle" href="#sidebar-cards" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false" >
                             XSS
                           <span class="badge badge-sm bg-green-lt text-uppercase ms-auto">Others</span>
                           </a>
@@ -211,7 +271,7 @@
                             <a href="./xssreflectedmedium.php" class="dropdown-item" style="color:orange;">
                               XSS Reflected - Medium
                             </a>
-                            <a href="./xssreflectedigh.php" class="dropdown-item" style="color:red;">
+                            <a href="./xssreflectedhigh.php" class="dropdown-item" style="color:red;">
                               XSS Reflected - High
                             </a>
                             <a href="./xssreflectedimpossible.php" class="dropdown-item" style="color:#8B0000;">
@@ -233,7 +293,7 @@
                             </a>
 
                             <hr>
-                            <a href="./xssdomow.php" class="dropdown-item" style="color:green;">
+                            <a href="./xssdomlow.php" class="dropdown-item" style="color:green;">
                               XSS DOM - Low
                             </a>
                             <a href="./xssdommedium.php" class="dropdown-item" style="color:orange;">
@@ -337,6 +397,15 @@
                         </a>
                         <a class="dropdown-item" href="./fileuploadcodecompare.php">
                           File Upload
+                        </a>
+                        <a class="dropdown-item" href="./ssticodecompare.php">
+                          SSTI
+                        </a>
+                        <a class="dropdown-item" href="./csrfcodecompare.php">
+                          CSRF
+                        </a>
+                        <a class="dropdown-item" href="./cookiecodecompare.php">
+                          Cookie Manipulation
                         </a>
                         <a class="dropdown-item" href="./xssreflectedcodecompare.php">
                           XSS

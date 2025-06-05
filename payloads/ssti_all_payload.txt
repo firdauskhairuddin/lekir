@@ -1,0 +1,24 @@
+All level plausible SSTI Payload Example
+
+Identify the Vulnerable Input Field
+
+First locates an input field, URL parameter, or any user-controllable part of the application that is passed into a server-side template without proper sanitization or escaping.
+
+For example, attacker might identify a web form, search bar, or template preview functionality that seems to return results based on dynamic user input.
+
+TIP: Generated PDF files, invoices and emails usually use a template.
+
+Inject Template Syntax
+
+The attacker tests the identified input field by injecting template syntax specific to the template engine in use. Different web frameworks use different template engines (e.g., Jinja2 for Python, Twig for PHP, or FreeMarker for Java).
+
+In most cases, this polyglot payload will trigger an error in presence of a SSTI vulnerability:
+
+${{<%[%'"}}%\.
+
+Common template expressions:
+
+";phpinfo();// 
+${7*}
+{{7*7}}
+#{7*7}
