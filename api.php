@@ -34,7 +34,6 @@ if (isset($_GET['action']))
             $_SESSION['user_role'] = htmlentities($querydata[0]->user_role);
             $_SESSION['level'] = '1';
             $_SESSION['jwtrole'] = '1';
-            $_SESSION['token'] = bin2hex(random_bytes(64));
             setcookie("user_id", "1", time() + 8 * 3600, "/");
             setcookie("page", "page1.php", time() + 8 * 3600, "/");
 
