@@ -1,0 +1,31 @@
+<?php
+// Check if Twig exists
+if (!class_exists('\Twig\Environment')) {
+    die('<div class="alert alert-danger">Twig not found. Install with: composer require twig/twig</div>');
+}
+
+// Advanced filter
+function advancedFilter($input) {
+    $input = preg_replace('/[^\w\s]/', '', $input); // Remove special chars
+    $input = str_replace(['{{', '}}'], '', $input); // Remove template tags
+    return strip_tags($input);
+}
+
+$loader = new \Twig\Loader\ArrayLoader([
+    'index' => 'Hello {{ name }}!'
+]);
+
+$twig = new \Twig\Environment($loader, [
+    'autoescape' => 'html', // Enabled escaping
+    'debug' => false
+]);
+
+// Still vulnerable to complex bypasses
+echo $twig->render('index', [
+    'name' => isset($_GET['name']) ? advancedFilter($_GET['name']) : 'Guest'
+]);
+
+if(isset($_GET['name'])) {
+    echo '<div class="mt-3 text-muted">Filtered input: <code style="color:red;">'.htmlspecialchars(advancedFilter($_GET['name'])).'</code></div>';
+}
+?>

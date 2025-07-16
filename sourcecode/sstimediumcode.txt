@@ -1,0 +1,27 @@
+<?php
+// Check if Twig exists
+if (!class_exists('\Twig\Environment')) {
+    die('<div class="alert alert-danger">Twig not found. Install with: composer require twig/twig</div>');
+}
+
+// Basic filter attempt
+function basicFilter($input) {
+    $blacklist = ['system', 'exec', 'passthru', 'shell_exec', '`'];
+    return str_ireplace($blacklist, '', $input);
+}
+
+$loader = new \Twig\Loader\ArrayLoader([
+    'index' => 'Hello ' . (isset($_GET['name']) ? basicFilter($_GET['name']) : 'Guest') . '!'
+]);
+
+$twig = new \Twig\Environment($loader, [
+    'autoescape' => false,
+    'debug' => false // Debug disabled
+]);
+
+echo $twig->render('index');
+
+if(isset($_GET['name'])) {
+    echo '<div class="mt-3 text-muted">Rendered source: <code style="color:red;">Hello '.htmlspecialchars($_GET['name']).'!</code></div>';
+}
+?>

@@ -17,13 +17,13 @@
               <div class="col-12 col-lg-auto mt-3 mt-lg-0">
                 <ul class="list-inline list-inline-dots mb-0">
                   <li class="list-inline-item">
-                    Copyright &copy; 2024
+                    Copyright &copy; <?php echo htmlentities(date("Y"));?>
                     <a href="https://github.com/firdauskhairuddin" class="link-secondary" target="_blank"><b>LEKIR</b></a>. Develop by <a href="https://www.linkedin.com/in/firdauskhairuddin/" class="link-secondary" target="_blank"><b>@firdauskhairuddin</b></a>. All rights reserved.
                   </li>
                   <li class="list-inline-item">
                     <a href="#" class="link-secondary" rel="noopener">
                     <a href="./changelog.php" class="link-secondary" rel="noopener">
-                      v1.0.3-Beta
+                      v1.0.4-Beta
                     </a>
                   </li>
                 </ul>

@@ -212,8 +212,6 @@ header("X-XSS-Protection: 0");
         function escapeHtml(input) {
             // Escape special characters to prevent XSS
             return input.replace(/&/g, '&amp;')
-                        .replace(/</g, '&lt;')
-                        .replace(/>/g, '&gt;')
                         .replace(/"/g, '&quot;')
                         .replace(/'/g, '&#39;');
         }

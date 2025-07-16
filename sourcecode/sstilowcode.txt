@@ -1,0 +1,25 @@
+<?php
+// Check if Twig exists
+if (!class_exists('\Twig\Environment')) {
+    die('<div class="alert alert-danger">Twig not found. Install with: composer require twig/twig</div>');
+}
+
+// INSECURE TWIG CONFIGURATION
+$loader = new \Twig\Loader\ArrayLoader([
+    'index' => 'Hello ' . (isset($_GET['name']) ? $_GET['name'] : 'Guest. Add ?name= parameter on url') . '!'
+]);
+
+$twig = new \Twig\Environment($loader, [
+    'autoescape' => false,  // Disabled escaping
+    'debug' => true         // Debug mode enabled
+]);
+
+// VULNERABLE RENDERING (SSTI)
+echo $twig->render('index');
+?>
+</p>
+<?php if(isset($_GET['name'])): ?>
+    <div class="mt-3 text-muted">
+        Rendered template source: <code style="color:red;"> Hello <?= htmlspecialchars($_GET['name'] ?? '') ?>!</code>
+    </div>
+<?php endif; ?>

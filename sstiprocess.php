@@ -1,0 +1,62 @@
+<?php
+require_once 'vendor/autoload.php';
+
+// UNSAFE CONFIGURATION
+$twig = new \Twig\Environment(
+    new \Twig\Loader\ArrayLoader(),
+    [
+        'autoescape' => false,
+        'debug' => true
+    ]
+);
+
+// UNSAFE TEMPLATE CREATION - THIS IS WHAT MAKES IT VULNERABLE
+$templateContent = '
+<!DOCTYPE html>
+        <html>
+        <head>
+            <style>
+                body { font-family: "Helvetica Neue", Arial, sans-serif; }
+                .certificate {
+                    border: 15px double #1a5276;
+                    padding: 40px;
+                    text-align: center;
+                    background-color: #f9f9f9;
+                    width: 210mm;
+                    height: 297mm;
+                }
+                .header { color: #1a5276; font-size: 24pt; margin-bottom: 30px; }
+                .name { 
+                    font-size: 36pt; 
+                    color: #d35400; 
+                    margin: 40px 0;
+                    padding: 20px;
+                    border-bottom: 2px solid #1a5276;
+                }
+                .signature { margin-top: 80px; }
+            </style>
+        </head>
+        <body>
+            <div class="certificate">
+                <div class="header">CERTIFICATE OF ACHIEVEMENT</div>
+                <p>This is to certify that</p>
+                <div class="name">'.$_POST['name'].'</div>
+                <p>has successfully completed the course requirements</p>
+                <div class="signature">
+                    <p>___________ Firdaus Kacak _____________</p>
+                    <p>Authorized Signature</p>
+                </div>
+                <div class="date">{{ "now"|date("F j, Y") }}</div>
+            </div>
+        </body>
+        </html>';
+
+// Generate PDF
+$pdf = new TCPDF();
+$pdf->AddPage();
+
+// RENDER UNSAFE CONTENT
+$html = $twig->createTemplate($templateContent)->render();
+$pdf->writeHTML($html);
+$pdf->Output('certificate.pdf', 'D'); // Force download
+?>

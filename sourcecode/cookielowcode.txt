@@ -1,0 +1,15 @@
+<?php
+session_start();
+
+if (!isset($_COOKIE['user_role'])) {
+    setcookie("user_role", "user", time() + 3600, "/");
+    // Set cookie first, then output
+    echo "<p>Welcome, regular user. Role cookie set to 'user'. Refresh the page.</p>";
+} else {
+    if ($_COOKIE['user_role'] === "admin") {
+        echo "<h2>Admin!</h2>";
+    } else {
+        echo "<h2>User.</h2>";
+    }
+}
+?>

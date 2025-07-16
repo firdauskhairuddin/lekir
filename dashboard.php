@@ -8,6 +8,12 @@ $session->check_invalid_session();
 
 $secure = new Secure();
 $level = new Level();
+
+// Check if Composer's autoloader exists (required for Twig - SSTi Vulnerability)
+$composerAutoload = file_exists(__DIR__ . '/vendor/autoload.php');
+if ($composerAutoload) {
+    require_once __DIR__ . '/vendor/autoload.php';
+}
 ?>
 <!doctype html>
 <!--
@@ -31,10 +37,47 @@ $level = new Level();
     <style>
       @import url('https://rsms.me/inter/inter.css');
       :root {
-      	--tblr-font-sans-serif: 'Inter Var', -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif;
+        --tblr-font-sans-serif: 'Inter Var', -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif;
       }
       body {
-      	font-feature-settings: "cv03", "cv04", "cv11";
+        font-feature-settings: "cv03", "cv04", "cv11";
+      }
+      .bg-gray-50 { background-color: #f8f9fa; }
+      .bg-gray-100 { background-color: #f3f4f6; }
+      .text-gray-600 { color: #4b5563; }
+      .text-gray-700 { color: #374151; }
+      .border-gray-200 { border-color: #e5e7eb; }
+      
+      .bg-blue-100 { background-color: #dbeafe; }
+      .text-blue-600 { color: #2563eb; }
+      
+      .bg-purple-100 { background-color: #e9d5ff; }
+      .text-purple-600 { color: #9333ea; }
+      
+      .bg-green-100 { background-color: #dcfce7; }
+      .text-green-600 { color: #16a34a; }
+      
+      .bg-orange-100 { background-color: #ffedd5; }
+      .text-orange-600 { color: #ea580c; }
+      
+      .bg-red-50 { background-color: #fef2f2; }
+      .bg-red-100 { background-color: #fee2e2; }
+      .text-red-500 { color: #ef4444; }
+      .text-red-600 { color: #dc2626; }
+      
+      .rounded-xl { border-radius: 12px; }
+      .rounded-lg { border-radius: 8px; }
+      .space-y-3 > * + * { margin-top: 0.75rem; }
+      
+      .display-5 {
+        font-size: 2.5rem;
+        font-weight: 600;
+      }
+      
+      @media (max-width: 768px) {
+        .display-5 {
+          font-size: 2rem;
+        }
       }
     </style>
   </head>
@@ -70,12 +113,12 @@ $level = new Level();
             </div>
             <div class="d-none d-md-flex">
               <a href="?theme=dark" class="nav-link px-0 hide-theme-dark" title="Enable dark mode" data-bs-toggle="tooltip"
-		   data-bs-placement="bottom">
+       data-bs-placement="bottom">
                 <!-- Download SVG icon from http://tabler-icons.io/i/moon -->
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" /></svg>
               </a>
               <a href="?theme=light" class="nav-link px-0 hide-theme-light" title="Enable light mode" data-bs-toggle="tooltip"
-		   data-bs-placement="bottom">
+       data-bs-placement="bottom">
                 <!-- Download SVG icon from http://tabler-icons.io/i/sun -->
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" /><path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7" /></svg>
               </a>
@@ -101,32 +144,121 @@ $level = new Level();
           <div class="container-xl">
             <div class="row row-cards">
               <div class="col-lg-8">
-                <div class="card card-lg">
-                  <div class="card-body">
+                <div class="card card-lg border-0" style="box-shadow: 0 4px 16px rgba(0,0,0,0.08); border-radius: 12px; overflow: hidden;">
+                  <div class="card-body p-5">
                     <div class="markdown">
-                      <div>
-                        <small class="text-muted">Learning Environment for Cybersecurity through Immersive Real-world scenarios</small>
-                        <h3 class="lh-1">Welcome to LEKIR!</h3>
+                      <div class="text-center mb-6">
+                        <span class="badge bg-gray-100 text-gray-600 border border-gray-200 mb-3" style="font-weight: 500; letter-spacing: 0.5px; padding: 6px 12px; border-radius: 20px;">Learning Environment for Cybersecurity through Immersive Real-world scenarios</span>
+                        <h2 class="display-5 fw-semibold mb-1" style="letter-spacing: -0.5px;">Welcome to LEKIR</h2>
+                        <div class="mx-auto" style="width: 250px; height: 3px; background: linear-gradient(to right, #0071e3, #34a853); opacity: 0.8; margin: 24px 0;"></div>
                       </div>
-                      <p>LEKIR is a deliberately vulnerable web application crafted to assist security professionals in refining their skills and evaluating their tools in a lawful setting. It also contributes to advancing web developers' comprehension of securing web applications. Moreover, LEKIR facilitates both students and instructors in comprehending web application security within a supervised environment.</p>
-                      <p>The goal of LEKIR is to provide a platform for practicing numerous common web vulnerabilities, offering varying levels of difficulty, all presented within a simple and user-friendly interface.</p>
-
-                      <ol>
-                        <li><b>Learning</b>: Providing a platform for individuals to gain hands-on experience and knowledge in cybersecurity concepts and practices.</li>
-                        <li><b>Exploration</b>: Encouraging users to explore various cybersecurity threats, vulnerabilities, and defense mechanisms in a safe and controlled environment.</li>
-                        <li><b>Knowledge Transfer</b>: Facilitating the transfer of cybersecurity expertise and skills through interactive modules, simulations, and tutorials</li>
-                        <li><b>Immersion</b>: Creating immersive and realistic scenarios that mimic real-world cyber attacks and incidents to enhance learning and problem-solving abilities.</li>
-                        <li><b>Resilience Building</b>: Fostering resilience by allowing users to experiment with different strategies and solutions to mitigate cyber risks and defend against threats.</li>
-                      </ol>
-                      <hr>
-                      <h3 class="text-danger">WARNING!</h3>
-                      <p>LEKIR is intentionally engineered to possess vulnerabilities. To prevent compromise, refrain from uploading it to your hosting provider's public HTML folder or any Internet-facing servers. Instead, it's advisable to employ a virtual machine, such as VirtualBox or VMware, configured with NAT networking mode. Within the guest machine, you can install XAMPP for the web server and database. This configuration offers a controlled environment for exploring LEKIR's vulnerabilities without the risk of external exposure.</p>
+                      
+                      <div class="bg-gray-50 p-4 rounded-xl mb-3" style="border: 1px solid rgba(0,0,0,0.03);">
+                        <p class="text-gray-700 mb-0" style="font-size: 1.05rem; line-height: 1.7;">LEKIR is a deliberately vulnerable web application crafted to assist security professionals in refining their skills and evaluating their tools in a lawful, controlled environment.</p>
+                      </div>
+                      
+                      <div class="row g-4 mb-6">
+                        <div class="col-md-6">
+                          <div class="p-4 rounded-xl h-100" style="background-color: #f8f9fa; border: 1px solid rgba(0,0,0,0.03);">
+                            <div class="d-flex align-items-center mb-3">
+                              <div class="bg-blue-100 text-blue-600 rounded-circle p-3 me-3" style="width: 48px; height: 48px; display: flex; align-items: center; justify-content: center;">
+                                <i class="fas fa-bullseye fa-lg"></i>
+                              </div>
+                              <h4 class="fw-semibold mb-0" style="letter-spacing: -0.3px;">Our Purpose</h4>
+                            </div>
+                            <p class="text-gray-600" style="line-height: 1.6; font-size: 0.95rem;">We provide a platform for practicing common web vulnerabilities with varying difficulty levels through an intuitive interface designed for progressive learning.</p>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="p-4 rounded-xl h-100" style="background-color: #f8f9fa; border: 1px solid rgba(0,0,0,0.03);">
+                            <div class="d-flex align-items-center mb-3">
+                              <div class="bg-purple-100 text-purple-600 rounded-circle p-3 me-3" style="width: 48px; height: 48px; display: flex; align-items: center; justify-content: center;">
+                                <i class="fas fa-users fa-lg"></i>
+                              </div>
+                              <h4 class="fw-semibold mb-0" style="letter-spacing: -0.3px;">Who Benefits</h4>
+                            </div>
+                            <p class="text-gray-600" style="line-height: 1.6; font-size: 0.95rem;">Security professionals, developers, students, and educators gain practical experience in a safe environment that mimics real-world scenarios.</p>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <h4 class="fw-semibold text-center mb-4" style="letter-spacing: -0.3px;">Core Objectives</h4>
+                      <div class="space-y-3 mb-6">
+                        <div class="d-flex p-3 rounded-lg" style="background-color: #f8f9fa; border: 1px solid rgba(0,0,0,0.03);">
+                          <div class="bg-green-100 text-green-600 rounded-circle p-2 me-3 flex-shrink-0" style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-graduation-cap"></i>
+                          </div>
+                          <div>
+                            <h5 class="fw-semibold mb-1" style="font-size: 1rem;">Learning</h5>
+                            <p class="text-gray-600 mb-0" style="font-size: 0.9rem; line-height: 1.6;">Hands-on experience with cybersecurity concepts and best practices through practical exercises.</p>
+                          </div>
+                        </div>
+                        
+                        <div class="d-flex p-3 rounded-lg" style="background-color: #f8f9fa; border: 1px solid rgba(0,0,0,0.03);">
+                          <div class="bg-blue-100 text-blue-600 rounded-circle p-2 me-3 flex-shrink-0" style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-search"></i>
+                          </div>
+                          <div>
+                            <h5 class="fw-semibold mb-1" style="font-size: 1rem;">Exploration</h5>
+                            <p class="text-gray-600 mb-0" style="font-size: 0.9rem; line-height: 1.6;">Discover threats, vulnerabilities, and defense mechanisms in a controlled sandbox.</p>
+                          </div>
+                        </div>
+                        
+                        <div class="d-flex p-3 rounded-lg" style="background-color: #f8f9fa; border: 1px solid rgba(0,0,0,0.03);">
+                          <div class="bg-orange-100 text-orange-600 rounded-circle p-2 me-3 flex-shrink-0" style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-exchange-alt"></i>
+                          </div>
+                          <div>
+                            <h5 class="fw-semibold mb-1" style="font-size: 1rem;">Knowledge Transfer</h5>
+                            <p class="text-gray-600 mb-0" style="font-size: 0.9rem; line-height: 1.6;">Interactive modules and simulations designed for effective skill development.</p>
+                          </div>
+                        </div>
+                        
+                        <div class="d-flex p-3 rounded-lg" style="background-color: #f8f9fa; border: 1px solid rgba(0,0,0,0.03);">
+                          <div class="bg-purple-100 text-purple-600 rounded-circle p-2 me-3 flex-shrink-0" style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-vr-cardboard"></i>
+                          </div>
+                          <div>
+                            <h5 class="fw-semibold mb-1" style="font-size: 1rem;">Immersion</h5>
+                            <p class="text-gray-600 mb-0" style="font-size: 0.9rem; line-height: 1.6;">Real-world scenarios that accurately simulate modern cyber attacks.</p>
+                          </div>
+                        </div>
+                        
+                        <div class="d-flex p-3 rounded-lg" style="background-color: #f8f9fa; border: 1px solid rgba(0,0,0,0.03);">
+                          <div class="bg-red-100 text-red-600 rounded-circle p-2 me-3 flex-shrink-0" style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-shield-virus"></i>
+                          </div>
+                          <div>
+                            <h5 class="fw-semibold mb-1" style="font-size: 1rem;">Resilience Building</h5>
+                            <p class="text-gray-600 mb-0" style="font-size: 0.9rem; line-height: 1.6;">Experiment with defense strategies to build robust security postures.</p>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="bg-red-50 border border-red-100 rounded-xl p-4" style="border-left: 4px solid #ea4335;">
+                        <div class="d-flex align-items-start">
+                          <div class="bg-red-100 text-red-600 rounded-circle p-2 me-3 flex-shrink-0" style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-exclamation-triangle"></i>
+                          </div>
+                          <div>
+                            <h4 class="fw-semibold text-red-600 mb-2">Important Security Notice</h4>
+                            <p class="text-gray-700 mb-2" style="line-height: 1.6;">LEKIR contains intentional vulnerabilities. For safe usage:</p>
+                            <ul class="text-gray-700 ps-3" style="line-height: 1.8; list-style-type: none;">
+                              <li class="mb-1"><span class="text-red-500 me-2">•</span> <strong>Avoid</strong> public web server deployment</li>
+                              <li class="mb-1"><span class="text-green-600 me-2">•</span> <strong>Use</strong> virtual machines (VirtualBox/VMware)</li>
+                              <li class="mb-1"><span class="text-green-600 me-2">•</span> <strong>Configure</strong> with NAT networking</li>
+                              <li class="mb-0"><span class="text-green-600 me-2">•</span> <strong>Install</strong> XAMPP for local testing</li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="col-lg-4">
-                <div class="card">
+
+              <div class="col-lg-4 ">
+                <div class="card card-lg border-0" style="box-shadow: 0 4px 16px rgba(0,0,0,0.08); border-radius: 12px; overflow: hidden;">
                   <div class="card-body">
                     <div class="d-flex align-items-center mb-3">
                       <div class="me-3">
@@ -150,6 +282,8 @@ $level = new Level();
                       <li>Installed module gd: <b style="color: <?php echo (extension_loaded('gd') ? 'green' : 'red'); ?>"><?php echo (extension_loaded('gd') ? 'Installed' : 'Not installed'); ?></b></li>
                       <li>Installed module mysqli: <b style="color: <?php echo (extension_loaded('mysqli') ? 'green' : 'red'); ?>"><?php echo (extension_loaded('mysqli') ? 'Installed' : 'Not installed'); ?></b></li>
                       <li>Installed module pdo_mysql: <b style="color: <?php echo (extension_loaded('pdo_mysql') ? 'green' : 'red'); ?>"><?php echo (extension_loaded('pdo_mysql') ? 'Installed' : 'Not installed'); ?></b></li>
+                      <li>Composer Autoloader: <b style="color: <?php echo ($composerAutoload ? 'green' : 'red'); ?>"><?php echo ($composerAutoload ? 'Found' : 'Not found'); ?></b></li>
+                      <li>Twig installed: <b style="color: <?php echo (class_exists('Twig\Environment') ? 'green' : 'red'); ?>"><?php echo (class_exists('Twig\Environment') ? 'Installed' : 'Not installed'); ?></b></li>
                       <hr>
                       <?php
                       $paths = array(

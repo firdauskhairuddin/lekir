@@ -1,0 +1,17 @@
+All level plausible Cookie Manipulation Payload Example
+
+Identify the Vulnerable Input Field
+
+The application uses a cookie (e.g., auth_token=admin) to determine user access level without validating or signing it.
+Cookie: auth_token=user
+
+Some application uses a Base64-encoded cookie value to store role or session information.
+Cookie: auth_token=dXNlcg==
+echo dXNlcg== | base64
+# Output: user
+
+Beside basic Base64 encryption, there are some method that may be used during the cookie creation such as:
+JWT
+Signed JWT
+HMAC128
+HMAC256

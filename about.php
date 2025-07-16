@@ -36,6 +36,42 @@ $level = new Level();
       body {
       	font-feature-settings: "cv03", "cv04", "cv11";
       }
+      .text-gradient {
+        background: linear-gradient(to right, #467fcf, #5eba00);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .tag {
+        background: #D3D3D3;
+        padding: 4px 12px;
+        border-radius: 50px;
+        font-size: 0.85rem;
+      }
+      .social-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        justify-content: center;
+      }
+      .btn-linkedin { background-color: #0a66c2; color: white; }
+      .btn-twitter { background-color: #1da1f2; color: white; }
+      .credits {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
+      }
+      .card-borderless {
+        border: none;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        height: 100%;
+      }
     </style>
   </head>
   <body >
@@ -99,34 +135,114 @@ $level = new Level();
       <?php include('./components/header.php');?>
       <div class="page-body">
           <div class="container-xl">
-            <div class="row row-cards">
-              <div class="col-lg-12">
-                <div class="card card-lg">
-                  <div class="card-body"><div class="markdown">
-                    <div>
-                      <small class="text-muted">Learning Environment for Cybersecurity through Immersive Real-world scenarios</small>
-                      <h3 class="lh-1">About LEKIR</h3>
+  <div class="row row-cards">
+    <div class="col-lg-12">
+      <div class="card card-lg">
+        <div class="card-body">
+          <div class="d-flex flex-column align-items-center text-center mb-4">
+            <div>
+              <small class="text-muted text-uppercase tracking-wide">Learning Environment for Cybersecurity through Immersive Real-world scenarios</small>
+              <h1 class="lh-1 mt-2 mb-3 text-gradient text-primary">About LEKIR</h1>
+            </div>
+          </div>
+          
+          <div class="markdown">
+            <div class="alert alert-info alert-dismissible fade show mb-4">
+              <strong>Welcome!</strong> I'm Firdaus Khairuddin, your guide in this cybersecurity journey.
+              <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+            
+            <div class="row g-4">
+              <div class="col-md-6">
+                <div class="card card-borderless bg-blue-lt">
+                  <div class="card-body">
+                    <div class="row align-items-center">
+                        <h3 class="card-title">👋 Hello There!</h3>
+                      <div class="col-auto">
+                        <span class="avatar avatar-xl" style="background-image: url(./static/avatars/firdauskhairuddin.jpg); border: 2px solid var(--tblr-border-color-translucent);"></span>
+                      </div>
+                      <div class="col">
+                        <p>I'm thrilled to welcome you to LEKIR - a dynamic learning platform dedicated to cybersecurity education. As a sales-turned-passionate cybersecurity enthusiast, I created LEKIR to provide a hands-on, immersive experience for individuals interested in learning about cybersecurity in a real-world context.</p>
+                      </div>
                     </div>
-                    <p><span class="avatar avatar-xl" style="background-image: url(./static/avatars/firdauskhairuddin.jpg)"></span></p>
-                    <p>Hello there! I'm Firdaus Khairuddin, and I'm thrilled to welcome you to LEKIR - a dynamic learning platform dedicated to cybersecurity education. As a sales turn passionate cybersecurity enthusiast, I created LEKIR to provide a hands-on, immersive experience for individuals interested in learning about cybersecurity in a real-world context.</p>
-                    <p>With LEKIR, my aim is to offer a comprehensive learning environment that caters to security professionals, web developers, students, and teachers alike. Through a variety of practical exercises, tutorials, and resources, LEKIR aims to empower individuals to enhance their skills, deepen their understanding of cybersecurity concepts, and stay updated with the latest trends and techniques.</p>
-                    <p>If you'd like to learn more, you can also hire me for training, pentesting services, and other security-related offerings. Make me your VP!</p>
-                    <p>Join me on this exciting journey as we explore the fascinating world of cybersecurity together!</p>
-                    <ul>
-                      <li><a href="https://linkedin.com/in/firdauskhairuddin">Linkedin</a></li>
-                      <li><a href="https://github.com/firdauskhairuddin">Github</a></li>
-                      <li><a href="https://firdauskhairuddin.gitbook.io">Gitbook</a></li>
-                      <li><a href="https://mfbktech.academy">Website</a></li>
-                      <li><a href="https://youtube.com/c/mfbktech">Youtube</a></li>
-                      <li><a href="https://twitter.com/firdaus_khai">Twitter</a></li>
-                    </ul>
-                    <p>Credit to tabler.io for the themes. Awesome works!</p>
+                  </div>
+                </div>
+              </div>
+                            
+              <div class="col-md-6">
+                <div class="card card-borderless bg-purple-lt">
+                  <div class="card-body">
+                    <h3 class="card-title">🎯 Our Mission</h3>
+                    <p>With LEKIR, my aim is to offer a comprehensive learning environment that caters to security professionals, web developers, students, and teachers alike. Through practical exercises and real-world scenarios, we empower individuals to enhance their cybersecurity skills.</p>
                   </div>
                 </div>
               </div>
             </div>
+            
+            <div class="card mt-4">
+              <div class="card-body">
+                <h3 class="card-title">💼 Professional Services</h3>
+                <p>Beyond this platform, I offer professional cybersecurity services:</p>
+                <div class="tags">
+                  <span class="tag">Security Training</span>
+                  <span class="tag">Penetration Testing</span>
+                  <span class="tag">Security Consulting</span>
+                  <span class="tag">VP of Security</span>
+                  <span class="tag">Workshops</span>
+                  <span class="tag">CTF</span>
+                </div>
+                <p class="mt-3">Let's discuss how I can help secure your organization!</p>
+              </div>
+            </div>
+            
+            <div class="card mt-4">
+              <div class="card-body">
+                <h3 class="card-title">🌐 Connect With Me</h3>
+                <div class="social-links">
+                  <a href="https://linkedin.com/in/firdauskhairuddin" class="btn btn-linkedin">
+                    <i class="fab fa-linkedin"></i> LinkedIn
+                  </a>
+                  <a href="https://github.com/firdauskhairuddin" class="btn btn-dark">
+                    <i class="fab fa-github"></i> GitHub
+                  </a>
+                  <a href="https://firdauskhairuddin.gitbook.io" class="btn btn-info">
+                    <i class="fas fa-book"></i> GitBook
+                  </a>
+                  <a href="https://mfbktech.academy" class="btn btn-primary">
+                    <i class="fas fa-globe"></i> Website
+                  </a>
+                  <a href="https://youtube.com/c/mfbktech" class="btn btn-danger">
+                    <i class="fab fa-youtube"></i> YouTube
+                  </a>
+                  <a href="https://twitter.com/firdaus_khai" class="btn btn-twitter">
+                    <i class="fab fa-twitter"></i> Twitter
+                  </a>
+                </div>
+              </div>
+            </div>
+            
+            <div class="mt-4 text-center text-muted">
+              <div class="mb-2">
+                <h4>Special Thanks To</h4>
+              </div>
+              <div class="credits">
+                <div class="badge bg-green-lt text-green text-uppercase p-2 m-1">Tabler.io for the awesome theme</div>
+              </div>
+            </div><div class="mt-4 text-center text-muted">
+              <div class="mb-2">
+                <h4>Supported by</h4>
+              </div>
+              <div class="credits">
+                <div class="badge bg-orange-lt text-orange text-uppercase p-2 m-1">Ahmad Razin Azman (Coffee)</div>
+                <div class="badge bg-purple-lt text-purple text-uppercase p-2 m-1">Prof. Apokalips (Code)</div>
+              </div>
+            </div>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
 
       <?php include('./components/footer.php');?>
     </div>

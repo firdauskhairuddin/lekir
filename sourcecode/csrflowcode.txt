@@ -1,0 +1,19 @@
+<?php
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+	$newUsername = $_POST['username'] ?? '';
+	$newPassword = $_POST['password'] ?? '';
+	file_put_contents('./data/csrf_credentials.txt', "user:$newUsername pass:$newPassword\n");
+
+}
+?>
+
+<form method="POST" action="">
+	<label>New Username:</label><br>
+	<input type="text" name="username" required><br><br>
+
+	<label>New Password:</label><br>
+	<input type="password" name="password" required><br><br>
+
+	<button type="submit">Change Credentials</button>
+
+</form>

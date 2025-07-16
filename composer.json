@@ -1,0 +1,6 @@
+{
+    "require": {
+        "twig/twig": "^3.21",
+        "tecnickcom/tcpdf": "^6.10"
+    }
+}

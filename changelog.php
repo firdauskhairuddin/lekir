@@ -149,6 +149,20 @@ $level = new Level();
                         <li>Fix xss challenges</li>
                       </ul>
                     </div>
+                    <div class="mb-4">
+                      <h2 class="mb-2">
+                        <span>v1.0.4-Beta</span> –
+                        <small>July 18, 2025</small>
+                      </h2>
+                      <ul>
+                        <li>Fix XSS Dom High - Remove &lt; &gt; filters</li>
+                        <li>Add SSTI Vulnerability - Credit Prof. Apokalips</li>
+                        <li>Add Cookie Manipulation Vulnerability - Credit Prof. Apokalips</li>
+                        <li>Add SSRF Vulnerability - Credit Prof. Apokalips</li>
+                        <li>Add Password Cracking Estimation Calculator</li>
+                        <li>Add JWT Tools</li>
+                      </ul>
+                    </div>
                   </div>
                 </div>
               </div>

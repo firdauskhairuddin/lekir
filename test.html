@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encoder/Decoder Tool</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: #f1f1f1;
+            border: 1px solid #ddd;
+            border-bottom: none;
+            border-radius: 5px 5px 0 0;
+            margin-right: 5px;
+        }
+        .tab.active {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .tab-content {
+            display: none;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-top: none;
+            border-radius: 0 0 5px 5px;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        textarea {
+            width: 100%;
+            height: 150px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            resize: vertical;
+            font-family: monospace;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            margin: 5px 0;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin: 10px 0;
+        }
+        .result-container {
+            margin-top: 20px;
+        }
+        .jwt-section {
+            display: flex;
+            gap: 20px;
+        }
+        .jwt-part {
+            flex: 1;
+        }
+        .jwt-header, .jwt-payload {
+            word-wrap: break-word;
+            white-space: pre-wrap;
+            background-color: #f9f9f9;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #eee;
+        }
+        .error {
+            color: red;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Encoder/Decoder Tool</h1>
+        
+        <div class="tabs">
+            <div class="tab active" onclick="openTab(event, 'html-tab')">HTML Entities</div>
+            <div class="tab" onclick="openTab(event, 'base64-tab')">Base64</div>
+            <div class="tab" onclick="openTab(event, 'jwt-tab')">JWT</div>
+        </div>
+        
+        <!-- HTML Entities Tab -->
+        <div id="html-tab" class="tab-content active">
+            <h2>HTML Entities Encoding/Decoding</h2>
+            <textarea id="html-input" placeholder="Enter text to encode or decode..."></textarea>
+            <div class="action-buttons">
+                <button onclick="htmlEncode()">HTML Encode</button>
+                <button onclick="htmlDecode()">HTML Decode</button>
+            </div>
+            <div class="result-container">
+                <h3>Result:</h3>
+                <textarea id="html-output" readonly></textarea>
+            </div>
+        </div>
+        
+        <!-- Base64 Tab -->
+        <div id="base64-tab" class="tab-content">
+            <h2>Base64 Encoding/Decoding</h2>
+            <textarea id="base64-input" placeholder="Enter text to encode or decode..."></textarea>
+            <div class="action-buttons">
+                <button onclick="base64Encode()">Base64 Encode</button>
+                <button onclick="base64Decode()">Base64 Decode</button>
+            </div>
+            <div class="result-container">
+                <h3>Result:</h3>
+                <textarea id="base64-output" readonly></textarea>
+                <div id="base64-error" class="error"></div>
+            </div>
+        </div>
+        
+        <!-- JWT Tab -->
+        <div id="jwt-tab" class="tab-content">
+            <h2>JWT Decoding</h2>
+            <textarea id="jwt-input" placeholder="Enter JWT token to decode..."></textarea>
+            <div class="action-buttons">
+                <button onclick="decodeJWT()">Decode JWT</button>
+            </div>
+            <div class="result-container">
+                <h3>Decoded JWT:</h3>
+                <div class="jwt-section">
+                    <div class="jwt-part">
+                        <h4>Header:</h4>
+                        <div id="jwt-header" class="jwt-header"></div>
+                    </div>
+                    <div class="jwt-part">
+                        <h4>Payload:</h4>
+                        <div id="jwt-payload" class="jwt-payload"></div>
+                    </div>
+                </div>
+                <div id="jwt-error" class="error"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tab functionality
+        function openTab(evt, tabName) {
+            const tabContents = document.getElementsByClassName("tab-content");
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove("active");
+            }
+            
+            const tabs = document.getElementsByClassName("tab");
+            for (let i = 0; i < tabs.length; i++) {
+                tabs[i].classList.remove("active");
+            }
+            
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+        
+        // HTML Entities functions
+        function htmlEncode() {
+            const input = document.getElementById("html-input").value;
+            const output = document.getElementById("html-output");
+            output.value = input.replace(/[\u00A0-\u9999<>&]/g, function(i) {
+                return '&#' + i.charCodeAt(0) + ';';
+            });
+        }
+        
+        function htmlDecode() {
+            const input = document.getElementById("html-input").value;
+            const output = document.getElementById("html-output");
+            output.value = input.replace(/&#(\d+);/g, function(match, dec) {
+                return String.fromCharCode(dec);
+            });
+        }
+        
+        // Base64 functions
+        function base64Encode() {
+            const input = document.getElementById("base64-input").value;
+            const output = document.getElementById("base64-output");
+            const errorElement = document.getElementById("base64-error");
+            
+            try {
+                output.value = btoa(unescape(encodeURIComponent(input)));
+                errorElement.textContent = "";
+            } catch (e) {
+                errorElement.textContent = "Error encoding to Base64: " + e.message;
+            }
+        }
+        
+        function base64Decode() {
+            const input = document.getElementById("base64-input").value;
+            const output = document.getElementById("base64-output");
+            const errorElement = document.getElementById("base64-error");
+            
+            try {
+                output.value = decodeURIComponent(escape(atob(input)));
+                errorElement.textContent = "";
+            } catch (e) {
+                errorElement.textContent = "Error decoding Base64: " + e.message;
+            }
+        }
+        
+        // JWT functions
+        function decodeJWT() {
+            const input = document.getElementById("jwt-input").value.trim();
+            const headerElement = document.getElementById("jwt-header");
+            const payloadElement = document.getElementById("jwt-payload");
+            const errorElement = document.getElementById("jwt-error");
+            
+            try {
+                if (!input) {
+                    throw new Error("Please enter a JWT token");
+                }
+                
+                const parts = input.split('.');
+                if (parts.length !== 3) {
+                    throw new Error("Invalid JWT format. Expected 3 parts separated by dots.");
+                }
+                
+                const header = JSON.parse(atob(parts[0]));
+                const payload = JSON.parse(atob(parts[1]));
+                
+                headerElement.textContent = JSON.stringify(header, null, 2);
+                payloadElement.textContent = JSON.stringify(payload, null, 2);
+                errorElement.textContent = "";
+            } catch (e) {
+                headerElement.textContent = "";
+                payloadElement.textContent = "";
+                errorElement.textContent = "Error decoding JWT: " + e.message;
+            }
+        }
+        
+        // Auto-update functionality for HTML and Base64 tabs
+        document.getElementById('html-input').addEventListener('input', function() {
+            if (this.value) {
+                if (this.value.includes('&#')) {
+                    htmlDecode();
+                } else {
+                    htmlEncode();
+                }
+            } else {
+                document.getElementById('html-output').value = '';
+            }
+        });
+        
+        document.getElementById('base64-input').addEventListener('input', function() {
+            if (this.value) {
+                try {
+                    // Try to decode first (if it looks like base64)
+                    if (/^[a-zA-Z0-9+/=]+$/.test(this.value)) {
+                        base64Decode();
+                    } else {
+                        base64Encode();
+                    }
+                } catch (e) {
+                    base64Encode();
+                }
+            } else {
+                document.getElementById('base64-output').value = '';
+                document.getElementById('base64-error').textContent = '';
+            }
+        });
+    </script>
+</body>
+</html>
