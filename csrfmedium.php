@@ -120,7 +120,7 @@ $_SESSION['token_medium'] = md5($_SESSION['user_name']);
                             <?php
                             // Handle POST submission
                             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                                if (isset($_POST['csrf_token']) && $_POST['csrf_token'] === $_SESSION['token']) {
+                                if (isset($_POST['csrf_token']) && $_POST['csrf_token'] === $_SESSION['token_medium']) {
                                     // Token valid – simulate credential change
                                     $newUsername = $_POST['username'] ?? '';
                                     $newPassword = $_POST['password'] ?? '';
