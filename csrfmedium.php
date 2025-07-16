@@ -124,7 +124,7 @@ $_SESSION['token_medium'] = md5($_SESSION['user_name']);
                                     // Token valid – simulate credential change
                                     $newUsername = $_POST['username'] ?? '';
                                     $newPassword = $_POST['password'] ?? '';
-                                    file_put_contents('./data/user_credentials.txt', "user:$newUsername pass:$newPassword\n");
+                                    file_put_contents('./data/csrf_credentials.txt', "user:$newUsername pass:$newPassword\n");
                                     echo '<p style="color:green;">Credentials changed successfully.</p>';
                                     echo '<p style="color:green;">Your new username is: ' . htmlspecialchars($newUsername) . '</p>';
                                 } else {
