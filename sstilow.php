@@ -124,7 +124,7 @@ require_once 'vendor/autoload.php'; // Assuming Twig is installed via Composer
 
                             $twig = new \Twig\Environment($loader, [
                                 'autoescape' => false,  // Disabled escaping
-                                'debug' => true         // Debug mode enabled
+                                'debug' => false         // Debug mode enabled
                             ]);
 
                             // VULNERABLE RENDERING (SSTI)

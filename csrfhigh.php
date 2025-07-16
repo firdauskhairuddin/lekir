@@ -9,10 +9,8 @@ $session->check_invalid_session();
 $secure = new Secure();
 $level = new Level();
 
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    $_SESSION['csrf_token'] = md5(date('Y-m-d H:i'));
-    $_SESSION['csrf_token_time'] = time();
-}
+$_SESSION['csrf_token'] = md5(date('Y-m-d H:i'));
+
 ?>
 <!doctype html>
 <!--
@@ -122,6 +120,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
                           <?php
                           if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                               if (isset($_POST['csrf_token']) && $_POST['csrf_token'] === $_SESSION['csrf_token']) {
+
                                   $newUsername = $_POST['username'] ?? '';
                                   $newPassword = $_POST['password'] ?? '';
                                   file_put_contents('./data/user_credentials.txt', "user:$newUsername pass:$newPassword\n");

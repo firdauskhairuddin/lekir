@@ -8,7 +8,9 @@ $session->check_invalid_session();
 
 $secure = new Secure();
 $level = new Level();
-$_SESSION['token'] = md5($_SESSION['user_name']);
+
+$_SESSION['token_medium'] = md5($_SESSION['user_name']);
+
 ?>
 <!doctype html>
 <!--
@@ -139,7 +141,7 @@ $_SESSION['token'] = md5($_SESSION['user_name']);
                                 <input type="password" name="password" required><br><br>
 
                                 <!-- Use the existing CSRF token from session -->
-                                <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['token']) ?>">
+                                <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['token_medium']) ?>">
 
                                 <button type="submit">Change Credentials</button>
                                 <br><i>*This won't alter your current logged session.</i><br>
