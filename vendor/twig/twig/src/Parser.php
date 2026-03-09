@@ -76,6 +76,9 @@ class Parser
         return \sprintf('__internal_parse_%d', $this->varNameSalt++);
     }
 
+    /**
+     * @throws SyntaxError
+     */
     public function parse(TokenStream $stream, $test = null, bool $dropNeedle = false): ModuleNode
     {
         $vars = get_object_vars($this);
@@ -158,6 +161,9 @@ class Parser
         }
     }
 
+    /**
+     * @throws SyntaxError
+     */
     public function subparse($test, bool $dropNeedle = false): Node
     {
         $lineno = $this->getCurrentToken()->getLine();
@@ -217,7 +223,7 @@ class Parser
                     $subparser->setParser($this);
                     $node = $subparser->parse($token);
                     if (!$node) {
-                        trigger_deprecation('twig/twig', '3.12', 'Returning "null" from "%s" is deprecated and forbidden by "TokenParserInterface\".\", $subparser::class);
+                        trigger_deprecation('twig/twig', '3.12', 'Returning "null" from "%s" is deprecated and forbidden by "TokenParserInterface".', $subparser::class);
                     } else {
                         $node->setNodeTag($subparser->getTag());
                         $rv[] = $node;
@@ -494,11 +500,26 @@ class Parser
             // try 2-words tests
             $name = $name.' '.$this->getCurrentToken()->getValue();
 
-            if ($test = $this->env->getTest($name)) {
-                $this->stream->next();
+            try {
+                $test = $this->env->getTest($name);
+            } catch (SyntaxError $e) {
+                if (!$this->shouldIgnoreUnknownTwigCallables()) {
+                    throw $e;
+                }
+
+                $test = null;
             }
+            $this->stream->next();
         } else {
-            $test = $this->env->getTest($name);
+            try {
+                $test = $this->env->getTest($name);
+            } catch (SyntaxError $e) {
+                if (!$this->shouldIgnoreUnknownTwigCallables()) {
+                    throw $e;
+                }
+
+                $test = null;
+            }
         }
 
         if (!$test) {

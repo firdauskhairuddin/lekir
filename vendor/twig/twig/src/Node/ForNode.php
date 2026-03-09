@@ -53,20 +53,20 @@ class ForNode extends Node
     {
         $compiler
             ->addDebugInfo($this)
-            ->write(\"\$context[\"_parent'] = \$context;\n")
-            ->write(\"\$context[\"_seq'] = CoreExtension::ensureTraversable(")
+            ->write("\$context['_parent'] = \$context;\n")
+            ->write("\$context['_seq'] = CoreExtension::ensureTraversable(")
             ->subcompile($this->getNode('seq'))
             ->raw(");\n")
         ;
 
         if ($this->hasNode('else')) {
-            $compiler->write(\"\$context[\"_iterated'] = false;\n");
+            $compiler->write("\$context['_iterated'] = false;\n");
         }
 
         if ($this->getAttribute('with_loop')) {
             $compiler
-                ->write(\"\$context[\"loop'] = [\n")
-                ->write("  'parent' => \$context['_parent'],\n')
+                ->write("\$context['loop'] = [\n")
+                ->write("  'parent' => \$context['_parent'],\n")
                 ->write("  'index0' => 0,\n")
                 ->write("  'index'  => 1,\n")
                 ->write("  'first'  => true,\n")
@@ -74,10 +74,10 @@ class ForNode extends Node
                 ->write("if (is_array(\$context['_seq']) || (is_object(\$context['_seq']) && \$context['_seq'] instanceof \Countable)) {\n")
                 ->indent()
                 ->write("\$length = count(\$context['_seq']);\n")
-                ->write(\"\$context[\"loop']['revindex0'] = \$length - 1;\n")
-                ->write(\"\$context[\"loop']['revindex'] = \$length;\n")
-                ->write(\"\$context[\"loop']['length'] = \$length;\n")
-                ->write(\"\$context[\"loop']['last'] = 1 === \$length;\n")
+                ->write("\$context['loop']['revindex0'] = \$length - 1;\n")
+                ->write("\$context['loop']['revindex'] = \$length;\n")
+                ->write("\$context['loop']['length'] = \$length;\n")
+                ->write("\$context['loop']['last'] = 1 === \$length;\n")
                 ->outdent()
                 ->write("}\n")
             ;
@@ -102,7 +102,7 @@ class ForNode extends Node
             $compiler->subcompile($this->getNode('else'));
         }
 
-        $compiler->write("\$_parent = \$context['_parent'];\n');
+        $compiler->write("\$_parent = \$context['_parent'];\n");
 
         // remove some "private" loop variables (needed for nested loops)
         $compiler->write('unset($context[\'_seq\'], $context[\''.$this->getNode('key_target')->getAttribute('name').'\'], $context[\''.$this->getNode('value_target')->getAttribute('name').'\'], $context[\'_parent\']');

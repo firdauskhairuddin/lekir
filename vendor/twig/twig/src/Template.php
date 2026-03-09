@@ -270,7 +270,7 @@ abstract class Template
     /**
      * @param string|TemplateWrapper|array<string|TemplateWrapper> $template
      */
-    protected function load(string|TemplateWrapper|array $template, int $line, int|null $index = null): self
+    protected function load(string|TemplateWrapper|array $template, int $line, ?int $index = null): self
     {
         try {
             if (\is_array($template)) {
@@ -315,7 +315,7 @@ abstract class Template
      *
      * @deprecated since Twig 3.21 and will be removed in 4.0. Use Template::load() instead.
      */
-    protected function loadTemplate($template, $templateName = null, int|null $line = null, int|null $index = null): self|TemplateWrapper
+    protected function loadTemplate($template, $templateName = null, ?int $line = null, ?int $index = null): self|TemplateWrapper
     {
         trigger_deprecation('twig/twig', '3.21', 'The "%s" method is deprecated.', __METHOD__);
 
@@ -465,7 +465,7 @@ abstract class Template
         } elseif ($parent = $this->getParent($context)) {
             yield from $parent->unwrap()->yieldBlock($name, $context, array_merge($this->blocks, $blocks), false, $templateContext ?? $this);
         } elseif (isset($blocks[$name])) {
-            throw new RuntimeError(\sprintf('Block "%s" should not call parent() in "%s" as the block does not exist in the parent template "%s\".\", $name, $blocks[$name][0]->getTemplateName(), $this->getTemplateName()), -1, $blocks[$name][0]->getSourceContext());
+            throw new RuntimeError(\sprintf('Block "%s" should not call parent() in "%s" as the block does not exist in the parent template "%s".', $name, $blocks[$name][0]->getTemplateName(), $this->getTemplateName()), -1, $blocks[$name][0]->getSourceContext());
         } else {
             throw new RuntimeError(\sprintf('Block "%s" on template "%s" does not exist.', $name, $this->getTemplateName()), -1, ($templateContext ?? $this)->getSourceContext());
         }
@@ -520,7 +520,7 @@ abstract class Template
             }
         }
 
-        throw new RuntimeError(\sprintf('Macro "%s" is not defined in template "%s\".\", substr($name, \strlen('macro_')), $this->getTemplateName()), $line, $source);
+        throw new RuntimeError(\sprintf('Macro "%s" is not defined in template "%s".', substr($name, \strlen('macro_')), $this->getTemplateName()), $line, $source);
     }
 
     /**

@@ -823,64 +823,64 @@ class TCPDF_FONTS {
 			$fmetric['type'] = 'TrueType';
 		}
 		// ---------- create php font file ----------
-		$pfile = '<'.'?'.'php'.'\n";
-		$pfile .= '// TCPDF FONT FILE DESCRIPTION'.'\n";
-		$pfile .= '$type=\''.$fmetric['type'].'\';'.'\n";
-		$pfile .= '$name=\''.$fmetric['name'].'\';'.'\n";
-		$pfile .= '$up='.$fmetric['underlinePosition'].';'.'\n";
-		$pfile .= '$ut='.$fmetric['underlineThickness'].';'.'\n";
+		$pfile = '<'.'?'.'php'."\n";
+		$pfile .= '// TCPDF FONT FILE DESCRIPTION'."\n";
+		$pfile .= '$type=\''.$fmetric['type'].'\';'."\n";
+		$pfile .= '$name=\''.$fmetric['name'].'\';'."\n";
+		$pfile .= '$up='.$fmetric['underlinePosition'].';'."\n";
+		$pfile .= '$ut='.$fmetric['underlineThickness'].';'."\n";
 		if ($fmetric['MissingWidth'] > 0) {
-			$pfile .= '$dw='.$fmetric['MissingWidth'].';'.'\n";
+			$pfile .= '$dw='.$fmetric['MissingWidth'].';'."\n";
 		} else {
-			$pfile .= '$dw='.$fmetric['AvgWidth'].';'.'\n";
+			$pfile .= '$dw='.$fmetric['AvgWidth'].';'."\n";
 		}
-		$pfile .= '$diff=\''.$fmetric['diff'].'\';'.'\n";
+		$pfile .= '$diff=\''.$fmetric['diff'].'\';'."\n";
 		if ($fmetric['type'] == 'Type1') {
 			// Type 1
-			$pfile .= '$enc=\''.$fmetric['enc'].'\';'.'\n";
-			$pfile .= '$file=\''.$fmetric['file'].'\';'.'\n";
-			$pfile .= '$size1='.$fmetric['size1'].';'.'\n";
-			$pfile .= '$size2='.$fmetric['size2'].';'.'\n";
+			$pfile .= '$enc=\''.$fmetric['enc'].'\';'."\n";
+			$pfile .= '$file=\''.$fmetric['file'].'\';'."\n";
+			$pfile .= '$size1='.$fmetric['size1'].';'."\n";
+			$pfile .= '$size2='.$fmetric['size2'].';'."\n";
 		} else {
-			$pfile .= '$originalsize='.$fmetric['originalsize'].';'.'\n";
+			$pfile .= '$originalsize='.$fmetric['originalsize'].';'."\n";
 			if ($fmetric['type'] == 'cidfont0') {
 				// CID-0
 				switch ($fonttype) {
 					case 'CID0JP': {
-						$pfile .= '// Japanese'.'\n";
-						$pfile .= '$enc=\'UniJIS-UTF16-H\';'.'\n";
-						$pfile .= '$cidinfo=array(\'Registry\'=>\'Adobe\', \'Ordering\'=>\'Japan1\',\'Supplement\'=>5);'.'\n";
-						$pfile .= 'include(dirname(__FILE__).\'/uni2cid_aj16.php\');'.'\n";
+						$pfile .= '// Japanese'."\n";
+						$pfile .= '$enc=\'UniJIS-UTF16-H\';'."\n";
+						$pfile .= '$cidinfo=array(\'Registry\'=>\'Adobe\', \'Ordering\'=>\'Japan1\',\'Supplement\'=>5);'."\n";
+						$pfile .= 'include(dirname(__FILE__).\'/uni2cid_aj16.php\');'."\n";
 						break;
 					}
 					case 'CID0KR': {
-						$pfile .= '// Korean'.'\n";
-						$pfile .= '$enc=\'UniKS-UTF16-H\';'.'\n";
-						$pfile .= '$cidinfo=array(\'Registry\'=>\'Adobe\', \'Ordering\'=>\'Korea1\',\'Supplement\'=>0);'.'\n";
-						$pfile .= 'include(dirname(__FILE__).\'/uni2cid_ak12.php\');'.'\n";
+						$pfile .= '// Korean'."\n";
+						$pfile .= '$enc=\'UniKS-UTF16-H\';'."\n";
+						$pfile .= '$cidinfo=array(\'Registry\'=>\'Adobe\', \'Ordering\'=>\'Korea1\',\'Supplement\'=>0);'."\n";
+						$pfile .= 'include(dirname(__FILE__).\'/uni2cid_ak12.php\');'."\n";
 						break;
 					}
 					case 'CID0CS': {
-						$pfile .= '// Chinese Simplified'.'\n";
-						$pfile .= '$enc=\'UniGB-UTF16-H\';'.'\n";
-						$pfile .= '$cidinfo=array(\'Registry\'=>\'Adobe\', \'Ordering\'=>\'GB1\',\'Supplement\'=>2);'.'\n";
-						$pfile .= 'include(dirname(__FILE__).\'/uni2cid_ag15.php\');'.'\n";
+						$pfile .= '// Chinese Simplified'."\n";
+						$pfile .= '$enc=\'UniGB-UTF16-H\';'."\n";
+						$pfile .= '$cidinfo=array(\'Registry\'=>\'Adobe\', \'Ordering\'=>\'GB1\',\'Supplement\'=>2);'."\n";
+						$pfile .= 'include(dirname(__FILE__).\'/uni2cid_ag15.php\');'."\n";
 						break;
 					}
 					case 'CID0CT':
 					default: {
-						$pfile .= '// Chinese Traditional'.'\n";
-						$pfile .= '$enc=\'UniCNS-UTF16-H\';'.'\n";
-						$pfile .= '$cidinfo=array(\'Registry\'=>\'Adobe\', \'Ordering\'=>\'CNS1\',\'Supplement\'=>0);'.'\n";
-						$pfile .= 'include(dirname(__FILE__).\'/uni2cid_aj16.php\');'.'\n";
+						$pfile .= '// Chinese Traditional'."\n";
+						$pfile .= '$enc=\'UniCNS-UTF16-H\';'."\n";
+						$pfile .= '$cidinfo=array(\'Registry\'=>\'Adobe\', \'Ordering\'=>\'CNS1\',\'Supplement\'=>0);'."\n";
+						$pfile .= 'include(dirname(__FILE__).\'/uni2cid_aj16.php\');'."\n";
 						break;
 					}
 				}
 			} else {
 				// TrueType
-				$pfile .= '$enc=\''.$fmetric['enc'].'\';'.'\n";
-				$pfile .= '$file=\''.$fmetric['file'].'\';'.'\n";
-				$pfile .= '$ctg=\''.$fmetric['ctg'].'\';'.'\n";
+				$pfile .= '$enc=\''.$fmetric['enc'].'\';'."\n";
+				$pfile .= '$file=\''.$fmetric['file'].'\';'."\n";
+				$pfile .= '$ctg=\''.$fmetric['ctg'].'\';'."\n";
 				// create CIDToGIDMap
 				$cidtogidmap = str_pad('', 131072, "\x00"); // (256 * 256 * 2) = 131072
 				foreach ($ctg as $cid => $gid) {
@@ -906,12 +906,12 @@ class TCPDF_FONTS {
 		$pfile .= '\'AvgWidth\'=>'.$fmetric['AvgWidth'].',';
 		$pfile .= '\'MaxWidth\'=>'.$fmetric['MaxWidth'].',';
 		$pfile .= '\'MissingWidth\'=>'.$fmetric['MissingWidth'].'';
-		$pfile .= ');'.'\n";
+		$pfile .= ');'."\n";
 		if (!empty($fmetric['cbbox'])) {
-			$pfile .= '$cbbox=array('.substr($fmetric['cbbox'], 1).');'.'\n";
+			$pfile .= '$cbbox=array('.substr($fmetric['cbbox'], 1).');'."\n";
 		}
-		$pfile .= '$cw=array('.substr($fmetric['cw'], 1).');'.'\n";
-		$pfile .= '// --- EOF ---'.'\n";
+		$pfile .= '$cw=array('.substr($fmetric['cw'], 1).');'."\n";
+		$pfile .= '// --- EOF ---'."\n";
 		// store file
 		$fp = TCPDF_STATIC::fopenLocal($outpath.$font_name.'.php', 'w');
 		fwrite($fp, $pfile);

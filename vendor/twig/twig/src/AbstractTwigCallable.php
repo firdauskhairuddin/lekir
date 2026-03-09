@@ -40,7 +40,7 @@ abstract class AbstractTwigCallable implements TwigCallableInterface
         ], $options);
 
         if ($this->options['deprecation_info'] && !$this->options['deprecation_info'] instanceof DeprecatedCallableInfo) {
-            throw new \LogicException(\sprintf('The "deprecation_info" option must be an instance of "%s\".\", DeprecatedCallableInfo::class));
+            throw new \LogicException(\sprintf('The "deprecation_info" option must be an instance of "%s".', DeprecatedCallableInfo::class));
         }
 
         if ($this->options['deprecated']) {

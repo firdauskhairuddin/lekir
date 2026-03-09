@@ -55,7 +55,7 @@ class TCPDF_STATIC {
 	 * Current TCPDF version.
 	 * @private static
 	 */
-	private static $tcpdf_version = '6.10.0';
+	private static $tcpdf_version = '6.10.1';
 
 	/**
 	 * String alias for total number of pages.
@@ -1248,7 +1248,7 @@ class TCPDF_STATIC {
 						}
 						case '[': { // attribute
 							$attrmatch = array();
-							if (preg_match('/\[([a-zA-Z0-9]*)[\s]*([\~\^\$\*\|\=]*)[\s]*["]?([^"\]]*)[\"]?\]/i\", $attrib, $attrmatch) > 0) {
+							if (preg_match('/\[([a-zA-Z0-9]*)[\s]*([\~\^\$\*\|\=]*)[\s]*["]?([^"\]]*)["]?\]/i', $attrib, $attrmatch) > 0) {
 								$att = strtolower($attrmatch[1]);
 								$val = $attrmatch[3];
 								if (isset($dom[$key]['attribute'][$att])) {

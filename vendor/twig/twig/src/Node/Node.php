@@ -152,7 +152,7 @@ class Node implements \Countable, \IteratorAggregate
     public function getAttribute(string $name)
     {
         if (!\array_key_exists($name, $this->attributes)) {
-            throw new \LogicException(\sprintf('Attribute "%s" does not exist for Node "%s\".\", $name, static::class));
+            throw new \LogicException(\sprintf('Attribute "%s" does not exist for Node "%s".', $name, static::class));
         }
 
         $triggerDeprecation = \func_num_args() > 1 ? func_get_arg(1) : true;
@@ -207,7 +207,7 @@ class Node implements \Countable, \IteratorAggregate
     public function getNode(string $name): self
     {
         if (!isset($this->nodes[$name])) {
-            throw new \LogicException(\sprintf('Node "%s" does not exist for Node "%s\".\", $name, static::class));
+            throw new \LogicException(\sprintf('Node "%s" does not exist for Node "%s".', $name, static::class));
         }
 
         $triggerDeprecation = \func_num_args() > 1 ? func_get_arg(1) : true;

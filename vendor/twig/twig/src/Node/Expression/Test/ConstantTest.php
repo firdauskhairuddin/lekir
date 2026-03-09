@@ -37,7 +37,7 @@ class ConstantTest extends TestExpression
             $compiler
                 ->raw('get_class(')
                 ->subcompile($this->getNode('arguments')->getNode('1'))
-                ->raw(')."::\".\")
+                ->raw(')."::".')
             ;
         }
 

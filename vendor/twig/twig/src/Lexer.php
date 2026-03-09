@@ -46,7 +46,7 @@ class Lexer
     public const STATE_INTERPOLATION = 4;
 
     public const REGEX_NAME = '/[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*/A';
-    public const REGEX_STRING = '/'([^#"\\\\]*(?:\\\\.[^#"\\\\]*)*)\"|\\"([^\'\\\\]*(?:\\\\.[^\'\\\\]*)*)\'/As';
+    public const REGEX_STRING = '/"([^#"\\\\]*(?:\\\\.[^#"\\\\]*)*)"|\'([^\'\\\\]*(?:\\\\.[^\'\\\\]*)*)\'/As';
 
     public const REGEX_NUMBER = '/(?(DEFINE)
         (?<LNUM>[0-9]+(_[0-9]+)*)               # Integers (with underscores)   123_456
@@ -56,8 +56,8 @@ class Lexer
     )(?:(?&DNUM)(?:(?&EXPONENT))?)              #                               123_456.456E+10
     /Ax';
 
-    public const REGEX_DQ_STRING_DELIM = '/'/A';
-    public const REGEX_DQ_STRING_PART = '/[^#'\\\\]*(?:(?:\\\\.|#(?!\{))[^#"\\\\]*)*/As';
+    public const REGEX_DQ_STRING_DELIM = '/"/A';
+    public const REGEX_DQ_STRING_PART = '/[^#"\\\\]*(?:(?:\\\\.|#(?!\{))[^#"\\\\]*)*/As';
     public const REGEX_INLINE_COMMENT = '/#[^\n]*/A';
     public const PUNCTUATION = '()[]{}?:.,|';
 
@@ -230,7 +230,7 @@ class Lexer
 
         if ($this->brackets) {
             [$expect, $lineno] = array_pop($this->brackets);
-            throw new SyntaxError(\sprintf('Unclosed "%s\".\", $expect), $lineno, $this->source);
+            throw new SyntaxError(\sprintf('Unclosed "%s".', $expect), $lineno, $this->source);
         }
 
         return new TokenStream($this->tokens, $this->source);
@@ -330,7 +330,7 @@ class Lexer
             $this->moveCursor($match[0]);
 
             if ($this->cursor >= $this->end) {
-                throw new SyntaxError(\sprintf('Unclosed "%s\".\", self::STATE_BLOCK === $this->state ? 'block' : 'variable'), $this->currentVarBlockLine, $this->source);
+                throw new SyntaxError(\sprintf('Unclosed "%s".', self::STATE_BLOCK === $this->state ? 'block' : 'variable'), $this->currentVarBlockLine, $this->source);
             }
         }
 
@@ -376,7 +376,7 @@ class Lexer
         }
         // unlexable
         else {
-            throw new SyntaxError(\sprintf('Unexpected character "%s\".\", $this->code[$this->cursor]), $this->lineno, $this->source);
+            throw new SyntaxError(\sprintf('Unexpected character "%s".', $this->code[$this->cursor]), $this->lineno, $this->source);
         }
     }
 
@@ -483,14 +483,14 @@ class Lexer
         } elseif (preg_match(self::REGEX_DQ_STRING_DELIM, $this->code, $match, 0, $this->cursor)) {
             [$expect, $lineno] = array_pop($this->brackets);
             if ('"' != $this->code[$this->cursor]) {
-                throw new SyntaxError(\sprintf('Unclosed "%s\".\", $expect), $lineno, $this->source);
+                throw new SyntaxError(\sprintf('Unclosed "%s".', $expect), $lineno, $this->source);
             }
 
             $this->popState();
             ++$this->cursor;
         } else {
             // unlexable
-            throw new SyntaxError(\sprintf('Unexpected character "%s\".\", $this->code[$this->cursor]), $this->lineno, $this->source);
+            throw new SyntaxError(\sprintf('Unexpected character "%s".', $this->code[$this->cursor]), $this->lineno, $this->source);
         }
     }
 
@@ -525,7 +525,7 @@ class Lexer
 
     private function getOperatorRegex(): string
     {
-        $expressionParsers = ['='];
+        $expressionParsers = [];
         foreach ($this->env->getExpressionParsers() as $expressionParser) {
             $expressionParsers = array_merge($expressionParsers, [$expressionParser->getName()], $expressionParser->getAliases());
         }
@@ -579,12 +579,12 @@ class Lexer
         } elseif (\in_array($code, $this->closingBrackets, true)) {
             // closing bracket
             if (!$this->brackets) {
-                throw new SyntaxError(\sprintf('Unexpected "%s\".\", $code), $this->lineno, $this->source);
+                throw new SyntaxError(\sprintf('Unexpected "%s".', $code), $this->lineno, $this->source);
             }
 
             [$expect, $lineno] = array_pop($this->brackets);
             if ($code !== str_replace($this->openingBrackets, $this->closingBrackets, $expect)) {
-                throw new SyntaxError(\sprintf('Unclosed "%s\".\", $expect), $lineno, $this->source);
+                throw new SyntaxError(\sprintf('Unclosed "%s".', $expect), $lineno, $this->source);
             }
         }
     }
