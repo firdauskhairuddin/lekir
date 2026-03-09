@@ -24,7 +24,7 @@ $secure = new Secure();
 $level = new Level();
 
 function base64url_encode($data) {
-    return rtrim(strtr(base64_encode($data), \"+/", '-_'), '=');
+    return rtrim(strtr(base64_encode($data), '+/', '-_'), '=');
 }
 
 function base64url_decode($data) {
@@ -35,16 +35,16 @@ function create_signed_jwt($payload, $secret) {
     $header = ['alg' => 'HS256', 'typ' => 'JWT'];
     $header_encoded = base64url_encode(json_encode($header));
     $payload_encoded = base64url_encode(json_encode($payload));
-    $signature = hash_hmac('sha256', '$header_encoded.$payload_encoded', $secret, true);
+    $signature = hash_hmac('sha256', "$header_encoded.$payload_encoded", $secret, true);
     $signature_encoded = base64url_encode($signature);
     return "$header_encoded.$payload_encoded.$signature_encoded";
 }
 
 function verify_signed_jwt($jwt, $secret) {
-    $parts = explode(\".", $jwt);
+    $parts = explode('.', $jwt);
     if (count($parts) !== 3) return false;
     list($header_encoded, $payload_encoded, $signature_provided) = $parts;
-    $signature = base64url_encode(hash_hmac('sha256', '$header_encoded.$payload_encoded', $secret, true));
+    $signature = base64url_encode(hash_hmac('sha256', "$header_encoded.$payload_encoded", $secret, true));
     return hash_equals($signature, $signature_provided);
 }
 
@@ -76,7 +76,7 @@ if (!isset($_COOKIE['auth_token'])) {
     <link href="<?php echo $base_path; ?>dist/css/tabler-vendors.min.css?1684106062" rel="stylesheet"/>
     <link href="<?php echo $base_path; ?>dist/css/demo.min.css?1684106062" rel="stylesheet"/>
     <style>
-      @import url(\"https://rsms.me/inter/inter.css");
+      @import url("https://rsms.me/inter/inter.css");
       :root {
       	--tblr-font-sans-serif: 'Inter Var', -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif;
       }
@@ -93,7 +93,7 @@ if (!isset($_COOKIE['auth_token'])) {
 
       <?php include($base_path . "components/top_navbar.php"); ?>
       <?php include($base_path . "components/header.php"); ?>
-
+ 
       <div class="page-body">
           <div class="container-xl">
             <div class="row row-cards">
@@ -113,12 +113,12 @@ if (!isset($_COOKIE['auth_token'])) {
                           $payload = json_decode(base64url_decode($parts[1]), true);
                           $role = $payload['role'] ?? 'user';
                           if ($role === 'admin') {
-                              echo "<h2 style='color:green;'">Welcome, Admin! You have full acces now.</h2>";
+                              echo "<h2 style='color:green;'>Welcome, Admin! You have full acces now.</h2>";
                           } else {
-                              echo "<h2 style=\'color:red;\">You are a regular user. No admin access for you.</h2>";
+                              echo "<h2 style='color:red;'>You are a regular user. No admin access for you.</h2>";
                           }
                       } else {
-                          echo "<h2 style=\'color:orange;\">Invalid or tampered token.</h2>";
+                          echo "<h2 style='color:orange;'>Invalid or tampered token.</h2>";
                       }
                       ?>
                         </p>

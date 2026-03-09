@@ -43,7 +43,7 @@ $level = new Level();
     <link href="<?php echo $base_path; ?>dist/css/tabler-vendors.min.css?1684106062" rel="stylesheet"/>
     <link href="<?php echo $base_path; ?>dist/css/demo.min.css?1684106062" rel="stylesheet"/>
     <style>
-      @import url(\"https://rsms.me/inter/inter.css");
+      @import url("https://rsms.me/inter/inter.css");
       :root {
       	--tblr-font-sans-serif: 'Inter Var', -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif;
       }
@@ -82,13 +82,13 @@ $level = new Level();
                             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 $newUsername = $_POST['username'] ?? '';
                                 $newPassword = $_POST['password'] ?? '';
-                                file_put_contents('./data/csrf_credentials.txt', 'user:$newUsername pass:$newPassword\n');
-                                echo "<p style='color:green;">Credentials changed successfully.</p>";
-                                echo "<p style=\'color:green;\'>Your new username is: ' . htmlspecialchars($newUsername) . '</p>';
+                                file_put_contents('./data/csrf_credentials.txt', "user:$newUsername pass:$newPassword\\n");
+                                echo "<p style='color:green;'>Credentials changed successfully.</p>";
+                                echo "<p style='color:green;'>Your new username is: " . htmlspecialchars($newUsername) . "</p>";
                             }
                             ?>
 
-                            <form method='POST' action="'>
+                            <form method='POST' action="">
                                 <label>New Username:</label><br>
                                 <input type="text" name="username" required><br><br>
 

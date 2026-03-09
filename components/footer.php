@@ -21,7 +21,7 @@
                   </li>
                   <li class="list-inline-item">
                     <a href="<?php echo $base_path; ?>changelog.php" class="link-secondary" rel="noopener">
-                      v1.0.4-Beta
+                      v1.1.0-Beta
                     </a>
                   </li>
                 </ul>

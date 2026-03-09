@@ -23,11 +23,11 @@ $session->check_invalid_session();
 $secure = new Secure();
 $level = new Level();
 
-ini_set(\"display_errors", 0);
+ini_set("display_errors", 0);
 header('X-XSS-Protection: 0');
 
 if(!isset($_COOKIE['user_id'])){
-  setcookie('user_id', "1", time() + 8 * 3600, "/'); 
+  setcookie('user_id', "1", time() + 8 * 3600, "/"); 
 }
 ?>
 <!doctype html>
@@ -50,7 +50,7 @@ if(!isset($_COOKIE['user_id'])){
     <link href="<?php echo $base_path; ?>dist/css/tabler-vendors.min.css?1684106062" rel="stylesheet"/>
     <link href="<?php echo $base_path; ?>dist/css/demo.min.css?1684106062" rel="stylesheet"/>
     <style>
-      @import url(\"https://rsms.me/inter/inter.css");
+      @import url("https://rsms.me/inter/inter.css");
       :root {
       	--tblr-font-sans-serif: 'Inter Var', -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif;
       }
@@ -67,7 +67,7 @@ if(!isset($_COOKIE['user_id'])){
 
       <?php include($base_path . "components/top_navbar.php"); ?>
       <?php include($base_path . "components/header.php"); ?>
-
+ 
       <div class="page-body">
           <div class="container-xl">
             <div class="row row-cards">
@@ -90,7 +90,7 @@ if(!isset($_COOKIE['user_id'])){
                       <li><b>Short Form</b> : XSS</b></li>
                       <li><b>Injection Point</b> : $_COOKIE['user_id']</li>
                       <li><b>Why this happen</b> : Reflected XSS occurs when a web application takes user-supplied data and includes it in the output sent back to the user's browser without properly validating or sanitizing it. This allows an attacker to craft a specially crafted URL or form input that, when clicked or submitted by a victim, executes malicious code in the victim's browser.</li>
-                      <li><b>Read More</b> : <a href='https://firdauskhairuddin.gitbook.io/common-web-vulnerability-php/cross-site-scripting' target="_blank'>Link</a></li>
+                      <li><b>Read More</b> : <a href='https://firdauskhairuddin.gitbook.io/common-web-vulnerability-php/cross-site-scripting' target="_blank">Link</a></li>
                       <br>
                       <a href="#" class="btn" data-bs-toggle="modal" data-bs-target="#modal-payloads">
                       View Payload

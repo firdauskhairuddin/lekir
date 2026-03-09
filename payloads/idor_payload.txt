@@ -1,0 +1,20 @@
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+...
+100
+999
+1337
+admin
+1'
+1"
+%00
+array parameters: id[]=1&id[]=2
+JSON format: {"id": 1}

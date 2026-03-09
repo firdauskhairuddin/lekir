@@ -23,7 +23,7 @@ $session->check_invalid_session();
 $secure = new Secure();
 $level = new Level();
 
-ini_set(\"display_errors", 0);
+ini_set("display_errors", 0);
 
 if(isset($_GET['user_id'])){
                         
@@ -32,7 +32,7 @@ if(isset($_GET['user_id'])){
   try{
 
     // Vulnerable code: directly inserting user input into the SQL query
-    $query = 'SELECT user_id, user_name, user_role FROM user WHERE user_id = '$id';';
+    $query = "SELECT user_id, user_name, user_role FROM user WHERE user_id = '$id';";
 
     // Execute the query and fetch the results
     $result = @mysqli_query($mysqli, $query); 
@@ -48,7 +48,7 @@ if(isset($_GET['user_id'])){
       header('HTTP/1.1 404 Bad Request');
 
       // If dont exist
-      $data = "<pre>User ID is MISSING from the database.</pre>';
+      $data = "<pre>User ID is MISSING from the database.</pre>";
     }
       
     $mysqli->close();
@@ -57,7 +57,7 @@ if(isset($_GET['user_id'])){
 
     header('Location: sqlinjectionblindlow.php');
     header("HTTP/1.1 500 Internal Server Error");
-    $data = "<pre>User ID is MISSING from the database.</pre>';
+    $data = "<pre>User ID is MISSING from the database.</pre>";
   }
 
 }
@@ -82,7 +82,7 @@ if(isset($_GET['user_id'])){
     <link href="<?php echo $base_path; ?>dist/css/tabler-vendors.min.css?1684106062" rel="stylesheet"/>
     <link href="<?php echo $base_path; ?>dist/css/demo.min.css?1684106062" rel="stylesheet"/>
     <style>
-      @import url(\"https://rsms.me/inter/inter.css");
+      @import url("https://rsms.me/inter/inter.css");
       :root {
       	--tblr-font-sans-serif: 'Inter Var', -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif;
       }
@@ -99,7 +99,7 @@ if(isset($_GET['user_id'])){
 
       <?php include($base_path . "components/top_navbar.php"); ?>
       <?php include($base_path . "components/header.php"); ?>
-
+ 
       <div class="page-body">
           <div class="container-xl">
             <div class="row row-cards">
@@ -119,10 +119,10 @@ if(isset($_GET['user_id'])){
                     </div>
                     <ul class="list-unstyled space-y-1">
                       <li><b>Level</b> : <font style="color:green;"><b>Low</b></font></li>
-                      <li><b>Short Form</b> : SQLI</b></li>
+                      <li><b>Short Form</b> : SQLI</li>
                       <li><b>Injection Point</b> : $_GET['user_id']</li>
                       <li><b>Why this happen</b> : SQL injection happens when attackers exploit vulnerabilities in web applications by injecting malicious SQL code into input fields. This occurs due to inadequate input validation and improper handling of user-supplied data in SQL queries. Attackers can manipulate these queries to execute unauthorized commands, leading to data breaches, unauthorized access, and other security compromises.</li>
-                      <li><b>Read More</b> : <a href='https://firdauskhairuddin.gitbook.io/common-web-vulnerability-php/sql-injection' target="_blank'>Link</a></li>
+                      <li><b>Read More</b> : <a href='https://firdauskhairuddin.gitbook.io/common-web-vulnerability-php/sql-injection' target='_blank'>Link</a></li>
                       <a href="#" class="btn" data-bs-toggle="modal" data-bs-target="#modal-simple">
                       View Source
                       </a>
@@ -156,7 +156,7 @@ if(isset($_GET['user_id'])){
                         <?php
                         if(isset($_GET['user_id'])){
                         
-                          echo "<code style=\'color:red;\'>&quot; SELECT user_id, user_name, user_role FROM user WHERE user_id = <b>'" . htmlentities($id) . "'</b> &quot;</code><br>';
+                          echo "<code style='color:red;'>&quot; SELECT user_id, user_name, user_role FROM user WHERE user_id = <b>'" . htmlentities($id) . "'</b> &quot;</code><br>";
 
                           echo $data;
 

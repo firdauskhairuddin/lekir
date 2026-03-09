@@ -24,7 +24,7 @@ $session->check_invalid_session();
 $secure = new Secure();
 $level = new Level();
 
-ini_set(\"display_errors", 0);
+ini_set("display_errors", 0);
 ?>
 <!doctype html>
 <!--
@@ -46,7 +46,7 @@ ini_set(\"display_errors", 0);
     <link href="<?php echo $base_path; ?>dist/css/tabler-vendors.min.css?1684106062" rel="stylesheet"/>
     <link href="<?php echo $base_path; ?>dist/css/demo.min.css?1684106062" rel="stylesheet"/>
     <style>
-      @import url(\"https://rsms.me/inter/inter.css");
+      @import url("https://rsms.me/inter/inter.css");
       :root {
       	--tblr-font-sans-serif: 'Inter Var', -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif;
       }
@@ -105,7 +105,7 @@ ini_set(\"display_errors", 0);
                           
                           $file = $_GET['page'];
 
-                          if(!fnmatch('*file', $file) && $file !="localfileinclusionhard.php" && $file !="page1.php" && $file !="page2.php" && $file !="page3.php')
+                          if(!fnmatch('*file', $file) && $file !="localfileinclusionhard.php" && $file !="page1.php" && $file !="page2.php" && $file !="page3.php")
                           {
                             echo "Error: File not found";
                           } else {
@@ -138,7 +138,7 @@ ini_set(\"display_errors", 0);
                       <li><b>Short Form</b> : LFI</b></li>
                       <li><b>Injection Point</b> : $_GET['page']</b></li>
                       <li><b>Why this happen</b> : The improper use of function <i>include()</i> or <i>require()</i>. Insufficient input validation, dynamic file inclusion with user-supplied data, lack access controls, directory traversal exploits, and server misconfigurations.</li>
-                      <li><b>Read More</b> : <a href='https://firdauskhairuddin.gitbook.io/common-web-vulnerability-php/lfi-local-file-inclusion' target="_blank'>Link</a></li>
+                      <li><b>Read More</b> : <a href='https://firdauskhairuddin.gitbook.io/common-web-vulnerability-php/lfi-local-file-inclusion' target="_blank">Link</a></li>
                       <br>
                       <a href="#" class="btn" data-bs-toggle="modal" data-bs-target="#modal-simple">
                       View Source

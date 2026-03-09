@@ -24,7 +24,7 @@ $session->check_invalid_session();
 $secure = new Secure();
 $level = new Level();
 
-ini_set(\"display_errors", 1);
+ini_set("display_errors", 1);
 
 if (isset($_GET['statement'])) {
 
@@ -54,7 +54,7 @@ if (isset($_GET['statement'])) {
     <link href="<?php echo $base_path; ?>dist/css/tabler-vendors.min.css?1684106062" rel="stylesheet"/>
     <link href="<?php echo $base_path; ?>dist/css/demo.min.css?1684106062" rel="stylesheet"/>
     <style>
-      @import url(\"https://rsms.me/inter/inter.css");
+      @import url("https://rsms.me/inter/inter.css");
       :root {
         --tblr-font-sans-serif: 'Inter Var', -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif;
       }
@@ -71,7 +71,7 @@ if (isset($_GET['statement'])) {
 
       <?php include($base_path . "components/top_navbar.php"); ?>
       <?php include($base_path . "components/header.php"); ?>
-
+ 
       <div class="page-body">
           <div class="container-xl">
             <div class="row row-cards">
@@ -95,6 +95,9 @@ if (isset($_GET['statement'])) {
                       <li><b>Why this happen</b> : PHP type juggling vulnerability occurs when loose comparison operators (== or !=) are used improperly, allowing attackers to bypass intended security checks. Attackers exploit this vulnerability by manipulating data types to cause unexpected behavior in the application. For example, the actual password is '<b>10932435112</b>' but by comparing a string "<b>aaroZmOk</b>' as password, PHP treats them as equal due to its loose type comparison rules. To prevent PHP type juggling vulnerabilities, developers should use strict comparison operators (=== or !==) and validate input properly to ensure consistent data types are used in comparisons.</li>
                       <li><b>Read More</b> : <a href="https://firdauskhairuddin.gitbook.io/common-web-vulnerability-php/php-type-juggling" target="_blank">Link</a></li>
                       <br>
+                      <a href="#" class="btn" data-bs-toggle="modal" data-bs-target="#modal-payloads">
+                      View Payload
+                      </a>
                       <a href="#" class="btn" data-bs-toggle="modal" data-bs-target="#modal-simple">
                       View Source
                       </a>
@@ -142,7 +145,7 @@ if (isset($_GET['statement'])) {
                         $stored_password = sha1('10932435112');
                         if ( $_POST['username'] == $stored_username){                                                     
                               if (sha1($_POST['password']) == $stored_password ) {                                                 
-                                  echo '<pre>Login successful!</pre>";                                                             
+                                  echo "<pre>Login successful!</pre>";                                                             
                               } else {                                                                                          
                                   echo "<pre>Login failed!</pre>";                               
                               }                                                                                                 
@@ -176,6 +179,26 @@ if (isset($_GET['statement'])) {
             </div>
             <div class="modal-footer">
               <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal modal-blur fade" id="modal-payloads" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-full-width modal-dialog-centered modal-dialog-scrollable" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">PHP Type Juggling - Payload</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" style="background-color: #E5E4E2;">
+              <?php
+              highlight_file($base_path . "payloads/typejuggling_payload.txt");
+              ?>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+              <a href="<?php echo $base_path; ?>payloads/typejuggling_payload.txt" type="button" class="btn btn-primary" download>Download</a>
             </div>
           </div>
         </div>

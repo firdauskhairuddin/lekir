@@ -24,7 +24,7 @@ $session->check_invalid_session();
 $secure = new Secure();
 $level = new Level();
 
-ini_set(\"display_errors", 0);
+ini_set("display_errors", 0);
 ?>
 <!doctype html>
 <!--
@@ -46,7 +46,7 @@ ini_set(\"display_errors", 0);
     <link href="<?php echo $base_path; ?>dist/css/tabler-vendors.min.css?1684106062" rel="stylesheet"/>
     <link href="<?php echo $base_path; ?>dist/css/demo.min.css?1684106062" rel="stylesheet"/>
     <style>
-      @import url(\"https://rsms.me/inter/inter.css");
+      @import url("https://rsms.me/inter/inter.css");
       :root {
       	--tblr-font-sans-serif: 'Inter Var', -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif;
       }
@@ -119,8 +119,11 @@ ini_set(\"display_errors", 0);
                       <li><b>Short Form</b> : RCE</b></li>
                       <li><b>Injection Point</b> : $_POST['calculate']</b></li>
                       <li><b>Why this happen</b> : It's a vulnerability that allows an attacker to execute arbitrary code on a target system remotely. Attackers exploit this vulnerability by injecting malicious code into an application or system, often through input fields or file uploads. Once exploited, RCE can lead to complete compromise of the target system, allowing attackers to steal data, install malware, or take control of the system. To prevent RCE vulnerabilities, applications should sanitize user input, validate file uploads, and implement proper security controls to restrict code execution.</li>
-                      <li><b>Read More</b> : <a href='https://firdauskhairuddin.gitbook.io/common-web-vulnerability-php/remote-code-injection' target="_blank'>Link</a></li>
+                      <li><b>Read More</b> : <a href='https://firdauskhairuddin.gitbook.io/common-web-vulnerability-php/remote-code-injection' target="_blank">Link</a></li>
                       <br>
+                      <a href="#" class="btn" data-bs-toggle="modal" data-bs-target="#modal-payloads">
+                      View Payload
+                      </a>
                       <a href="#" class="btn" data-bs-toggle="modal" data-bs-target="#modal-simple">
                       View Source
                       </a>
@@ -149,6 +152,26 @@ ini_set(\"display_errors", 0);
             </div>
             <div class="modal-footer">
               <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal modal-blur fade" id="modal-payloads" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-full-width modal-dialog-centered modal-dialog-scrollable" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Remote Code Execution - Payload</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" style="background-color: #E5E4E2;">
+              <?php
+              highlight_file($base_path . "payloads/rce_payload.txt");
+              ?>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+              <a href="<?php echo $base_path; ?>payloads/rce_payload.txt" type="button" class="btn btn-primary" download>Download</a>
             </div>
           </div>
         </div>

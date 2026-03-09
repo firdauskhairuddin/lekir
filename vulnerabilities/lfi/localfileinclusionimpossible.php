@@ -24,7 +24,7 @@ $session->check_invalid_session();
 $secure = new Secure();
 $level = new Level();
 
-ini_set(\"display_errors", 0);
+ini_set("display_errors", 0);
 ?>
 <!doctype html>
 <!--
@@ -46,7 +46,7 @@ ini_set(\"display_errors", 0);
     <link href="<?php echo $base_path; ?>dist/css/tabler-vendors.min.css?1684106062" rel="stylesheet"/>
     <link href="<?php echo $base_path; ?>dist/css/demo.min.css?1684106062" rel="stylesheet"/>
     <style>
-      @import url(\"https://rsms.me/inter/inter.css");
+      @import url("https://rsms.me/inter/inter.css");
       :root {
       	--tblr-font-sans-serif: 'Inter Var', -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif;
       }
@@ -63,7 +63,7 @@ ini_set(\"display_errors", 0);
 
       <?php include($base_path . "components/top_navbar.php"); ?>
       <?php include($base_path . "components/header.php"); ?>
-
+ 
       <div class="page-body">
           <div class="container-xl">
             <div class="row row-cards">
@@ -101,7 +101,7 @@ ini_set(\"display_errors", 0);
                           $file = $_GET['page'];
 
                           
-                         if($file !='localfileinclusionimposible.php' && $file !="page1.php" && $file !="page2.php" && $file !="page3.php')
+                         if($file !='localfileinclusionimpossible.php' && $file !="page1.php" && $file !="page2.php" && $file !="page3.php")
                           {
                             echo "Error: File not found";
                           } else {

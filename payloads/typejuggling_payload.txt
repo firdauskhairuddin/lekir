@@ -1,0 +1,18 @@
+// PHP Hash Comparison (Magic Hash)
+"0e123456789" == "0e987654321" (TRUE)
+md5('QNKCDZO') == md5('240610708') (TRUE)
+
+// Loose Comparison
+"1a" == 1 (TRUE)
+"1e3" == 1000 (TRUE)
+NULL == 0 (TRUE)
+NULL < -1 (FALSE)
+
+// JSON Decode
+json_decode('{"hash": true}') -> object(stdClass)#1 (1) { ["hash"]=> bool(true) }
+if ($json->hash == "secret_hash") -> TRUE
+
+// strcmp() issue
+strcmp($_GET['a'], "secret") -> if $_GET['a'] is array
+strcmp([], "secret") -> NULL (treated as 0/FALSE in strict check, but loose equality check?)
+if (strcmp($secret, $input) == 0) -> if input is array, returns NULL. NULL == 0 (TRUE).

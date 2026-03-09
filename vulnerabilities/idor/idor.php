@@ -24,11 +24,11 @@ $session->check_invalid_session();
 $secure = new Secure();
 $level = new Level();
 
-ini_set(\"display_errors", 1);
+ini_set("display_errors", 1);
 
 if (isset($_GET['statement'])) {
 
-    $directory = './idor/';
+    $directory = './';
     $file = $_GET['statement'];
     $filePath = $directory . $file.'.txt';
 }
@@ -54,7 +54,7 @@ if (isset($_GET['statement'])) {
     <link href="<?php echo $base_path; ?>dist/css/tabler-vendors.min.css?1684106062" rel="stylesheet"/>
     <link href="<?php echo $base_path; ?>dist/css/demo.min.css?1684106062" rel="stylesheet"/>
     <style>
-      @import url(\"https://rsms.me/inter/inter.css");
+      @import url("https://rsms.me/inter/inter.css");
       :root {
         --tblr-font-sans-serif: 'Inter Var', -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif;
       }
@@ -93,8 +93,11 @@ if (isset($_GET['statement'])) {
                       <li><b>Short Form</b> : idor</li>
                       <li><b>Injection Point</b> : $_GET['statement']</li>
                       <li><b>Why this happen</b> : Vulnerability occurs when an application exposes internal implementation details, such as database keys or file paths, directly to users. Attackers exploit this vulnerability by manipulating those references to access unauthorized data or perform unauthorized actions. To prevent IDOR vulnerabilities, applications should implement proper access controls and validate user input to ensure that users can only access resources they are authorized to access. </li>
-                      <li><b>Read More</b> : <a href='https://firdauskhairuddin.gitbook.io/common-web-vulnerability-php/idor-insecure-direct-object-referrence' target="_blank'>Link</a></li>
+                      <li><b>Read More</b> : <a href='https://firdauskhairuddin.gitbook.io/common-web-vulnerability-php/idor-insecure-direct-object-referrence' target="_blank">Link</a></li>
                       <br>
+                      <a href="#" class="btn" data-bs-toggle="modal" data-bs-target="#modal-payloads">
+                      View Payload
+                      </a>
                       <a href="#" class="btn" data-bs-toggle="modal" data-bs-target="#modal-simple">
                       View Source
                       </a>
@@ -133,12 +136,12 @@ if (isset($_GET['statement'])) {
                         if (isset($_GET['statement'])) {
                             // Vulnerable to IDOR
                             if (file_exists($filePath)) {
-                                echo '<h2 class='mt-5'><center>File Content : '.htmlentities($file)."</center></h2>";
-                                echo "<pre style=\"background:gray;color:white;">';
+                                echo "<h2 class='mt-5'><center>File Content : ".htmlentities($file)."</center></h2>";
+                                echo '<pre style="background:gray;color:white;">';
                                 highlight_file($filePath);
                                 echo "</pre>";
                             } else {
-                                echo "<h2 class=\"mt-5"><center>File not found</center></h2>';
+                                echo '<h2 class="mt-5"><center>File not found</center></h2>';
                             }
                         }
                         ?>
@@ -168,6 +171,26 @@ if (isset($_GET['statement'])) {
             </div>
             <div class="modal-footer">
               <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal modal-blur fade" id="modal-payloads" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-full-width modal-dialog-centered modal-dialog-scrollable" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Insecure direct object references - Payload</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" style="background-color: #E5E4E2;">
+              <?php
+              highlight_file($base_path . "payloads/idor_payload.txt");
+              ?>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+              <a href="<?php echo $base_path; ?>payloads/idor_payload.txt" type="button" class="btn btn-primary" download>Download</a>
             </div>
           </div>
         </div>

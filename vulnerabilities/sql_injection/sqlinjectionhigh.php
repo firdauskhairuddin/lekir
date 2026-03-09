@@ -37,7 +37,7 @@ if(isset($_POST['user_id'])){
 
   try {
 
-    $query = 'SELECT user_id, user_name, user_role FROM user WHERE user_id = '$id' LIMIT 1;';
+    $query = "SELECT user_id, user_name, user_role FROM user WHERE user_id = '$id' LIMIT 1;";
 
     $result = mysqli_query($mysqli, $query) or die( '<pre>Something went wrong.</pre>' );
 
@@ -72,7 +72,7 @@ if(isset($_POST['user_id'])){
     <link href="<?php echo $base_path; ?>dist/css/tabler-vendors.min.css?1684106062" rel="stylesheet"/>
     <link href="<?php echo $base_path; ?>dist/css/demo.min.css?1684106062" rel="stylesheet"/>
     <style>
-      @import url(\"https://rsms.me/inter/inter.css");
+      @import url("https://rsms.me/inter/inter.css");
       :root {
         --tblr-font-sans-serif: 'Inter Var', -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif;
       }
@@ -89,7 +89,7 @@ if(isset($_POST['user_id'])){
 
       <?php include($base_path . "components/top_navbar.php"); ?>
       <?php include($base_path . "components/header.php"); ?>
-
+ 
       <div class="page-body">
           <div class="container-xl">
             <div class="row row-cards">
@@ -111,7 +111,7 @@ if(isset($_POST['user_id'])){
                       <li><b>Short Form</b> : SQLI</li>
                       <li><b>Injection Point</b> : $_POST['user_id']</li>
                       <li><b>Why this happen</b> : SQL injection happens when attackers exploit vulnerabilities in web applications by injecting malicious SQL code into input fields. This occurs due to inadequate input validation and improper handling of user-supplied data in SQL queries. Attackers can manipulate these queries to execute unauthorized commands, leading to data breaches, unauthorized access, and other security compromises.</li>
-                      <li><b>Read More</b> : <a href='https://firdauskhairuddin.gitbook.io/common-web-vulnerability-php/sql-injection' target="_blank'>Link</a></li>
+                      <li><b>Read More</b> : <a href='https://firdauskhairuddin.gitbook.io/common-web-vulnerability-php/sql-injection' target='_blank'>Link</a></li>
                       <br>
                       <a href="#" class="btn" data-bs-toggle="modal" data-bs-target="#modal-payloads">
                       View Payload
@@ -130,10 +130,10 @@ if(isset($_POST['user_id'])){
                           <div>
                             <h3 class="lh-1">Search for User ID</h3>
                           </div>
-
+3. 
                           <div class="row g-2 align-items-center">
                             <form role="form" action="" method="POST" >
-                              <input type="hidden" name="csrftoken" value="<?php echo $_SESSION['csrftoken']; ?>'>
+                              <input type="hidden" name="csrftoken" value="<?php echo $_SESSION['csrftoken']; ?>">
                               <div class="mb-3">
                                 <select class="form-select" name="user_id">
                                   <option value="1">User 1</option>
@@ -156,14 +156,14 @@ if(isset($_POST['user_id'])){
 
                         if(isset($_POST['user_id'])){
 
-                          echo "<code style=\'color:red;\'>&quot; SELECT user_id, user_name, user_role FROM user WHERE user_id = <b>'" . htmlentities($id) . "'</b> &quot;</code><br>';
+                          echo "<code style='color:red;'>&quot; SELECT user_id, user_name, user_role FROM user WHERE user_id = <b>" . htmlentities($id) . "</b> &quot;</code><br>";
                           while($row = mysqli_fetch_assoc($result)) {
 
                             $userid = $row['user_id'];
                             $username = $row['user_name'];
                             $userrole = $row['user_role'];
 
-                            echo '<pre>User ID : {$userid}<br />Username : {$username}<br />Role : {$userrole}</pre>';
+                            echo "<pre>User ID : {$userid}<br />Username : {$username}<br />Role : {$userrole}</pre>";
 
                           } 
                         }

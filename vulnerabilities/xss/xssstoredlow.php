@@ -23,7 +23,7 @@ $session->check_invalid_session();
 $secure = new Secure();
 $level = new Level();
 
-ini_set(\"display_errors", 1);
+ini_set("display_errors", 1);
 header ('X-XSS-Protection: 0');
 
 function executeStatement($mysqli, $query, $params = null) {
@@ -46,7 +46,7 @@ if (isset($_POST['submit']) && isset($_POST['name'], $_POST['age'], $_POST['job'
     $age = $_POST['age'];
     $job = $_POST['job'];
 
-    executeStatement($mysqli, 'INSERT INTO xss (xss_name, xss_age, xss_job) VALUES (?, ?, ?)", [\"sis", $name, $age, $job]);
+    executeStatement($mysqli, "INSERT INTO xss (xss_name, xss_age, xss_job) VALUES (?, ?, ?)", ["sis", $name, $age, $job]);
     header('Location: ' . $_SERVER['PHP_SELF']);
     exit();
 }
@@ -73,7 +73,7 @@ $query = $mysqli->query('SELECT * FROM xss LIMIT 10');
     <link href="<?php echo $base_path; ?>dist/css/tabler-vendors.min.css?1684106062" rel="stylesheet"/>
     <link href="<?php echo $base_path; ?>dist/css/demo.min.css?1684106062" rel="stylesheet"/>
     <style>
-      @import url(\"https://rsms.me/inter/inter.css");
+      @import url("https://rsms.me/inter/inter.css");
       :root {
       	--tblr-font-sans-serif: 'Inter Var', -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif;
       }
@@ -90,7 +90,7 @@ $query = $mysqli->query('SELECT * FROM xss LIMIT 10');
 
       <?php include($base_path . "components/top_navbar.php"); ?>
       <?php include($base_path . "components/header.php"); ?>
-
+ 
       <div class="page-body">
           <div class="container-xl">
             <div class="row row-cards">
@@ -113,7 +113,7 @@ $query = $mysqli->query('SELECT * FROM xss LIMIT 10');
                       <li><b>Short Form</b> : XSS</li>
                       <li><b>Injection Point</b> : $_POST['job']</li>
                       <li><b>Why this happen</b> : XSS occurs when a web application takes user-supplied data and includes it in the output sent back to the user's browser without properly validating or sanitizing it. This allows an attacker to craft a specially crafted URL or form input that, when clicked or submitted by a victim, executes malicious code in the victim's browser.</li>
-                      <li><b>Read More</b> : <a href='https://firdauskhairuddin.gitbook.io/common-web-vulnerability-php/cross-site-scripting' target="_blank'>Link</a></li>
+                      <li><b>Read More</b> : <a href='https://firdauskhairuddin.gitbook.io/common-web-vulnerability-php/cross-site-scripting' target="_blank">Link</a></li>
                       <br>
                       <a href="#" class="btn" data-bs-toggle="modal" data-bs-target="#modal-payloads">
                       View Payload
@@ -174,17 +174,17 @@ $query = $mysqli->query('SELECT * FROM xss LIMIT 10');
                               // Iterate over each row
                               while ($row = $query->fetch_assoc()) {
                                   // Output the data for each row
-                                  echo \"<tr>";
+                                  echo "<tr>";
                                   echo '<td>' . htmlspecialchars($row['xss_name']) . '</td>';
-                                  echo '<td class='text-muted'>' . $row['xss_job'] . '</td>';
-                                  echo '<td class='text-muted'>' . htmlspecialchars($row['xss_age']) . '</td>';
+                                  echo '<td class="text-muted">' . $row['xss_job'] . '</td>';
+                                  echo '<td class="text-muted">' . htmlspecialchars($row['xss_age']) . '</td>';
                                   // Display a 'Remove' link to delete the corresponding record
-                                  echo "<td><a href='' . $_SERVER['PHP_SELF'] . '?action=delete&id=' . htmlspecialchars($row['xss_id']) . '">Remove</a></td>";
+                                  echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?action=delete&id=' . htmlspecialchars($row['xss_id']) . '">Remove</a></td>';
                                   echo '</tr>';
                               }
                           } else {
                               // Display a message if no records are found
-                              echo '<tr><td colspan='4'><center>No records found</center></td></tr>";
+                              echo '<tr><td colspan="4"><center>No records found</center></td></tr>';
                           }
                         ?>
                       </tbody>

@@ -1,0 +1,23 @@
+<?php
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['car-xml'])) {
+    $xmlData = $_POST['car-xml'];
+    
+    if (!empty($xmlData)) {
+        try {
+            // Process the XML data
+            // libxml_disable_entity_loader(false); // Deprecated in newer PHP versions
+
+            $carData = simplexml_load_string(
+                $xmlData,
+                'SimpleXMLElement',
+                LIBXML_NOENT | LIBXML_DTDLOAD
+            );
+            
+            // ... Display car details ...
+            
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage();
+        }
+    }
+}
+?>

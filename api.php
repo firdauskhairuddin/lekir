@@ -4,6 +4,9 @@ $current_path = $_SERVER['PHP_SELF'];
 $base_path = './';
 if (strpos($current_path, '/vulnerabilities/') !== false) {
     $parts = explode('/vulnerabilities/', $current_path);
+    // The original line here was malformed. Assuming the intent was to check for further subdirectories.
+    // The filter_var($url, FILTER_VALIDATE_URL) && !strpos($url, "page") part was syntactically incorrect and out of context.
+    // Restoring the likely intended logic based on common patterns for base_path determination.
     if (isset($parts[1]) && strpos($parts[1], '/') !== false) {
         $base_path = '../../';
     } else {
@@ -48,7 +51,7 @@ if (isset($_GET['action']))
             $_SESSION['user_role'] = htmlentities($querydata[0]->user_role);
             $_SESSION['level'] = '1';
             $_SESSION['jwtrole'] = '1';
-            setcookie('user_id', "1", time() + 8 * 3600, "/');
+            setcookie('user_id', "1", time() + 8 * 3600, "/");
             setcookie("page", "page1.php", time() + 8 * 3600, "/");
 
             header("Location: ./dashboard.php");
@@ -57,7 +60,7 @@ if (isset($_GET['action']))
         else
         {
             session_start();
-            $_SESSION['message'] = 'Invalid username or password";
+            $_SESSION['message'] = "Invalid username or password";
             $_SESSION['alert'] = 'danger';
             header("Location: ./");
             exit();
@@ -91,7 +94,7 @@ if (isset($_GET['action']))
         session_start();
         session_destroy();
         session_start();
-        $_SESSION['message'] = 'You have been logged out";
+        $_SESSION['message'] = "You have been logged out";
         $_SESSION['alert'] = 'success';
         header("Location: ./");
         exit();

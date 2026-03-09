@@ -23,7 +23,7 @@ $session->check_invalid_session();
 $secure = new Secure();
 $level = new Level();
 
-require_once \"vendor/autoload.php"; // Assuming Twig is installed via Composer
+require_once $base_path . "vendor/autoload.php"; // Assuming Twig is installed via Composer
 ?>
 <!doctype html>
 <!--
@@ -45,7 +45,7 @@ require_once \"vendor/autoload.php"; // Assuming Twig is installed via Composer
     <link href="<?php echo $base_path; ?>dist/css/tabler-vendors.min.css?1684106062" rel="stylesheet"/>
     <link href="<?php echo $base_path; ?>dist/css/demo.min.css?1684106062" rel="stylesheet"/>
     <style>
-      @import url(\"https://rsms.me/inter/inter.css");
+      @import url("https://rsms.me/inter/inter.css");
       :root {
       	--tblr-font-sans-serif: 'Inter Var', -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif;
       }
@@ -62,7 +62,7 @@ require_once \"vendor/autoload.php"; // Assuming Twig is installed via Composer
 
       <?php include($base_path . "components/top_navbar.php"); ?>
       <?php include($base_path . "components/header.php"); ?>
-
+ 
       <div class="page-body">
           <div class="container-xl">
             <div class="row row-cards">
@@ -77,8 +77,8 @@ require_once \"vendor/autoload.php"; // Assuming Twig is installed via Composer
                             <p>
                             <?php
                             // Check if Twig exists
-                            if (!class_exists(\"\Twig\Environment")) {
-                                die('<div class='alert alert-danger'>Twig not found. Install with: composer require twig/twig</div>');
+                            if (!class_exists("Twig\Environment")) {
+                                die('<div class="alert alert-danger">Twig not found. Install with: composer require twig/twig</div>');
                             }
 
                             // INSECURE TWIG CONFIGURATION
@@ -96,8 +96,8 @@ require_once \"vendor/autoload.php"; // Assuming Twig is installed via Composer
                             ?>
                             </p>
                             <?php if(isset($_GET['name'])): ?>
-                                <div class='mt-3 text-muted'>
-                                    Rendered template source: <code style="color:red;"> Hello <?= htmlspecialchars($_GET['name'] ?? '") ?>!</code>
+                                <div class="mt-3 text-muted">
+                                    Rendered template source: <code style="color:red;"> Hello <?= htmlspecialchars($_GET['name']) ?>!</code>
                                 </div>
                             <?php endif; ?>
                         </div>
@@ -124,7 +124,7 @@ require_once \"vendor/autoload.php"; // Assuming Twig is installed via Composer
                       <li><b>Injection Point</b> : $_GET['name'] </li>
                       <li><b>Twig installed</b>: <b style='color: <?php echo (class_exists('Twig\Environment') ? 'green' : 'red'); ?>'><?php echo (class_exists('Twig\Environment') ? 'Installed' : 'Not installed | composer require twig/twig'); ?></b></li>
                       <li><b>Why this happen</b> : SSTI (Server-Side Template Injection) occurs when untrusted user input is embedded directly into a server-side template, allowing attackers to inject malicious template syntax (e.g., {{ 7*7 }} → 49) and escalate to remote code execution</li>
-                      <li><b>Read More</b> : <a href='https://firdauskhairuddin.gitbook.io/common-web-vulnerability-php/server-site-template-injection' target="_blank'>Link</a></li>
+                      <li><b>Read More</b> : <a href='https://firdauskhairuddin.gitbook.io/common-web-vulnerability-php/server-site-template-injection' target='_blank'>Link</a></li>
                       <li><b>Author</b> : Prof. Apokalips</li>
                       <br>
 
@@ -175,6 +175,10 @@ require_once \"vendor/autoload.php"; // Assuming Twig is installed via Composer
               <?php
               highlight_file($base_path . "payloads/sstipayload.txt");
               ?>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+              <a href="<?php echo $base_path; ?>payloads/sstipayload.txt" type="button" class="btn btn-primary" download>Download</a>
             </div>
           </div>
         </div>

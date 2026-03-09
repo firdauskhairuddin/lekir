@@ -25,10 +25,10 @@ $secure = new Secure();
 $level = new Level();
 
 if(!isset($_COOKIE['page'])){
-  setcookie('page', "page1.php", time() + 3600, "/');
+  setcookie('page', "page1.php", time() + 3600, "/");
 }
 
-ini_set(\"display_errors", 0);
+ini_set("display_errors", 0);
 ?>
 <!doctype html>
 <!--
@@ -50,7 +50,7 @@ ini_set(\"display_errors", 0);
     <link href="<?php echo $base_path; ?>dist/css/tabler-vendors.min.css?1684106062" rel="stylesheet"/>
     <link href="<?php echo $base_path; ?>dist/css/demo.min.css?1684106062" rel="stylesheet"/>
     <style>
-      @import url(\"https://rsms.me/inter/inter.css");
+      @import url("https://rsms.me/inter/inter.css");
       :root {
       	--tblr-font-sans-serif: 'Inter Var', -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif;
       }
@@ -67,7 +67,7 @@ ini_set(\"display_errors", 0);
 
       <?php include($base_path . "components/top_navbar.php"); ?>
       <?php include($base_path . "components/header.php"); ?>
-
+ 
       <div class="page-body">
           <div class="container-xl">
             <div class="row row-cards">
@@ -78,23 +78,6 @@ ini_set(\"display_errors", 0);
                           <div>
                             <h3 class="lh-1">Include other page</h3>
                           </div>
-                          <div class="row g-2 align-items-center">
-                            <div class="col-6 col-sm-4 col-md-2 col-xl py-3">
-                              <a href="#" class="btn btn-primary w-100">
-                                Page 1
-                              </a>
-                            </div>
-                            <div class="col-6 col-sm-4 col-md-2 col-xl py-3">
-                              <a href="#" class="btn btn-secondary w-100">
-                                Page 2
-                              </a>
-                            </div>
-                            <div class="col-6 col-sm-4 col-md-2 col-xl py-3">
-                              <a href="#" class="btn btn-success w-100">
-                                Page 3
-                              </a>
-                            </div>
-                        </div>
 
                         <center>
                         <p>
@@ -110,7 +93,7 @@ ini_set(\"display_errors", 0);
                           if (file_exists($_COOKIE['page'])) {
                               include($_COOKIE['page']); // Vulnerability: LFI
                           } else {
-                              echo 'File not found";
+                              echo "File not found";
                           }
 
                         }
@@ -136,10 +119,10 @@ ini_set(\"display_errors", 0);
                     </div>
                     <ul class="list-unstyled space-y-1">
                       <li><b>Level</b> : Others</li>
-                      <li><b>Short Form</b> : LFI</b></li>
-                      <li><b>Injection Point</b> : $_COOKIE['page']</b></li>
+                      <li><b>Short Form</b> : LFI</li>
+                      <li><b>Injection Point</b> : $_COOKIE['page']</li>
                       <li><b>Why this happen</b> : The improper use of function <i>include()</i> or <i>require()</i>. Insufficient input validation, dynamic file inclusion with user-supplied data, lack access controls, directory traversal exploits, and server misconfigurations.</li>
-                      <li><b>Read More</b> : <a href='https://firdauskhairuddin.gitbook.io/common-web-vulnerability-php/lfi-local-file-inclusion' target="_blank'>Link</a></li>
+                      <li><b>Read More</b> : <a href='https://firdauskhairuddin.gitbook.io/common-web-vulnerability-php/lfi-local-file-inclusion' target="_blank">Link</a></li>
                       <br>
                       <a href="#" class="btn" data-bs-toggle="modal" data-bs-target="#modal-simple">
                       View Source

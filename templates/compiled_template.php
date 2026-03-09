@@ -14,5 +14,5 @@ if (strpos($current_path, '/vulnerabilities/') !== false) {
 }
 
   // Compiled template below
-  echo '<h1>Greetings, s{{7*7}}!</h1>";
+    echo "<h1>Greetings, s{{7*7}}!</h1>";
 ?>

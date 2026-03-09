@@ -24,7 +24,7 @@ $session->check_invalid_session();
 $secure = new Secure();
 $level = new Level();
 
-ini_set(\"display_errors", 0);
+ini_set("display_errors", 0);
 ?>
 <!doctype html>
 <!--
@@ -46,7 +46,7 @@ ini_set(\"display_errors", 0);
     <link href="<?php echo $base_path; ?>dist/css/tabler-vendors.min.css?1684106062" rel="stylesheet"/>
     <link href="<?php echo $base_path; ?>dist/css/demo.min.css?1684106062" rel="stylesheet"/>
     <style>
-      @import url(\"https://rsms.me/inter/inter.css");
+      @import url("https://rsms.me/inter/inter.css");
       :root {
       	--tblr-font-sans-serif: 'Inter Var', -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif;
       }
@@ -130,8 +130,11 @@ ini_set(\"display_errors", 0);
                       <li><b>Short Form</b> : LFI</li>
                       <li><b>Injection Point</b> : $_GET['page']</li>
                       <li><b>Why this happen</b> : The improper use of function <i>include()</i> or <i>require()</i>. Insufficient input validation, dynamic file inclusion with user-supplied data, lack access controls, directory traversal exploits, and server misconfigurations.</li>
-                      <li><b>Read More</b> : <a href='https://firdauskhairuddin.gitbook.io/common-web-vulnerability-php/lfi-local-file-inclusion' target="_blank'>Link</a></li>
+                      <li><b>Read More</b> : <a href='https://firdauskhairuddin.gitbook.io/common-web-vulnerability-php/lfi-local-file-inclusion' target="_blank">Link</a></li>
                       <br>
+                      <a href="#" class="btn" data-bs-toggle="modal" data-bs-target="#modal-payloads">
+                      View Payload
+                      </a>
                       <a href="#" class="btn" data-bs-toggle="modal" data-bs-target="#modal-simple">
                       View Source
                       </a>
@@ -161,6 +164,26 @@ ini_set(\"display_errors", 0);
             <div class="modal-footer">
               <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
               <a href="<?php echo $base_path; ?>compare/localfileinclusioncodecompare.php" type="button" class="btn btn-primary">Compare All Level</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal modal-blur fade" id="modal-payloads" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-full-width modal-dialog-centered modal-dialog-scrollable" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Local File Inclusion - Payload</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" style="background-color: #E5E4E2;">
+              <?php
+              highlight_file($base_path . "payloads/lfi_payload.txt");
+              ?>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+              <a href="<?php echo $base_path; ?>payloads/lfi_payload.txt" type="button" class="btn btn-primary" download>Download</a>
             </div>
           </div>
         </div>

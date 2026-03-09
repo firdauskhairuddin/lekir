@@ -43,7 +43,7 @@ $level = new Level();
     <link href="<?php echo $base_path; ?>dist/css/tabler-vendors.min.css?1684106062" rel="stylesheet"/>
     <link href="<?php echo $base_path; ?>dist/css/demo.min.css?1684106062" rel="stylesheet"/>
     <style>
-      @import url(\"https://rsms.me/inter/inter.css");
+      @import url("https://rsms.me/inter/inter.css");
       :root {
       	--tblr-font-sans-serif: 'Inter Var', -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif;
       }
@@ -177,6 +177,22 @@ $level = new Level();
                         <li>Add JWT Tools</li>
                       </ul>
                     </div>
+                    <div class="mb-4">
+                      <h2 class="mb-2">
+                        <span>v1.1.0-Beta</span> –
+                        <small>March 9, 2026</small>
+                      </h2>
+                      <ul>
+                        <li>Restructure Codebase</li>
+                        <li>Changing folder structure</li>
+                        <li>Added new tools</li>
+                        <li>New Vulnerability - Deserialization - Credit EagleTube1337</li>  
+                        <li>New Vulnerability - XXE - Credit EagleTube1337</li>  
+                        <li>New Vulnerability - XSLT Injection - Credit EagleTube1337</li>  
+                        <li>New Vulnerability - SSRF - Credit EagleTube1337 </li>  
+                      </ul>
+                    </div>
+
                   </div>
                 </div>
               </div>

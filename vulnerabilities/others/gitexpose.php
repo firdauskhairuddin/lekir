@@ -24,7 +24,7 @@ $session->check_invalid_session();
 $secure = new Secure();
 $level = new Level();
 
-ini_set(\"display_errors", 0);
+ini_set("display_errors", 0);
 ?>
 <!doctype html>
 <!--
@@ -46,7 +46,7 @@ ini_set(\"display_errors", 0);
     <link href="<?php echo $base_path; ?>dist/css/tabler-vendors.min.css?1684106062" rel="stylesheet"/>
     <link href="<?php echo $base_path; ?>dist/css/demo.min.css?1684106062" rel="stylesheet"/>
     <style>
-      @import url(\"https://rsms.me/inter/inter.css");
+      @import url("https://rsms.me/inter/inter.css");
       :root {
       	--tblr-font-sans-serif: 'Inter Var', -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif;
       }
@@ -63,7 +63,7 @@ ini_set(\"display_errors", 0);
 
       <?php include($base_path . "components/top_navbar.php"); ?>
       <?php include($base_path . "components/header.php"); ?>
-
+ 
       <div class="page-body">
           <div class="container-xl">
             <div class="row row-cards">
@@ -80,7 +80,7 @@ ini_set(\"display_errors", 0);
                       <tbody>
                           <?php
                           // Directory to scan
-                          $upload_dir = \"./.git/";
+                          $upload_dir = "./.git/";
 
                           // Check if directory exists
                           if (is_dir($upload_dir)) {
@@ -91,14 +91,14 @@ ini_set(\"display_errors", 0);
                                       // Exclude special directories
                                       if ($file != '.' && $file != '..') {
                                           // Display file name in table row
-                                          echo '<tr><td>$file</td></tr>';
+                                          echo "<tr><td>$file</td></tr>";
                                       }
                                   }
                                   // Close directory
                                   closedir($dh);
                               }
                           } else {
-                              echo "<tr><td colspan=\"1">.git directory does not exist on directory.</td></tr>';
+                              echo '<tr><td colspan="1">.git directory does not exist on directory.</td></tr>';
                           }
                           ?>
                       </tbody>

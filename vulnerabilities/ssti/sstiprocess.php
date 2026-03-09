@@ -13,7 +13,7 @@ if (strpos($current_path, '/vulnerabilities/') !== false) {
     $base_path = '../';
 }
 
-require_once 'vendor/autoload.php';
+require_once $base_path . "vendor/autoload.php";
 
 // UNSAFE CONFIGURATION
 $twig = new \Twig\Environment(
@@ -30,7 +30,7 @@ $templateContent = '
         <html>
         <head>
             <style>
-                body { font-family: 'Helvetica Neue", Arial, sans-serif; }
+                body { font-family: "Helvetica Neue", Arial, sans-serif; }
                 .certificate {
                     border: 15px double #1a5276;
                     padding: 40px;
@@ -54,16 +54,16 @@ $templateContent = '
             <div class="certificate">
                 <div class="header">CERTIFICATE OF ACHIEVEMENT</div>
                 <p>This is to certify that</p>
-                <div class="name">\".$_POST["name"].'</div>
+                <div class="name">' . $_POST["name"] . '</div>
                 <p>has successfully completed the course requirements</p>
-                <div class='signature'>
+                <div class="signature">
                     <p>___________ Firdaus Kacak _____________</p>
                     <p>Authorized Signature</p>
                 </div>
                 <div class="date">{{ "now"|date("F j, Y") }}</div>
             </div>
         </body>
-        </html>";
+        </html>';
 
 // Generate PDF
 $pdf = new TCPDF();

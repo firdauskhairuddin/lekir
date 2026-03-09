@@ -38,7 +38,7 @@ if(isset($_SESSION['user_id'])){header('Location: ./dashboard.php');}
     <!-- CSS files -->
     <link href="<?php echo $base_path; ?>dist/css/tabler.min.css?1684106062" rel="stylesheet"/>
     <style>
-      @import url(\"https://rsms.me/inter/inter.css");
+      @import url("https://rsms.me/inter/inter.css");
       :root {
         --tblr-font-sans-serif: 'Inter Var', -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif;
       }
@@ -79,10 +79,10 @@ if(isset($_SESSION['user_id'])){header('Location: ./dashboard.php');}
         <br>
         <?php
         if(isset($_SESSION['message'])){
-          echo '<center class='alert alert-'.htmlentities($_SESSION['alert']).''>'.htmlentities($_SESSION['message']).'</center>';
+          echo '<center class="alert alert-'.htmlentities($_SESSION['alert']).'">'.htmlentities($_SESSION['message']).'</center>';
           unset($_SESSION['message']);
         } else {
-          echo '<center class='alert alert-info'>LEKIR - Vulnerable by Design</center>';
+          echo '<center class="alert alert-info">LEKIR - Vulnerable by Design</center>';
         }
         ?>
       </div>

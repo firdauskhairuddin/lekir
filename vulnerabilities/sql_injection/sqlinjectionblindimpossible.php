@@ -24,16 +24,16 @@ $session->check_invalid_session();
 $secure = new Secure();
 $level = new Level();
 
-ini_set(\"display_errors", 0);
+ini_set("display_errors", 0);
 
 if(isset($_GET['user_id'])){
                         
     $id = $_GET['user_id'];
 
-    $data = $mysqli->prepare('SELECT user_id, user_name, user_role FROM user WHERE user_id = ?;');
-    $data->bind_param( 'i', $id );
-    $data->execute();
-    $result = $data->get_result();
+    $stmt = $mysqli->prepare('SELECT user_id, user_name, user_role FROM user WHERE user_id = ?;');
+    $stmt->bind_param( 'i', $id );
+    $stmt->execute();
+    $result = $stmt->get_result();
 
     if( $result->num_rows > 0 ) {
       // If exist
@@ -70,7 +70,7 @@ if(isset($_GET['user_id'])){
     <link href="<?php echo $base_path; ?>dist/css/tabler-vendors.min.css?1684106062" rel="stylesheet"/>
     <link href="<?php echo $base_path; ?>dist/css/demo.min.css?1684106062" rel="stylesheet"/>
     <style>
-      @import url(\"https://rsms.me/inter/inter.css");
+      @import url("https://rsms.me/inter/inter.css");
       :root {
         --tblr-font-sans-serif: 'Inter Var', -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif;
       }
@@ -87,7 +87,7 @@ if(isset($_GET['user_id'])){
 
       <?php include($base_path . "components/top_navbar.php"); ?>
       <?php include($base_path . "components/header.php"); ?>
-
+ 
       <div class="page-body">
           <div class="container-xl">
             <div class="row row-cards">
@@ -122,6 +122,9 @@ if(isset($_GET['user_id'])){
                   </div>
                 </div>
               </div>
+
+
+
               <div class="col-lg-8">
                 <div class="card card-lg">
                   <div class="card-body">
@@ -131,7 +134,8 @@ if(isset($_GET['user_id'])){
                           </div>
 
                           <div class="row g-2 align-items-center">
-                            <form role="form" action="" method="GET" >
+                              
+                            <form role="form" action="" method="POST" >
                               <div class="mb-3">
                                 <input type="text" class="form-control" name="user_id" autocomplete="off">
                               </div>
@@ -142,20 +146,48 @@ if(isset($_GET['user_id'])){
                             </form> 
                           </div>
 
-                          <center>
-                          <br>
-                          <p>
-                          <?php
-                          if(isset($_GET['user_id'])){
-                          
-                            echo "<code style=\'color:red;\'>&quot; SELECT user_id, user_name, user_role FROM user WHERE user_id = <b>' . htmlentities($id) . "</b> &quot;</code><br>";
+                        <center>
+                        <br>
+                        <p>
+                        <?php
+                        if(isset($_POST['user_id'])){
+                        
+                          $id = $_POST['user_id'];
 
-                            echo $data;
+                          echo "<code style='color:red;'>&quot; SELECT user_id, user_name, user_role FROM user WHERE user_id = <b>" . htmlentities($id) . "</b> &quot;</code><br>";
 
+                          if(is_numeric($id)){
+
+                            $data = $mysqli->prepare('SELECT user_id, user_name, user_role FROM user WHERE user_id = ?;');
+                            $data->bind_param( 'i', $id );
+                            $data->execute();
+                            $result = $data->get_result();
+
+                            // only 1 result is returned
+                            if($result->num_rows > 0 ) {
+                              while($row = $result->fetch_assoc()){
+
+
+                              $userid = $row['user_id'];
+                              $username = $row['user_name'];
+                              $userrole = $row['user_role'];
+
+
+                              echo "<pre>User ID : {$userid}<br />Username : {$username}<br />Role : {$userrole}</pre>";
+                              }
+
+                            } else {
+                                echo "<pre>No record found</pre>";
+                            }
+
+                          } else {
+                            echo "<pre>Please enter numbers only</pre>";
                           }
-                          ?>
-                          </p>
-                          </center>
+
+                          mysqli_close($mysqli);
+                        }
+                        ?>
+                        </p>
                     </div>
                   </div>
                 </div>

@@ -24,7 +24,7 @@ $session->check_invalid_session();
 $secure = new Secure();
 $level = new Level();
 
-ini_set(\"display_errors", 1);
+ini_set("display_errors", 1);
 
 if(isset($_SESSION['jwtrole'])){
   if($_SESSION['jwtrole'] === 'admin'){
@@ -33,7 +33,7 @@ if(isset($_SESSION['jwtrole'])){
 
   } elseif($_SESSION['jwtrole'] === 'user'){
 
-    $data = 'Oppppsss! No permission!";
+    $data = "Oppppsss! No permission!";
 
   } else {
 
@@ -61,7 +61,7 @@ if(isset($_SESSION['jwtrole'])){
     <link href="<?php echo $base_path; ?>dist/css/tabler-vendors.min.css?1684106062" rel="stylesheet"/>
     <link href="<?php echo $base_path; ?>dist/css/demo.min.css?1684106062" rel="stylesheet"/>
     <style>
-      @import url(\"https://rsms.me/inter/inter.css");
+      @import url("https://rsms.me/inter/inter.css");
       :root {
         --tblr-font-sans-serif: 'Inter Var', -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif;
       }
@@ -102,6 +102,9 @@ if(isset($_SESSION['jwtrole'])){
                       <li><b>Why this happen</b> : Weak passwords in JWTs are vulnerable to brute force attacks. If exploited, attackers gain unauthorized access, risking data exposure, identity theft, reputation damage, and legal consequences. Prevention involves using strong passwords and enforcing complexity rules, along with implementing security measures like account lockout.</li>
                       <li><b>Read More</b> : <a href="https://firdauskhairuddin.gitbook.io/common-web-vulnerability-php/source-code-disclosure" target="_blank">Link</a></li>
                       <br>
+                      <a href="#" class="btn" data-bs-toggle="modal" data-bs-target="#modal-payloads">
+                      View Payload
+                      </a>
                       <a href="#" class="btn" data-bs-toggle="modal" data-bs-target="#modal-simple">
                       View Source
                       </a>
@@ -155,9 +158,29 @@ if(isset($_SESSION['jwtrole'])){
         </div>
       </div>
 
+      <div class="modal modal-blur fade" id="modal-payloads" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-full-width modal-dialog-centered modal-dialog-scrollable" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Json Web Token - Payload</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" style="background-color: #E5E4E2;">
+              <?php
+              highlight_file($base_path . "payloads/jwt_payload.txt");
+              ?>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+              <a href="<?php echo $base_path; ?>payloads/jwt_payload.txt" type="button" class="btn btn-primary" download>Download</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
     <script>
-    document.getElementById(\"sendRequestBtn").addEventListener('click', function() {
+    document.getElementById("sendRequestBtn").addEventListener('click', function() {
         var xhr = new XMLHttpRequest();
         xhr.open('GET', 'get-data.php', true);
 
@@ -184,6 +207,6 @@ if(isset($_SESSION['jwtrole'])){
     </script>
     <!-- Libs JS -->
     <!-- Tabler Core -->
-   // <script src='<?php echo $base_path; ?>dist/js/tabler.min.js?1684106062' defer></script>
+    <script src='<?php echo $base_path; ?>dist/js/tabler.min.js?1684106062' defer></script>
   </body>
 </html>

@@ -24,7 +24,7 @@ $secure = new Secure();
 $level = new Level();
 $update = new Update();
 
-$repo_owner = \"firdauskhairuddin";
+$repo_owner = "firdauskhairuddin";
 $repo_name = 'lekir';
 
 $current_hash = $update->getCurrentCommitHash();
@@ -41,7 +41,7 @@ function performUpdate($owner, $repo) {
 
 if(isset($_GET['action']) && $_GET['action'] === 'update'){
   $_SESSION['updateMessage'] = performUpdate($repo_owner, $repo_name);
-  echo '<script>window.onload = function() { var myModal = new bootstrap.Modal(document.getElementById('modal-success')); myModal.show(); }</script>";
+  echo '<script>window.onload = function() { var myModal = new bootstrap.Modal(document.getElementById("modal-success")); myModal.show(); }</script>';
 }
 
 if(isset($_SESSION['updateMessage'])){
@@ -60,7 +60,7 @@ if(isset($_SESSION['updateMessage'])){
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
-    <title><?php echo htmlentities($title); ?></title>
+    <title><?php echo htmlentities($title); ?> - System Update</title>
     <link rel="icon" href="<?php echo $base_path; ?>static/lekir.jpeg" type="image/png">
     <!-- CSS files -->
     <link href="<?php echo $base_path; ?>dist/css/tabler.min.css?1684106062" rel="stylesheet"/>
@@ -69,15 +69,31 @@ if(isset($_SESSION['updateMessage'])){
     <link href="<?php echo $base_path; ?>dist/css/tabler-vendors.min.css?1684106062" rel="stylesheet"/>
     <link href="<?php echo $base_path; ?>dist/css/demo.min.css?1684106062" rel="stylesheet"/>
     <style>
-      @import url(\"https://rsms.me/inter/inter.css");
+      @import url("https://rsms.me/inter/inter.css");
       :root {
       	--tblr-font-sans-serif: 'Inter Var', -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif;
       }
       body {
       	font-feature-settings: 'cv03', "cv04", "cv11";
+        background-color: #f8fafc;
       }
-      #modalTriggerButton {
-        display: none;
+      .settings-card {
+        border: none;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      }
+      .list-group-item.active {
+        background-color: #206bc4 !important;
+        border-color: #206bc4 !important;
+      }
+      .code-block {
+          background: #1e293b;
+          color: #e2e8f0;
+          padding: 1rem;
+          border-radius: 6px;
+          font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+          font-size: 0.875rem;
+          overflow-x: auto;
       }
     </style>
   </head>
@@ -85,87 +101,84 @@ if(isset($_SESSION['updateMessage'])){
     <script src="<?php echo $base_path; ?>dist/js/demo-theme.min.js?1684106062"></script>
     <div class="page">
       <!-- Navbar -->
-      <header class="navbar navbar-expand-md d-print-none" >
-        <div class="container-xl">
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <h1 class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
-            <a href="<?php echo $base_path; ?>dashboard.php">
-              LEKIR
-            </a>
-          </h1>
-          <div class="navbar-nav flex-row order-md-last">
-            <div class="nav-item d-none d-md-flex me-3">
-              <div class="btn-list">
-                <a href="https://github.com/firdauskhairuddin" class="btn" target="_blank" rel="noreferrer">
-                  <!-- Download SVG icon from http://tabler-icons.io/i/brand-github -->
-                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" /></svg>
-                  Source code
-                </a>
-                <!--
-                <a href="https://paypal.me/firdauskhairuddin" class="btn" target="_blank" rel="noreferrer">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="icon text-pink" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" /></svg>
-                  Sponsor
-                </a>
-                -->
-              </div>
-            </div>
-            <div class="d-none d-md-flex">
-              <a href="?theme=dark" class="nav-link px-0 hide-theme-dark" title="Enable dark mode" data-bs-toggle="tooltip"
-		   data-bs-placement="bottom">
-                <!-- Download SVG icon from http://tabler-icons.io/i/moon -->
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" /></svg>
-              </a>
-              <a href="?theme=light" class="nav-link px-0 hide-theme-light" title="Enable light mode" data-bs-toggle="tooltip"
-		   data-bs-placement="bottom">
-                <!-- Download SVG icon from http://tabler-icons.io/i/sun -->
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" /><path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7" /></svg>
-              </a>
-            </div>
-            <div class="nav-item dropdown">
-              <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
-                <span class="avatar avatar-sm" style="background-image: url(./static/lekir.jpeg)"></span>
-                <div class="d-none d-xl-block ps-2">
-                  <div><?php echo htmlentities($_SESSION['user_name']); ?></div>
-                  <div class='mt-1 small text-secondary'>Level : <?php echo $level->current_level($_SESSION['level']); ?></div>
-                </div>
-              </a>
-              <div class='dropdown-menu dropdown-menu-end dropdown-menu-arrow'>
-                <a href="./api.php?action=logout" class="dropdown-item">Logout</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      <?php include($base_path . "components/header.php");?>
+      <?php include($base_path . "components/top_navbar.php"); ?>
+      <?php include($base_path . "components/header.php"); ?>
+ 
       <div class="page-body">
           <div class="container-xl">
-            <div class="card">
-              <div class="row g-0">
-                <div class="col-12 col-md-3 border-end">
+            <div class="row g-4">
+              <!-- Sidebar -->
+              <div class="col-md-3">
+                 <h3 class="mb-3">Settings</h3>
+                 <div class="list-group list-group-transparent mb-3">
+                    <a href="<?php echo $base_path; ?>settings.php" class="list-group-item list-group-item-action d-flex align-items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7l16 0" /><path d="M10 11l0 6" /><path d="M14 11l0 6" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></svg>
+                        Managing Uploads
+                    </a>
+                    <a href="./info.php" class="list-group-item list-group-item-action d-flex align-items-center" target="_blank">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" /><path d="M12 9h.01" /><path d="M11 12h1v4h1" /></svg>
+                        PHP Info
+                    </a>
+                    <a href="./systemUpdate.php" class="list-group-item list-group-item-action d-flex align-items-center active text-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4" /><path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4" /></svg>
+                        System Update
+                    </a>
+                 </div>
+              </div>
+
+              <!-- Main Content -->
+              <div class="col-md-9">
+                <div class="card settings-card">
+                  <div class="card-header">
+                     <h3 class="card-title">System Update</h3>
+                  </div>
+                  
                   <div class="card-body">
-                    <h4 class="subheader">Server settings</h4>
-                    <div class="list-group list-group-transparent">
-                      <a href="<?php echo $base_path; ?>settings.php" class="list-group-item list-group-item-action d-flex align-items-center">Uploads Folder</a>
-                      <a href="./info.php" class="list-group-item list-group-item-action d-flex align-items-center" target="_blank">PHP Info</a>
-                      <a href="./systemUpdate.php" class="list-group-item list-group-item-action d-flex align-items-center active">System Update</a>
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-6">
+                            <div class="form-label">Current Version Hash</div>
+                            <div class="form-control-plaintext font-monospace bg-light p-2 rounded border">
+                                <?php echo $current_hash ? $current_hash : '<span class="text-muted">Unknown</span>';?>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-label">Latest Available Hash</div>
+                            <div class="form-control-plaintext font-monospace bg-light p-2 rounded border">
+                                <?php echo $latest_hash ? $latest_hash : '<span class="text-muted">Check Failed</span>';?>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <div class="form-label">Status</div>
+                        <?php 
+                        if(isset($_SESSION['updateMessage'])){ 
+                            echo '<div class="code-block">'.htmlentities($_SESSION['updateMessage']).'</div>';
+                        } else {
+                            if($current_hash !== $latest_hash && $latest_hash){ 
+                                echo '<div class="alert alert-info d-flex align-items-center" role="alert">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 9v2m0 4v.01" /><path d="M5 19h14a2 2 0 0 0 1.84 -2.75l-7.1 -12.25a2 2 0 0 0 -3.5 0l-7.1 12.25a2 2 0 0 0 1.75 2.75" /></svg>
+                                    <div>New update available. Click "Update Now" to pull the latest changes.</div>
+                                </div>';
+                            } elseif ($current_hash === $latest_hash) {
+                                echo '<div class="alert alert-success d-flex align-items-center" role="alert">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10" /></svg>
+                                    <div>Good news! Your system is up to date.</div>
+                                </div>';
+                            } else {
+                                echo '<div class="alert alert-warning" role="alert">Unable to determine update status.</div>';
+                            }
+                        }
+                        ?>
                     </div>
                   </div>
-                </div>
-                <div class="col-12 col-md-9 d-flex flex-column">
-                  <div class="card-body">
-                    <h2 class="mb-4">System update</h2>
-                    <p> Current Hash : <?php echo $current_hash;?></p>
-                    <p> Latest Commit : <?php echo $latest_hash;?></p>
-                    <?php if(isset($_SESSION['updateMessage'])){ echo '<pre>'.htmlentities($_SESSION['updateMessage']).'</pre>';} else {if($update->getCurrentCommitHash() !== $update->getLatestCommitHash($repo_owner, $repo_name)){ echo "<pre><center>System update available<center></pre>";}else{echo "<pre><center>Goodnews! system is up to date</center></pre>";}}?>
-                  </div>
-                  <div class="card-footer bg-transparent mt-auto">
-                    <div class="btn-list justify-content-end">
-                      <a href="#" class="btn primary" data-bs-toggle="modal" data-bs-target="#modal-confirm">
-                        Update
-                      </a>
+                  
+                  <div class="card-footer bg-transparent">
+                    <div class="d-flex justify-content-end">
+                      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-confirm" <?php echo ($current_hash === $latest_hash) ? 'disabled' : ''; ?>>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4" /><path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4" /></svg>
+                        Update Now
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -176,50 +189,46 @@ if(isset($_SESSION['updateMessage'])){
 
       <?php include($base_path . "components/footer.php");?>
     </div>
+
+    <!-- Confirm Modal -->
     <div class="modal modal-blur fade" id="modal-confirm" tabindex="-1" style="display: none;" aria-hidden="true">
       <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
         <div class="modal-content">
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           <div class="modal-status bg-info"></div>
           <div class="modal-body text-center py-4">
-            <!-- Download SVG icon from http://tabler-icons.io/i/alert-triangle -->
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-info icon-lg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 9v4"></path><path d="M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0z"></path><path d="M12 16h.01"></path></svg>
-            <h3>System Update Confirmation</h3>
-            <div class="text-secondary">Proceed with System Update?</div>
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-info icon-lg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 9v4"/><path d="M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0z"></path><path d="M12 16h.01"></path></svg>
+            <h3>System Update</h3>
+            <div class="text-secondary">Are you sure you want to pull the latest changes from the repository? This might overwrite local modifications.</div>
           </div>
           <div class="modal-footer">
             <div class="w-100">
               <div class="row">
-                <div class="col"><a href="#" class="btn w-100" data-bs-dismiss="modal">
-                    Cancel
-                  </a></div>
-                <div class="col"><a href="?action=update" class="btn btn-info w-100">
-                    Confirm Update
-                  </a></div>
+                <div class="col"><a href="#" class="btn w-100" data-bs-dismiss="modal">Cancel</a></div>
+                <div class="col"><a href="?action=update" class="btn btn-info w-100">Confirm Update</a></div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+
+    <!-- Success Modal -->
     <div class="modal modal-blur fade" id="modal-success" tabindex="-1" style="display: none;" aria-hidden="true">
       <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
         <div class="modal-content">
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           <div class="modal-status bg-success"></div>
           <div class="modal-body text-center py-4">
-            <!-- Download SVG icon from http://tabler-icons.io/i/circle-check -->
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-green icon-lg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path><path d="M9 12l2 2l4 -4"></path></svg>
-            <h3>System Update Successful!</h3>
-            <div class="text-secondary">The system has been updated successfully.</div>
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-green icon-lg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path><path d="M9 12l2 2l4 -4"></path></svg>
+            <h3>Update Triggered</h3>
+            <div class="text-secondary">The system update command has been executed. Check the status log for details.</div>
           </div>
           <div class="modal-footer">
             <div class="w-100">
               <div class="row">
                 <div class="col">
-                  <button class="btn w-100"  data-bs-dismiss="modal" >
-                    Close
-                  </button>
+                  <button class="btn btn-success w-100" data-bs-dismiss="modal">Close</button>
                 </div>
               </div>
             </div>
@@ -227,9 +236,8 @@ if(isset($_SESSION['updateMessage'])){
         </div>
       </div>
     </div>
-    <a href="#" id="modalTriggerButton" class="btn primary" data-bs-toggle="modal" data-bs-target="#modal-success">Trigger Modal</a>
+
     <!-- Libs JS -->
-    <!-- Tabler Core -->
     <script src="<?php echo $base_path; ?>dist/js/tabler.min.js?1684106062" defer></script>
     <script src="<?php echo $base_path; ?>dist/js/demo.min.js?1684106062" defer></script>
   </body>

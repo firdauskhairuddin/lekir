@@ -49,7 +49,7 @@ $_SESSION['csrftoken'] = $random_value;
     <link href="<?php echo $base_path; ?>dist/css/tabler-vendors.min.css?1684106062" rel="stylesheet"/>
     <link href="<?php echo $base_path; ?>dist/css/demo.min.css?1684106062" rel="stylesheet"/>
     <style>
-      @import url(\"https://rsms.me/inter/inter.css");
+      @import url("https://rsms.me/inter/inter.css");
       :root {
         --tblr-font-sans-serif: 'Inter Var', -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif;
       }
@@ -66,7 +66,7 @@ $_SESSION['csrftoken'] = $random_value;
 
       <?php include($base_path . "components/top_navbar.php"); ?>
       <?php include($base_path . "components/header.php"); ?>
-
+ 
       <div class="page-body">
           <div class="container-xl">
             <div class="row row-cards">
@@ -84,7 +84,7 @@ $_SESSION['csrftoken'] = $random_value;
                             <form role="form" action="" method="POST" >
                               <div class="mb-3">
                                 <input type="text" class="form-control" name="ip" placeholder="Enter an IP Address">
-                                <input type="hidden" name="csrftoken" value="<?php echo $_SESSION['csrftoken']; ?>'>
+                                <input type="hidden" name="csrftoken" value="<?php echo $_SESSION['csrftoken']; ?>">
                               </div>
                               <center><button action="submit" class="btn btn-primary">
                                 Submit
@@ -107,7 +107,7 @@ $_SESSION['csrftoken'] = $random_value;
 
                           if( ( is_numeric( $octet[0] ) ) && ( is_numeric( $octet[1] ) ) && ( is_numeric( $octet[2] ) ) && ( is_numeric( $octet[3] ) ) && ( sizeof( $octet ) == 4 ) ) {
 
-                            $target = $octet[0] . \"." . $octet[1] . '.' . $octet[2] . '.' . $octet[3];
+                            $target = $octet[0] . "." . $octet[1] . '.' . $octet[2] . '.' . $octet[3];
 
                             if( stristr( php_uname( 's' ), 'Windows NT' ) ) {
                                 // If window
@@ -115,15 +115,15 @@ $_SESSION['csrftoken'] = $random_value;
                             }
                             else {
                                 // If linux
-                                $cmd = shell_exec( 'ping -c 4 '.$_POST[ 'ip' ] );
+                                $cmd = shell_exec( 'ping -c 4 '.$target );
                             }
 
                           } else {
 
-                            $cmd = 'Invalid Input : Please entered a correct IP";
+                            $cmd = 'Invalid Input : Please entered a correct IP';
                           }
 
-                          echo "<code style=\"color:red;">ping -c 4 <b>" . htmlentities($target) . "</b></code><br>";
+                          echo "<code style=\"color:red;\">ping -c 4 <b>" . htmlentities($target) . "</b></code><br>";
                           echo "<pre>{$cmd}</pre>";
 
                         }
@@ -152,7 +152,7 @@ $_SESSION['csrftoken'] = $random_value;
                       <li><b>Short Form</b> : Command Injection</li>
                       <li><b>Injection Point</b> : $_POST['ip']</li>
                       <li><b>Why this happen</b> : OS command injection is a critical security flaw that arises when attackers manipulate input data to execute unauthorized system commands via a command-line interpreter on a server or operating system. This exploitation can result in unauthorized access, data exposure, or system compromise. Neglecting proper input sanitization while utilizing PHP's hazardous functions exacerbates this vulnerability.</li>
-                      <li><b>Read More</b> : <a href='https://firdauskhairuddin.gitbook.io/common-web-vulnerability-php/os-command-injection' target="_blank'>Link</li>
+                      <li><b>Read More</b> : <a href='https://firdauskhairuddin.gitbook.io/common-web-vulnerability-php/os-command-injection' target="_blank">Link</li>
                       <br>
                       <a href="#" class="btn" data-bs-toggle="modal" data-bs-target="#modal-payloads">
                       View Explanation

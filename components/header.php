@@ -69,6 +69,18 @@
                       </a>
                     </div>
                   </div>
+                  <a class="dropdown-item" href="<?php echo $base_path; ?>vulnerabilities/deserialize/">
+                    Deserialization
+                  </a>
+                  <a class="dropdown-item" href="<?php echo $base_path; ?>vulnerabilities/ssrf/ssrf1.php">
+                    Server Side Request Forgery
+                  </a>
+                  <a class="dropdown-item" href="<?php echo $base_path; ?>vulnerabilities/xxe/index.php">
+                    XML External Entity
+                  </a>
+                  <a class="dropdown-item" href="<?php echo $base_path; ?>vulnerabilities/jwt/jwt.php">
+                    Json Web Token
+                  </a>
                 </div>
                 <div class="dropdown-menu-column">
                   <div class="dropend">
@@ -254,6 +266,7 @@
                       </a>
                     </div>
                   </div>
+
                   <div class="dropend">
                     <a class="dropdown-item dropdown-toggle" href="#sidebar-cards" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false" >
                       XSS
@@ -313,6 +326,40 @@
                       </a>
                     </div>
                   </div>
+
+                  <div class="dropend">
+                    <a class="dropdown-item dropdown-toggle" href="#sidebar-cards" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false" >
+                      Deserialize
+                    <span class="badge badge-sm bg-green-lt text-uppercase ms-auto">Others</span>
+                    </a>
+                    <div class="dropdown-menu">
+                      <a href="<?php echo $base_path; ?>vulnerabilities/deserialize/" class="dropdown-item" style="color:green;">
+                        Deserialize - Low
+                      </a>
+                      <a href="<?php echo $base_path; ?>vulnerabilities/deserialize/deserialize2.php" class="dropdown-item" style="color:orange;">
+                        Deserialize - Medium
+                      </a>
+                      <a href="<?php echo $base_path; ?>vulnerabilities/deserialize/deserialize3.php" class="dropdown-item" style="color:red;">
+                        Deserialize - High
+                      </a>
+                    </div>
+                  </div>
+
+                  <div class="dropend">
+                    <a class="dropdown-item dropdown-toggle" href="#sidebar-cards" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false" >
+                      SSRF
+                    <span class="badge badge-sm bg-green-lt text-uppercase ms-auto">Others</span>
+                    </a>
+                    <div class="dropdown-menu">
+                      <a href="<?php echo $base_path; ?>vulnerabilities/ssrf/" class="dropdown-item" style="color:green;">
+                        SSRF - Low
+                      </a>
+                      <a href="<?php echo $base_path; ?>vulnerabilities/ssrf/ssrf2.php" class="dropdown-item" style="color:orange;">
+                        SSRF - Medium
+                      </a>
+                    </div>
+                  </div>
+
                   <div class="dropend">
                     <a class="dropdown-item dropdown-toggle" href="#sidebar-cards" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false" >
                       Others
@@ -337,7 +384,10 @@
                       <a href="<?php echo $base_path; ?>vulnerabilities/others/gitexpose.php" class="dropdown-item">
                         Expose Git
                       </a>
-                    </div>
+                      <a href="<?php echo $base_path; ?>vulnerabilities/xslt/" class="dropdown-item">
+                        XSLT Injection
+                      </a>
+                    </div> 
                   </div>
                 </div>
               </div>
@@ -364,6 +414,32 @@
                   <a class="dropdown-item" href="<?php echo $base_path; ?>tools/texttohex.php">
                     Text to Hex
                   </a>
+                  <a class="dropdown-item" href="<?php echo $base_path; ?>tools/url_encoder.php">
+                    URL Encode / Decode
+                  </a>
+                  <a class="dropdown-item" href="<?php echo $base_path; ?>tools/html_entity.php">
+                    HTML Entity Encode / Decode
+                  </a>
+                  <a class="dropdown-item" href="<?php echo $base_path; ?>tools/jwttools.php">
+                    JWT Encode / Decode
+                  </a>
+                  <a class="dropdown-item" href="<?php echo $base_path; ?>tools/json_xml_formatter.php">
+                    JSON / XML Formatter
+                  </a>
+                  <a class="dropdown-item" href="<?php echo $base_path; ?>tools/password_gen.php">
+                    Secure Password Generator
+                  </a>
+                </div>
+                <div class="dropdown-menu-column">
+                  <a class="dropdown-item" href="<?php echo $base_path; ?>tools/rev_shell_gen.php">
+                    Reverse Shell Generator
+                  </a>
+                  <a class="dropdown-item" href="<?php echo $base_path; ?>tools/subnet_calc.php">
+                    Subnet Calculator
+                  </a>
+                   <a class="dropdown-item" href="<?php echo $base_path; ?>tools/header_analyzer.php">
+                    HTTP Header Analyzer
+                  </a>
                   <a class="dropdown-item" href="<?php echo $base_path; ?>tools/texttomd5.php">
                     Text to MD5
                   </a>
@@ -376,8 +452,8 @@
                   <a class="dropdown-item" href="<?php echo $base_path; ?>tools/crackingtimeestimation.php">
                     Password Cracking Time Estimator
                   </a>
-                  <a class="dropdown-item" href="<?php echo $base_path; ?>tools/jwttools.php">
-                    JWT Encode / Decode
+                  <a class="dropdown-item" href="<?php echo $base_path; ?>tools/timestamp.php">
+                    Unix Timestamp Converter
                   </a>
                 </div>
               </div>

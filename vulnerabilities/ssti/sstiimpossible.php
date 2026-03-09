@@ -23,7 +23,7 @@ $session->check_invalid_session();
 $secure = new Secure();
 $level = new Level();
 
-require_once \"vendor/autoload.php"; // Assuming Twig is installed via Composer
+require_once $base_path . "vendor/autoload.php"; // Assuming Twig is installed via Composer
 ?>
 <!doctype html>
 <!--
@@ -45,7 +45,7 @@ require_once \"vendor/autoload.php"; // Assuming Twig is installed via Composer
     <link href="<?php echo $base_path; ?>dist/css/tabler-vendors.min.css?1684106062" rel="stylesheet"/>
     <link href="<?php echo $base_path; ?>dist/css/demo.min.css?1684106062" rel="stylesheet"/>
     <style>
-      @import url(\"https://rsms.me/inter/inter.css");
+      @import url("https://rsms.me/inter/inter.css");
       :root {
       	--tblr-font-sans-serif: 'Inter Var', -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif;
       }
@@ -62,7 +62,7 @@ require_once \"vendor/autoload.php"; // Assuming Twig is installed via Composer
 
       <?php include($base_path . "components/top_navbar.php"); ?>
       <?php include($base_path . "components/header.php"); ?>
-
+ 
       <div class="page-body">
           <div class="container-xl">
             <div class="row row-cards">
@@ -79,7 +79,7 @@ require_once \"vendor/autoload.php"; // Assuming Twig is installed via Composer
                             // Secure implementation that works with normal inputs
                             try {
                                 // Check if Twig exists
-                                if (!class_exists(\"\Twig\Environment")) {
+                                if (!class_exists("Twig\Environment")) {
                                     throw new RuntimeException('Template engine not available');
                                 }
 
@@ -102,7 +102,7 @@ require_once \"vendor/autoload.php"; // Assuming Twig is installed via Composer
 
                                 // Show raw input for demonstration (safe because it's htmlspecialchars encoded)
                                 if(isset($_GET['name'])) {
-                                    echo '<div class='mt-3 text-muted'>Sanitized input: <code style="color:red;'>"
+                                    echo '<div class="mt-3 text-muted">Sanitized input: <code style="color:red;">'
                                        . htmlspecialchars($name, ENT_QUOTES, 'UTF-8')
                                        . '</code></div>';
                                 }
@@ -110,7 +110,7 @@ require_once \"vendor/autoload.php"; // Assuming Twig is installed via Composer
                             } catch (Throwable $e) {
                                 // Generic error message
                                 error_log('Template error: ' . $e->getMessage());
-                                echo '<div class='alert alert-info'>Hello Guest! (System error occurred)</div>";
+                                echo '<div class="alert alert-info">Hello Guest! (System error occurred)</div>';
                             }
                             ?>
                         </div>
@@ -132,12 +132,12 @@ require_once \"vendor/autoload.php"; // Assuming Twig is installed via Composer
                       </div>
                     </div>
                     <ul class="list-unstyled space-y-1">
-                      <li><b>Level</b> : <font style="color:orange;"><b>Medium</b></font></li>
+                      <li><b>Level</b> : <font style="color:#8B0000;"><b>Impossible</b></font></li>
                       <li><b>Short Form</b> : SSTI</li>
                       <li><b>Injection Point</b> : $_GET['name'] </li>
                       <li><b>Twig installed</b>: <b style='color: <?php echo (class_exists('Twig\Environment') ? 'green' : 'red'); ?>'><?php echo (class_exists('Twig\Environment') ? 'Installed' : 'Not installed'); ?></b></li>
                       <li><b>Why this happen</b> : SSTI (Server-Side Template Injection) occurs when untrusted user input is embedded directly into a server-side template, allowing attackers to inject malicious template syntax (e.g., {{ 7*7 }} → 49) and escalate to remote code execution</li>
-                      <li><b>Read More</b> : <a href='https://firdauskhairuddin.gitbook.io/common-web-vulnerability-php/server-site-template-injection' target="_blank'>Link</a></li>
+                      <li><b>Read More</b> : <a href='https://firdauskhairuddin.gitbook.io/common-web-vulnerability-php/server-site-template-injection' target="_blank">Link</a></li>
                       <li><b>Author</b> : Prof. Apokalips</li>
                       <br>
 

@@ -43,7 +43,7 @@ $level = new Level();
     <link href="<?php echo $base_path; ?>dist/css/tabler-vendors.min.css?1684106062" rel="stylesheet"/>
     <link href="<?php echo $base_path; ?>dist/css/demo.min.css?1684106062" rel="stylesheet"/>
     <style>
-      @import url(\"https://rsms.me/inter/inter.css");
+      @import url("https://rsms.me/inter/inter.css");
       :root {
       	--tblr-font-sans-serif: 'Inter Var', -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif;
       }
@@ -103,7 +103,7 @@ $level = new Level();
                               $cmd = shell_exec( 'ping -c 4 ' . $target );
                           }
 
-                          echo "<code style=\'color:red;\'>ping -c 4 <b>' . htmlentities($target) . "</b></code><br>";
+                          echo "<code style='color:red;'>ping -c 4 <b>" . htmlentities($target) . "</b></code><br>";
                           echo "<pre>{$cmd}</pre>";
 
                         }
@@ -132,7 +132,7 @@ $level = new Level();
                       <li><b>Short Form</b> : Command Injection</li>
                       <li><b>Injection Point</b> : $_POST['ip']</li>
                       <li><b>Why this happen</b> : OS command injection is a critical security flaw that arises when attackers manipulate input data to execute unauthorized system commands via a command-line interpreter on a server or operating system. This exploitation can result in unauthorized access, data exposure, or system compromise. Neglecting proper input sanitization while utilizing PHP's hazardous functions exacerbates this vulnerability.</li>
-                      <li><b>Read More</b> : <a href='https://firdauskhairuddin.gitbook.io/common-web-vulnerability-php/os-command-injection' target="_blank'>Link</li>
+                      <li><b>Read More</b> : <a href='https://firdauskhairuddin.gitbook.io/common-web-vulnerability-php/os-command-injection' target="_blank">Link</li>
                       <br>
                       <a href="#" class="btn" data-bs-toggle="modal" data-bs-target="#modal-payloads">
                       View Payload

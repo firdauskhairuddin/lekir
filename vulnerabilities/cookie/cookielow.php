@@ -24,7 +24,7 @@ $secure = new Secure();
 $level = new Level();
 
 if (!isset($_COOKIE['user_role'])) {
-    setcookie('user_role', "user", time() + 3600, "/');
+    setcookie('user_role', "user", time() + 3600, "/");
     // Store a flag to display a message later
     $_SESSION['show_cookie_message'] = true;
 }
@@ -50,7 +50,7 @@ if (!isset($_COOKIE['user_role'])) {
     <link href="<?php echo $base_path; ?>dist/css/tabler-vendors.min.css?1684106062" rel="stylesheet"/>
     <link href="<?php echo $base_path; ?>dist/css/demo.min.css?1684106062" rel="stylesheet"/>
     <style>
-      @import url(\"https://rsms.me/inter/inter.css");
+      @import url("https://rsms.me/inter/inter.css");
       :root {
       	--tblr-font-sans-serif: 'Inter Var', -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif;
       }
@@ -67,7 +67,7 @@ if (!isset($_COOKIE['user_role'])) {
 
       <?php include($base_path . "components/top_navbar.php"); ?>
       <?php include($base_path . "components/header.php"); ?>
-
+ 
       <div class="page-body">
           <div class="container-xl">
             <div class="row row-cards">
@@ -83,7 +83,7 @@ if (!isset($_COOKIE['user_role'])) {
                         <p>
                         <?php
                         if (isset($_SESSION['show_cookie_message'])) {
-                            echo '<p>Welcome, regular user. Role cookie set to 'user'. Refresh the page.</p>';
+                            echo "<p>Welcome, regular user. Role cookie set to 'user'. Refresh the page.</p>";
                             unset($_SESSION['show_cookie_message']);
                         } else {
                             if (isset($_COOKIE['user_role']) && $_COOKIE['user_role'] === 'admin') {
@@ -182,4 +182,4 @@ if (!isset($_COOKIE['user_role'])) {
     <script src="<?php echo $base_path; ?>dist/js/tabler.min.js?1684106062" defer></script>
     <script src="<?php echo $base_path; ?>dist/js/demo.min.js?1684106062" defer></script>
   </body>
-</html> 
+</html>

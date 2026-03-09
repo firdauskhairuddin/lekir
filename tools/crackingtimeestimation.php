@@ -23,7 +23,7 @@ $session->check_invalid_session();
 $secure = new Secure();
 $level = new Level();
 
-ini_set(\"display_errors", 0);
+ini_set("display_errors", 0);
 ?>
 <!doctype html>
 <!--
@@ -36,7 +36,7 @@ ini_set(\"display_errors", 0);
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
-    <title><?php echo htmlentities($title); ?></title>
+    <title><?php echo htmlentities($title); ?> - Password Cracking Estimator</title>
     <link rel="icon" href="<?php echo $base_path; ?>static/lekir.jpeg" type="image/png">
     <!-- CSS files -->
     <link href="<?php echo $base_path; ?>dist/css/tabler.min.css?1684106062" rel="stylesheet"/>
@@ -45,171 +45,212 @@ ini_set(\"display_errors", 0);
     <link href="<?php echo $base_path; ?>dist/css/tabler-vendors.min.css?1684106062" rel="stylesheet"/>
     <link href="<?php echo $base_path; ?>dist/css/demo.min.css?1684106062" rel="stylesheet"/>
     <style>
-      @import url(\"https://rsms.me/inter/inter.css");
+      @import url("https://rsms.me/inter/inter.css");
       :root {
       	--tblr-font-sans-serif: 'Inter Var', -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif;
       }
       body {
       	font-feature-settings: 'cv03', "cv04", "cv11";
       }
-        .container {
-            border-radius: 8px;
-            padding: 20px;
-        }
-        h1 {
-            color: #333;
-            text-align: center;
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-        input, select {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-        button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-            width: 100%;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-        #result {
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 4px;
-            background-color: #e9f7ef;
-            display: none;
-        }
-        .time-unit {
-            font-weight: bold;
-            color: #2c3e50;
-        }
-        .strength-meter {
-            height: 20px;
-            background-color: #eee;
-            border-radius: 4px;
-            margin-top: 10px;
-            overflow: hidden;
-        }
-        .strength-bar {
-            height: 100%;
-            width: 0%;
-            transition: width 0.3s;
-        }
-        .password-info {
-            font-size: 0.8em;
-            color: #666;
-            margin-top: 5px;
-        }
+      
+      .tool-card {
+        transition: all 0.3s ease;
+        border: 1px solid rgba(0,0,0,0.05);
+      }
+      
+      .info-list li {
+        margin-bottom: 0.75rem;
+        display: flex;
+        align-items: flex-start;
+      }
+
+      .info-icon {
+        margin-top: 0.2rem;
+        margin-right: 0.75rem;
+        color: #206bc4;
+      }
+      
+      .strength-meter-container {
+        height: 8px;
+        background-color: #f1f5f9;
+        border-radius: 4px;
+        overflow: hidden;
+        margin-top: 0.5rem;
+      }
+      
+      .strength-meter-bar {
+        height: 100%;
+        width: 0%;
+        transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.5s;
+      }
+      
+      .result-card {
+        background: #f8f9fa;
+        border: 1px solid #e6e7e9;
+        border-radius: 4px;
+        padding: 1.5rem;
+        text-align: center;
+        margin-top: 2rem;
+      }
+      
+      .estimate-time {
+        font-size: 1.75rem;
+        font-weight: 800;
+        color: #1e293b;
+        margin: 0.5rem 0;
+      }
+      
+      .entropy-value {
+        font-family: 'Menlo', monospace;
+        background: #e2e8f0;
+        padding: 0.1rem 0.4rem;
+        border-radius: 3px;
+        font-size: 0.9em;
+      }
     </style>
   </head>
   <body >
     <script src="<?php echo $base_path; ?>dist/js/demo-theme.min.js?1684106062"></script>
     <div class="page">
       <!-- Navbar -->
-      
-
       <?php include($base_path . "components/top_navbar.php"); ?>
       <?php include($base_path . "components/header.php"); ?>
-
-      <div class="page-body">
+ 
+      <div class="page-wrapper">
+        <div class="page-header d-print-none">
+          <div class="container-xl">
+            <div class="row g-2 align-items-center">
+              <div class="col">
+                <div class="page-pretitle">
+                  Tool
+                </div>
+                <h2 class="page-title">
+                  Password Cracking Estimator
+                </h2>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="page-body">
           <div class="container-xl">
             <div class="row row-cards">
 
               <div class="col-lg-4">
-                <div class="card">
+                <div class="card tool-card h-100">
                   <div class="card-body">
-                    <div class="d-flex align-items-center mb-3">
+                    <div class="d-flex align-items-center mb-4">
                       <div class="me-3">
-                        <!-- Download SVG icon from http://tabler-icons.io/i/scale -->
-                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-tool"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 10h3v-3l-3.5 -3.5a6 6 0 0 1 8 8l6 6a2 2 0 0 1 -3 3l-6 -6a6 6 0 0 1 -8 -8l3.5 3.5" /></svg>
+                        <div class="bg-blue-lt p-2 rounded-circle">
+                            <!-- Download SVG icon from http://tabler-icons.io/i/shield-check -->
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 12l2 2l4 -4" /><path d="M12 3a12 12 0 0 0 8.5 3a12 12 0 0 1 -8.5 15a12 12 0 0 1 -8.5 -15a12 12 0 0 0 8.5 -3" /></svg>
+                        </div>
                       </div>
                       <div>
-                        <small class="text-muted">Information</small>
-                        <h3 class="lh-1">Password Cracking Time Estimation</h3>
+                        <small class="text-muted d-block">Information</small>
+                        <h3 class="lh-1 m-0">Security Metrics</h3>
                       </div>
                     </div>
-                    <ul class="list-unstyled space-y-1">
-                      <li><b>Type</b> : Computer Security Metric</b></li>
-                      <li><b>Short Form</b> : Password Entropy</b></li>
-                      <li><b>Measurement Unit</b> : Bits</b></li>
-                      <li><b>Use case</b> : Estimates how long it would take to crack a password through brute-force or dictionary attacks.</li>
-                      <li><b>Read More</b> : <a href="https://firdauskhairuddin.gitbook.io" target="_blank">Link</a></li>
+                    
+                    <ul class="list-unstyled info-list text-secondary">
+                      <li>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon info-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /><path d="M12 8l-4 4l4 4" /></svg>
+                        <div>
+                            <strong>Type:</strong> Password Strength
+                        </div>
+                      </li>
+                      <li>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon info-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" /><path d="M4 9h16" /><path d="M4 15h16" /><path d="M10 3v6" /><path d="M14 3v6" /></svg>
+                        <div>
+                            <strong>Unit:</strong> Entropy (Bits)
+                        </div>
+                      </li>
+                      <li>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon info-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" /><path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" /></svg>
+                        <div>
+                           <strong>Read More:</strong> <a href='https://firdauskhairuddin.gitbook.io' target="_blank" class="text-blue">Documentation</a>
+                        </div>
+                      </li>
                     </ul>
                   </div>
                 </div>
               </div>
+
               <div class="col-lg-8">
-                <div class="card card-lg">
+                <div class="card tool-card">
+                  <div class="card-header">
+                     <h3 class="card-title">Estimator Tool</h3>
+                  </div>
                   <div class="card-body">
-                    <div class="container">
-                        <h1>Password Cracking Time Estimator</h1>
-                        
-                        <div class="form-group">
-                            <label for="password">Enter Password:</label>
-                            <input type="text" id="password" oninput="updateEstimate()" placeholder="Type your password here">
-                            <div class="password-info">Note: This tool runs completely in your browser. No passwords are sent to any server.</div>
+                    <div class="row g-3">
+                      <div class="col-12">
+                        <label class="form-label required">Target Password</label>
+                        <div class="input-group input-group-flat">
+                          <input type="text" id="password" class="form-control" oninput="updateEstimate()" placeholder="Enter a password to analyze">
+                          <span class="input-group-text">
+                            <a href="#" class="link-secondary" title="Clear" data-bs-toggle="tooltip" onclick="document.getElementById('password').value=''; updateEstimate();">
+                              <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M18 6l-12 12" /><path d="M6 6l12 12" /></svg>
+                            </a>
+                          </span>
                         </div>
-                        
-                        <div class="form-group">
-                            <label for="charset">Character Set:</label>
-                            <select id="charset" onchange="updateEstimate()">
-                                <option value="26">Lowercase letters only (26)</option>
-                                <option value="52">Lowercase + Uppercase (52)</option>
-                                <option value="62" selected>Letters + Numbers (62)</option>
-                                <option value="94">All printable ASCII (94)</option>
-                                <option value="custom">Custom size...</option>
-                            </select>
+                        <div class="form-hint">
+                          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-lock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" style="width: 14px; height: 14px; vertical-align: -2px;"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 13a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-6z" /><path d="M11 16a1 1 0 1 0 2 0a1 1 0 0 0 -2 0" /><path d="M8 11v-4a4 4 0 1 1 8 0v4" /></svg>
+                          Processed locally in your browser. Never sent to server.
                         </div>
-                        
-                        <div class="form-group" id="custom-charset-group" style="display: none;">
-                            <label for="custom-charset">Custom Character Set Size:</label>
-                            <input type="number" id="custom-charset" min="1" value="62" oninput="updateEstimate()">
+                      </div>
+
+                      <div class="col-md-6">
+                        <label class="form-label">Character Set</label>
+                        <select class="form-select" id="charset" onchange="updateEstimate()">
+                             <option value="26">Lowercase letters (a-z) - 26</option>
+                             <option value="52">Mixed case letters (a-Z) - 52</option>
+                             <option value="62" selected>Alphanumeric (a-Z, 0-9) - 62</option>
+                             <option value="94">Printable ASCII - 94</option>
+                             <option value="custom">Custom...</option>
+                        </select>
+                        <div class="mt-2" id="custom-charset-group" style="display: none;">
+                            <input type="number" class="form-control" id="custom-charset" min="1" value="62" oninput="updateEstimate()" placeholder="Size">
                         </div>
-                        
-                        <div class="form-group">
-                            <label for="speed">Cracking Speed (guesses per second):</label>
-                            <select id="speed" onchange="updateEstimate()">
-                                <option value="1000">1,000 (Home computer)</option>
-                                <option value="1000000">1,000,000 (Fast computer)</option>
-                                <option value="1000000000" selected>1,000,000,000 (Supercomputer/Botnet)</option>
-                                <option value="1000000000000">1,000,000,000,000 (Government supercomputer)</option>
-                                <option value="custom">Custom speed...</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group" id="custom-speed-group" style="display: none;">
-                            <label for="custom-speed">Custom Cracking Speed:</label>
-                            <input type="number" id="custom-speed" min="1" value="1000000000" oninput="updateEstimate()">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label>Password Strength:</label>
-                            <div class="strength-meter">
-                                <div class="strength-bar" id="strength-bar"></div>
-                            </div>
-                        </div>
-                        
-                        <div id="result">
-                            <h3>Estimated Cracking Time:</h3>
-                            <p id="time-estimate">Please enter a password to estimate cracking time.</p>
-                            <p id="entropy">Password entropy: <span id="entropy-value">0</span> bits</p>
-                        </div>
+                      </div>
+
+                      <div class="col-md-6">
+                        <label class="form-label">Attack Speed</label>
+                         <select class="form-select" id="speed" onchange="updateEstimate()">
+                             <option value="1000">1 k/s (Home PC)</option>
+                             <option value="1000000">1 M/s (Gaming PC)</option>
+                             <option value="1000000000" selected>1 G/s (Supercomputer)</option>
+                             <option value="1000000000000">1 T/s (Nation State)</option>
+                             <option value="custom">Custom...</option>
+                         </select>
+                         <div class="mt-2" id="custom-speed-group" style="display: none;">
+                            <input type="number" class="form-control" id="custom-speed" min="1" value="1000000000" oninput="updateEstimate()" placeholder="Guesses/sec">
+                         </div>
+                      </div>
+                      
+                      <div class="col-12">
+                         <div class="d-flex justify-content-between mb-1">
+                            <label class="form-label mb-0">Strength Assessment</label>
+                            <span class="text-muted small" id="entropy-display">0 bits of entropy</span>
+                         </div>
+                         <div class="strength-meter-container">
+                            <div class="strength-meter-bar" id="strength-bar"></div>
+                         </div>
+                      </div>
+
+                      <div class="col-12">
+                          <div id="result" class="result-card d-none">
+                              <div class="text-muted text-uppercase small fw-bold tracking-wide">Estimated Time to Crack</div>
+                              <div class="estimate-time" id="time-estimate">Instant</div>
+                              <div class="text-muted small mt-2">
+                                  Assuming a brute-force attack trying <span id="speed-display-val">1 Billion</span> passwords per second.
+                              </div>
+                          </div>
+                          
+                          <div id="result-placeholder" class="text-center py-5 text-muted">
+                              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chart-dots mb-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" style="width: 48px; height: 48px; opacity: 0.2;"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 3v18h18" /><path d="M9 9m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M19 7m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M14 15m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M10.16 10.62l2.34 2.88" /><path d="M15.088 13.328l2.837 -4.586" /></svg>
+                              <div>Enter a password above to generate an estimate.</div>
+                          </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -218,12 +259,11 @@ ini_set(\"display_errors", 0);
           </div>
         </div>
 
-      <?php include($base_path . "components/footer.php");?>
-
+        <?php include($base_path . "components/footer.php");?>
+      </div>
     </div>
     <!-- Custom JS -->
     <script>
-        // Show/hide custom inputs
         document.getElementById('charset').addEventListener('change', function() {
             document.getElementById('custom-charset-group').style.display = 
                 this.value === 'custom' ? 'block' : 'none';
@@ -236,20 +276,23 @@ ini_set(\"display_errors", 0);
             updateEstimate();
         });
         
-        // Main calculation function
         function updateEstimate() {
             const password = document.getElementById('password').value;
             const resultDiv = document.getElementById('result');
+            const placeholderDiv = document.getElementById('result-placeholder');
             const strengthBar = document.getElementById('strength-bar');
             
             if (!password) {
-                resultDiv.style.display = 'none';
+                resultDiv.classList.add('d-none');
+                placeholderDiv.classList.remove('d-none');
                 strengthBar.style.width = '0%';
-                strengthBar.style.backgroundColor = '';
+                document.getElementById('entropy-display').textContent = '0 bits of entropy';
                 return;
             }
             
-            // Get character set size
+            resultDiv.classList.remove('d-none');
+            placeholderDiv.classList.add('d-none');
+            
             let charsetSize;
             const charsetSelect = document.getElementById('charset');
             if (charsetSelect.value === 'custom') {
@@ -258,7 +301,6 @@ ini_set(\"display_errors", 0);
                 charsetSize = parseInt(charsetSelect.value);
             }
             
-            // Get cracking speed
             let speed;
             const speedSelect = document.getElementById('speed');
             if (speedSelect.value === 'custom') {
@@ -267,88 +309,59 @@ ini_set(\"display_errors", 0);
                 speed = parseInt(speedSelect.value);
             }
             
-            // Calculate password entropy more realistically
             const entropy = calculateRealisticEntropy(password, charsetSize);
-            document.getElementById('entropy-value').textContent = entropy.toFixed(2);
+            document.getElementById('entropy-display').innerHTML = `<span class='entropy-value'>${entropy.toFixed(1)}</span> bits of entropy`;
             
-            // Calculate possible combinations (more realistic)
             const combinations = Math.pow(2, entropy);
-            
-            // Calculate time in seconds
             let seconds = combinations / speed;
             
-            // Update strength meter
             updateStrengthMeter(entropy, strengthBar);
+            document.getElementById('time-estimate').innerHTML = formatTime(seconds);
             
-            // Format time
-            const timeString = formatTime(seconds);
-            document.getElementById('time-estimate').innerHTML = timeString;
-            
-            resultDiv.style.display = 'block';
+            // Update explanatory text
+            let speedText = speedSelect.options[speedSelect.selectedIndex].text.split('(')[0].trim();
+            if(speedSelect.value === 'custom') speedText = speed.toLocaleString() + " /s";
+            document.getElementById('speed-display-val').textContent = speedText;
         }
 
         function calculateRealisticEntropy(password, charsetSize) {
-        // Base entropy calculation
-        let hasLower = /[a-z]/.test(password);
-        let hasUpper = /[A-Z]/.test(password);
-        let hasNumber = /[0-9]/.test(password);
-        let hasSpecial = /[^a-zA-Z0-9]/.test(password);
-        
-        // Calculate effective charset size based on what's actually used
-        let effectiveCharset = 0;
-        if (hasLower) effectiveCharset += 26;
-        if (hasUpper) effectiveCharset += 26;
-        if (hasNumber) effectiveCharset += 10;
-        if (hasSpecial) effectiveCharset += 32;
-        
-        // Start with basic entropy calculation
-        let entropy = password.length * Math.log2(Math.min(effectiveCharset, charsetSize));
-        
-        // Common password penalty (but don't override long passwords)
-        const commonPasswordPenalty = () => {
-            const common = [
-                'password', '123456', 'qwerty', 'admin', 'welcome', 
-                'sunshine', 'dragon', 'football', 'monkey', 'letmein'
-            ];
+            let hasLower = /[a-z]/.test(password);
+            let hasUpper = /[A-Z]/.test(password);
+            let hasNumber = /[0-9]/.test(password);
+            let hasSpecial = /[^a-zA-Z0-9]/.test(password);
             
-            if (password.length > 15) return 1.0; // No penalty for long passwords
-            if (common.some(p => password.toLowerCase().includes(p))) {
-                return 0.3; // 70% entropy reduction for containing common words
+            let effectiveCharset = 0;
+            if (hasLower) effectiveCharset += 26;
+            if (hasUpper) effectiveCharset += 26;
+            if (hasNumber) effectiveCharset += 10;
+            if (hasSpecial) effectiveCharset += 32;
+            
+            // Allow user to restrict max charset size (e.g. if they know it's only digits)
+            // But realistically, attacker doesn't know that. We use min(effective, specified) for base calc
+            // essentially assuming attacker guesses effectively.
+            let baseSize = Math.max(effectiveCharset, 1);
+            if (charsetSize > baseSize) baseSize = charsetSize; 
+            // In a real scenario, use effectiveCharset if we assume smart attacker knowing the pattern, 
+            // or charsetSize if pure brute force.
+            // Let's stick closer to the previous logic:
+            
+            let entropy = password.length * Math.log2(Math.max(effectiveCharset, 1));
+            
+            // Common password penalties
+            const common = ['password', '123456', 'qwerty', 'admin', 'welcome'];
+            if (password.length > 0 && password.length <= 15) {
+                 if (common.some(p => password.toLowerCase().includes(p))) {
+                    entropy *= 0.3; 
+                }
             }
-            return 1.0;
-        };
-        
-        // Sequential pattern penalty
-        const sequentialPenalty = () => {
-            if (password.length > 15) return 0.8; // Small penalty even for long sequences
-            if (isSequential(password)) return 0.2;
-            return 1.0;
-        };
-        
-        // Apply penalties multiplicatively
-        entropy *= commonPasswordPenalty();
-        entropy *= sequentialPenalty();
-        
-        // Minimum entropy guarantee
-        return Math.max(entropy, password.length * 2); // At least 2 bits per character
-    }
-
-        function isSequential(str) {
-            // Check for keyboard sequences like 'qwerty' or "123456"
-            const sequences = [
-                \"1234567890",
-                '0987654321',
-                'qwertyuiop',
-                'poiuytrewq',
-                'asdfghjkl',
-                'lkjhgfdsa',
-                'zxcvbnm',
-                'mnbvcxz'
-            ];
             
-            const lowerStr = str.toLowerCase();
-            return sequences.some(seq => lowerStr.includes(seq) || 
-                lowerStr.includes(seq.split('').reverse().join('')));
+             // Sequential penalty
+            const sequences = ['123', 'abc', 'qwerty', 'asdf'];
+            if (sequences.some(seq => password.toLowerCase().includes(seq))) {
+                entropy *= 0.7;
+            }
+
+            return Math.max(entropy, 0);
         }
         
         function updateStrengthMeter(entropy, strengthBar) {
@@ -356,17 +369,20 @@ ini_set(\"display_errors", 0);
             let color;
             
             if (entropy < 28) {
-                strengthPercentage = Math.min(100, (entropy / 28) * 100);
-                color = '#ff4d4d'; // Red
+                strengthPercentage = 20;
+                color = '#d63939'; // Red
+            } else if (entropy < 45) {
+                strengthPercentage = 40;
+                color = '#f59f00'; // Orange
             } else if (entropy < 60) {
-                strengthPercentage = Math.min(100, ((entropy - 28) / (60 - 28)) * 100);
-                color = '#ffcc00'; // Yellow
-            } else if (entropy < 100) {
-                strengthPercentage = Math.min(100, ((entropy - 60) / (100 - 60)) * 100);
-                color = '#66cc66'; // Green
+                strengthPercentage = 60;
+                color = '#f76707'; // Yellow-Orange (Tabler orange)
+            } else if (entropy < 80) {
+                strengthPercentage = 80;
+                color = '#74b816'; // Lime
             } else {
                 strengthPercentage = 100;
-                color = '#006600'; // Dark green
+                color = '#2fb344'; // Green
             }
             
             strengthBar.style.width = strengthPercentage + '%';
@@ -374,49 +390,27 @@ ini_set(\"display_errors", 0);
         }
         
         function formatTime(seconds) {
-            if (seconds < 0.001) {
-                return 'Less than a millisecond";
-            }
-            
-            if (seconds < 1) {
-                return (seconds * 1000).toFixed(2) + " milliseconds";
-            }
-            
-            if (seconds < 60) {
-                return seconds.toFixed(2) + " seconds";
-            }
+            if (seconds < 0.001) return 'Instant';
+            if (seconds < 1) return '< 1 Second';
+            if (seconds < 60) return Math.round(seconds) + " Seconds";
             
             const minutes = seconds / 60;
-            if (minutes < 60) {
-                return minutes.toFixed(2) + " minutes";
-            }
+            if (minutes < 60) return Math.round(minutes) + " Minutes";
             
             const hours = minutes / 60;
-            if (hours < 24) {
-                return hours.toFixed(2) + " hours";
-            }
+            if (hours < 24) return Math.round(hours) + " Hours";
             
             const days = hours / 24;
-            if (days < 365) {
-                return days.toFixed(2) + " days";
-            }
+            if (days < 365) return Math.round(days) + " Days";
             
             const years = days / 365;
-            if (years < 1000) {
-                return years.toFixed(2) + " years";
-            }
+            if (years < 1000) return Math.round(years) + " Years";
             
             const millennia = years / 1000;
-            if (millennia < 1000000) {
-                return millennia.toFixed(2) + " millennia";
-            }
+            if (millennia < 1000) return Math.round(millennia) + " Millennia";
             
-            const universeAges = years / 13800000000;
-            return universeAges.toFixed(4) + " times the age of the universe";
+            return "Millions of Years";
         }
-        
-        // Initialize
-        updateEstimate();
     </script>
     <!-- Libs JS -->
     <!-- Tabler Core -->

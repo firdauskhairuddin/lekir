@@ -24,7 +24,7 @@ $session->check_invalid_session();
 $secure = new Secure();
 $level = new Level();
 
-ini_set(\"display_errors", 0);
+ini_set("display_errors", 0);
 ?>
 <!doctype html>
 <!--
@@ -46,7 +46,7 @@ ini_set(\"display_errors", 0);
     <link href="<?php echo $base_path; ?>dist/css/tabler-vendors.min.css?1684106062" rel="stylesheet"/>
     <link href="<?php echo $base_path; ?>dist/css/demo.min.css?1684106062" rel="stylesheet"/>
     <style>
-      @import url(\"https://rsms.me/inter/inter.css");
+      @import url("https://rsms.me/inter/inter.css");
       :root {
       	--tblr-font-sans-serif: 'Inter Var', -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif;
       }
@@ -63,7 +63,7 @@ ini_set(\"display_errors", 0);
 
       <?php include($base_path . "components/top_navbar.php"); ?>
       <?php include($base_path . "components/header.php"); ?>
-
+ 
       <div class="page-body">
           <div class="container-xl">
             <div class="row row-cards">
@@ -83,7 +83,7 @@ ini_set(\"display_errors", 0);
                       if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         if (isset($_FILES["image"])) {
                           $filename = $_FILES["image"]["name"];
-                          $fileext = substr($filename, strrpos($filename, \".") + 1);
+                          $fileext = substr($filename, strrpos($filename, ".") + 1);
                           $filetmp = $_FILES['image']["tmp_name"];
 
                           if((strtolower($fileext) == "gif") && getimagesize($filetmp)){
@@ -91,19 +91,19 @@ ini_set(\"display_errors", 0);
                             move_uploaded_file($filetmp, "uploads/$filename");
 
                             // Display uploaded files
-                            echo "<div class=\"mt-4">';
-                            echo "<h3>Succefully upload GIF File:</h3>";
-                            echo "<center><img src="<?php echo $base_path; ?>uploads/".htmlentities($filename)."' alt='Uploaded GIF' style='max-width: 50%;'>';
-                            echo "<br><br><p>Upload path : <a href=./uploads/".htmlentities($filename)." target=\"_blank">./uploads/'.htmlentities($filename)."</a></p>";
-                            echo "<p>Vulnerable link : <a href=".$_SERVER["REQUEST_URI"]."?file=./uploads/".htmlentities($filename)." target=\"_blank">'.$_SERVER['REQUEST_URI'].'?file=./uploads/'.htmlentities($filename)."</a></p>";
-                            echo "<p>Delete this image : <a href=".$_SERVER["REQUEST_URI"]."?delete=".htmlentities($filename).">Delete file</a></p>";
+                            echo '<div class="mt-4">';
+                            echo "<h3>Successfully uploaded GIF File:</h3>";
+                            echo "<center><img src=\"" . $base_path . "uploads/" . htmlentities($filename) . "\" alt='Uploaded GIF' style='max-width: 50%;'></center>";
+                            echo "<br><br><p>Upload path : <a href='./uploads/" . htmlentities($filename) . "' target='_blank'>./uploads/" . htmlentities($filename) . "</a></p>";
+                            echo "<p>Vulnerable link : <a href='" . $_SERVER["REQUEST_URI"] . "?file=./uploads/" . htmlentities($filename) . "' target='_blank'>" . $_SERVER['REQUEST_URI'] . "?file=./uploads/" . htmlentities($filename) . "</a></p>";
+                            echo "<p>Delete this image : <a href='" . $_SERVER["REQUEST_URI"] . "?delete=" . htmlentities($filename) . "'>Delete file</a></p>";
                             echo "</div>";
                           } else {
-                            echo "<br><center><p class=\"text-danger">Please upload GIF file only.</p></center>';
+                            echo "<br><center><p class='text-danger'>Please upload GIF file only.</p></center>";
                           }
                           
                         } else {
-                          echo "<br><center><p class=\"text-danger">Please upload GIF file only.</p></center>';
+                          echo "<br><center><p class='text-danger'>Please upload GIF file only.</p></center>";
                         }
                       }
 
@@ -132,17 +132,15 @@ ini_set(\"display_errors", 0);
                         if (file_exists($filePath)) {
                             // Attempt to delete the file
                             if (unlink($filePath)) {
-                                $_SESSION['message'] = 'File ".htmlentities($filename).' has been deleted successfully.";
-
+                                $_SESSION['message'] = "File " . htmlentities($filename) . " has been deleted successfully.";
                             } else {
-                                $_SESSION['message'] = 'Failed to delete file ".htmlentities($filename);
+                                $_SESSION['message'] = "Failed to delete file " . htmlentities($filename);
                             }
                         } else {
-
-                            $_SESSION['message'] = 'File ".htmlentities($filename).' does not exist";
+                            $_SESSION['message'] = "File " . htmlentities($filename) . " does not exist";
                         }
 
-                        echo "<script>window.location.href = \"./localfileinclusiongifchain.php";</script>';
+                        echo "<script>window.location.href = './localfileinclusiongifchain.php';</script>";
                         exit();
                       }
 
@@ -176,7 +174,7 @@ ini_set(\"display_errors", 0);
                       <li><b>Short Form</b> : LFI</li>
                       <li><b>Injection Point</b> : $_GET['file'] + File upload = RCE</li>
                       <li><b>Why this happen</b> : The improper use of function <i>include()</i> or <i>require()</i>. Insufficient input validation, dynamic file inclusion with user-supplied data, lack access controls, directory traversal exploits, and server misconfigurations.</li>
-                      <li>Read More: <a href='https://firdauskhairuddin.gitbook.io/common-web-vulnerability-php/lfi-local-file-inclusion' target="_blank'>Link</a></li>
+                      <li>Read More: <a href='https://firdauskhairuddin.gitbook.io/common-web-vulnerability-php/lfi-local-file-inclusion' target="_blank">Link</a></li>
                       <br>
                       <a href="#" class="btn" data-bs-toggle="modal" data-bs-target="#modal-payloads">
                       View Payload

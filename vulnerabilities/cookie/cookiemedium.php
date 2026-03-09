@@ -24,7 +24,7 @@ $secure = new Secure();
 $level = new Level();
 
 if (!isset($_COOKIE['user_role'])) {
-  setcookie('user_role', base64_encode("user"), time() + 3600, "/');
+  setcookie('user_role', base64_encode("user"), time() + 3600, "/");
   $need_refresh = true; 
 }
 ?>
@@ -48,7 +48,7 @@ if (!isset($_COOKIE['user_role'])) {
     <link href="<?php echo $base_path; ?>dist/css/tabler-vendors.min.css?1684106062" rel="stylesheet"/>
     <link href="<?php echo $base_path; ?>dist/css/demo.min.css?1684106062" rel="stylesheet"/>
     <style>
-      @import url(\"https://rsms.me/inter/inter.css");
+      @import url("https://rsms.me/inter/inter.css");
       :root {
       	--tblr-font-sans-serif: 'Inter Var', -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif;
       }
