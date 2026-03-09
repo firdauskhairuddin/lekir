@@ -1,1 +1,0 @@
-<?php echo 'Im hosted at : '.htmlentities($_SERVER['SERVER_ADDR']); ?>

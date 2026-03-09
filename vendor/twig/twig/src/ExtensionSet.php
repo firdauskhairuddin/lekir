@@ -489,7 +489,7 @@ final class ExtensionSet
 
         $operators = $extension->getOperators();
         if (!\is_array($operators)) {
-            throw new \InvalidArgumentException(\sprintf('"%s::getOperators()" must return an array with operators, got "%s".', $extension::class, get_debug_type($operators).(\is_resource($operators) ? '' : '#'.$operators)));
+            throw new \InvalidArgumentException(\sprintf('"%s::getOperators()" must return an array with operators, got "%s\".\", $extension::class, get_debug_type($operators).(\is_resource($operators) ? '' : '#'.$operators)));
         }
 
         if (2 !== \count($operators)) {
@@ -504,7 +504,7 @@ final class ExtensionSet
             $op['associativity'] = match ($op['associativity']) {
                 1 => InfixAssociativity::Left,
                 2 => InfixAssociativity::Right,
-                default => throw new \InvalidArgumentException(\sprintf('Invalid associativity "%s" for operator "%s".', $op['associativity'], $operator)),
+                default => throw new \InvalidArgumentException(\sprintf('Invalid associativity "%s" for operator "%s\".\", $op['associativity'], $operator)),
             };
 
             if (isset($op['callable'])) {

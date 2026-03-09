@@ -1,5 +1,4 @@
-
-        <footer class="footer footer-transparent d-print-none">
+<footer class="footer footer-transparent d-print-none">
           <div class="container-xl">
             <div class="row text-center align-items-center flex-row-reverse">
               <div class="col-lg-auto ms-lg-auto">
@@ -21,8 +20,7 @@
                     <a href="https://github.com/firdauskhairuddin" class="link-secondary" target="_blank"><b>LEKIR</b></a>. Develop by <a href="https://www.linkedin.com/in/firdauskhairuddin/" class="link-secondary" target="_blank"><b>@firdauskhairuddin</b></a>. All rights reserved.
                   </li>
                   <li class="list-inline-item">
-                    <a href="#" class="link-secondary" rel="noopener">
-                    <a href="./changelog.php" class="link-secondary" rel="noopener">
+                    <a href="<?php echo $base_path; ?>changelog.php" class="link-secondary" rel="noopener">
                       v1.0.4-Beta
                     </a>
                   </li>

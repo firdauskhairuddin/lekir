@@ -232,9 +232,9 @@ final class ModuleNode extends Node
                     ->raw(");\n")
                     ->write(\sprintf("if (!\$_trait_%s->unwrap()->isTraitable()) {\n", $i))
                     ->indent()
-                    ->write("throw new RuntimeError('Template \"'.")
+                    ->write("throw new RuntimeError('Template \"'.')
                     ->subcompile($trait->getNode('template'))
-                    ->raw(".'\" cannot be used as a trait.', ")
+                    ->raw(\".\"\' cannot be used as a trait.', ")
                     ->repr($node->getTemplateLine())
                     ->raw(", \$this->source);\n")
                     ->outdent()
@@ -252,7 +252,7 @@ final class ModuleNode extends Node
                         ->string($key)
                         ->raw(' is not defined in trait ')
                         ->subcompile($trait->getNode('template'))
-                        ->raw(".', ")
+                        ->raw(\".\", ")
                         ->repr($node->getTemplateLine())
                         ->raw(", \$this->source);\n")
                         ->outdent()
@@ -314,7 +314,7 @@ final class ModuleNode extends Node
 
         foreach ($this->getNode('blocks') as $name => $node) {
             $compiler
-                ->write(\sprintf("'%s' => [\$this, 'block_%s'],\n", $name, $name))
+                ->write(\sprintf("'%s' => [\$this, 'block_%s'],\n', $name, $name))
             ;
         }
 

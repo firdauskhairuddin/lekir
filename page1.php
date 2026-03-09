@@ -1,1 +1,0 @@
-<?php echo 'Your IP address is : '.htmlentities($_SERVER['REMOTE_ADDR']); ?>

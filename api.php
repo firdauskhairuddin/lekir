@@ -1,4 +1,18 @@
 <?php
+// Determine the base path based on current directory depth
+$current_path = $_SERVER['PHP_SELF'];
+$base_path = './';
+if (strpos($current_path, '/vulnerabilities/') !== false) {
+    $parts = explode('/vulnerabilities/', $current_path);
+    if (isset($parts[1]) && strpos($parts[1], '/') !== false) {
+        $base_path = '../../';
+    } else {
+        $base_path = '../';
+    }
+} elseif (strpos($current_path, '/tools/') !== false || strpos($current_path, '/compare/') !== false || strpos($current_path, '/components/') !== false) {
+    $base_path = '../';
+}
+
 include ('./core/configuration.php');
 include ('./core/function.php');
 
@@ -12,7 +26,7 @@ if (isset($_GET['action']))
 
     if ($action == NULL)
     {
-        $data = "IkNyb2NvZGlsZXMgYXJlIGVhc3ksIHRoZXkgdHJ5IHRvIGtpbGwgYW5kIGVhdCB5b3UuIFBlb3BsZSBhcmUgaGFyZGVyLCBzb21ldGltZXMgdGhleSBwcmV0ZW5kIHRvIGJlIHlvdXIgZnJpZW5kIGZpcnN0IgoKLSBTdGV2ZSBJcndpbiAoMTk2MiAtIDIwMDYp";
+        $data = 'IkNyb2NvZGlsZXMgYXJlIGVhc3ksIHRoZXkgdHJ5IHRvIGtpbGwgYW5kIGVhdCB5b3UuIFBlb3BsZSBhcmUgaGFyZGVyLCBzb21ldGltZXMgdGhleSBwcmV0ZW5kIHRvIGJlIHlvdXIgZnJpZW5kIGZpcnN0IgoKLSBTdGV2ZSBJcndpbiAoMTk2MiAtIDIwMDYp';
         $pages->errorpage($data);
         exit();
     }
@@ -21,7 +35,7 @@ if (isset($_GET['action']))
     if ($action == "login")
     {
         error_reporting(0);
-        $stmt = $connect->prepare('SELECT * FROM user WHERE user_name = ?');
+        $stmt = $connect->prepare("SELECT * FROM user WHERE user_name = ?");
         $stmt->execute([$_POST['username']]);
 
         $querydata = $stmt->fetchAll(PDO::FETCH_OBJ);
@@ -34,23 +48,24 @@ if (isset($_GET['action']))
             $_SESSION['user_role'] = htmlentities($querydata[0]->user_role);
             $_SESSION['level'] = '1';
             $_SESSION['jwtrole'] = '1';
-            setcookie("user_id", "1", time() + 8 * 3600, "/");
+            setcookie('user_id', "1", time() + 8 * 3600, "/');
             setcookie("page", "page1.php", time() + 8 * 3600, "/");
 
-            header('Location: dashboard.php');
+            header("Location: ./dashboard.php");
+            exit();
         }
         else
         {
             session_start();
-            $_SESSION['message'] = "Invalid username or password";
-            $_SESSION['alert'] = "danger";
-            header('Location: ./');
+            $_SESSION['message'] = 'Invalid username or password";
+            $_SESSION['alert'] = 'danger';
+            header("Location: ./");
             exit();
         }
     }
 
     //Login Process
-    if ($action == "level")
+    elseif ($action == 'level')
     {
         if (isset($_POST['level']))
         {
@@ -64,21 +79,20 @@ if (isset($_GET['action']))
             // 	header('Location: ./dashboard.php');
             // }
             header('Location: ./dashboard.php');
-            exit;
+            exit();
         }
 
         header('Location: ./');
-        exit;
+        exit();
     }
 
-    //Logout Process
-    if ($_GET['action'] == "logout")
+    elseif ($action == 'logout')
     {
         session_start();
         session_destroy();
         session_start();
-        $_SESSION['message'] = "You have been logged out";
-        $_SESSION['alert'] = "success";
+        $_SESSION['message'] = 'You have been logged out";
+        $_SESSION['alert'] = 'success';
         header("Location: ./");
         exit();
     }

@@ -1,7 +1,21 @@
 <?php
+// Determine the base path based on current directory depth
+$current_path = $_SERVER['PHP_SELF'];
+$base_path = './';
+if (strpos($current_path, '/vulnerabilities/') !== false) {
+    $parts = explode('/vulnerabilities/', $current_path);
+    if (isset($parts[1]) && strpos($parts[1], '/') !== false) {
+        $base_path = '../../';
+    } else {
+        $base_path = '../';
+    }
+} elseif (strpos($current_path, '/tools/') !== false || strpos($current_path, '/compare/') !== false || strpos($current_path, '/components/') !== false) {
+    $base_path = '../';
+}
+
 session_start();
-include('./core/configuration.php');
-include('./core/function.php');
+include($base_path . 'core/configuration.php');
+include($base_path . "core/function.php");
 
 $session = new Session();
 $session->check_invalid_session();
@@ -21,25 +35,25 @@ $level = new Level();
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
     <title><?php echo htmlentities($title); ?></title>
-    <link rel="icon" href="./static/lekir.jpeg" type="image/png">
+    <link rel="icon" href="<?php echo $base_path; ?>static/lekir.jpeg" type="image/png">
     <!-- CSS files -->
-    <link href="./dist/css/tabler.min.css?1684106062" rel="stylesheet"/>
-    <link href="./dist/css/tabler-flags.min.css?1684106062" rel="stylesheet"/>
-    <link href="./dist/css/tabler-payments.min.css?1684106062" rel="stylesheet"/>
-    <link href="./dist/css/tabler-vendors.min.css?1684106062" rel="stylesheet"/>
-    <link href="./dist/css/demo.min.css?1684106062" rel="stylesheet"/>
+    <link href="<?php echo $base_path; ?>dist/css/tabler.min.css?1684106062" rel="stylesheet"/>
+    <link href="<?php echo $base_path; ?>dist/css/tabler-flags.min.css?1684106062" rel="stylesheet"/>
+    <link href="<?php echo $base_path; ?>dist/css/tabler-payments.min.css?1684106062" rel="stylesheet"/>
+    <link href="<?php echo $base_path; ?>dist/css/tabler-vendors.min.css?1684106062" rel="stylesheet"/>
+    <link href="<?php echo $base_path; ?>dist/css/demo.min.css?1684106062" rel="stylesheet"/>
     <style>
-      @import url('https://rsms.me/inter/inter.css');
+      @import url(\"https://rsms.me/inter/inter.css");
       :root {
       	--tblr-font-sans-serif: 'Inter Var', -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif;
       }
       body {
-      	font-feature-settings: "cv03", "cv04", "cv11";
+      	font-feature-settings: 'cv03', "cv04", "cv11";
       }
     </style>
   </head>
   <body >
-    <script src="./dist/js/demo-theme.min.js?1684106062"></script>
+    <script src="<?php echo $base_path; ?>dist/js/demo-theme.min.js?1684106062"></script>
     <div class="page">
       <!-- Navbar -->
       <header class="navbar navbar-expand-md d-print-none" >
@@ -48,7 +62,7 @@ $level = new Level();
             <span class="navbar-toggler-icon"></span>
           </button>
           <h1 class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
-            <a href="./dashboard.php">
+            <a href="<?php echo $base_path; ?>dashboard.php">
               LEKIR
             </a>
           </h1>
@@ -85,10 +99,10 @@ $level = new Level();
                 <span class="avatar avatar-sm" style="background-image: url(./static/lekir.jpeg)"></span>
                 <div class="d-none d-xl-block ps-2">
                   <div><?php echo htmlentities($_SESSION['user_name']); ?></div>
-                  <div class="mt-1 small text-secondary">Level : <?php echo $level->current_level($_SESSION['level']); ?></div>
+                  <div class='mt-1 small text-secondary'>Level : <?php echo $level->current_level($_SESSION['level']); ?></div>
                 </div>
               </a>
-              <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+              <div class='dropdown-menu dropdown-menu-end dropdown-menu-arrow'>
                 <a href="./api.php?action=logout" class="dropdown-item">Logout</a>
               </div>
             </div>
@@ -96,7 +110,7 @@ $level = new Level();
         </div>
       </header>
 
-      <?php include('./components/header.php');?>
+      <?php include($base_path . "components/header.php");?>
       <div class="page-wrapper">
         <!-- Page body -->
         <div class="page-body">
@@ -170,12 +184,12 @@ $level = new Level();
           </div>
         </div>
 
-        <?php include('./components/footer.php');?>
+        <?php include($base_path . "components/footer.php");?>
       </div>
     </div>
     <!-- Libs JS -->
     <!-- Tabler Core -->
-    <script src="./dist/js/tabler.min.js?1684106062" defer></script>
-    <script src="./dist/js/demo.min.js?1684106062" defer></script>
+    <script src="<?php echo $base_path; ?>dist/js/tabler.min.js?1684106062" defer></script>
+    <script src="<?php echo $base_path; ?>dist/js/demo.min.js?1684106062" defer></script>
   </body>
 </html>

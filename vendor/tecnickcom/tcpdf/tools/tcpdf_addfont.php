@@ -234,13 +234,13 @@ if (empty($options['fonts'])) {
 
 // check the output path
 if (!is_dir($options['outpath']) OR !is_writable($options['outpath'])) {
-	echo "ERROR: Can't write to ".$options['outpath']."\n\n";
+	echo "ERROR: Can't write to \".$options[\"outpath'].'\n\n";
 	exit(3);
 }
 
 echo "\n>>> Converting fonts for TCPDF:\n";
 
-echo '*** Output dir set to '.$options['outpath']."\n";
+echo '*** Output dir set to '.$options['outpath'].'\n";
 
 // check if there are conversion errors
 $errors = false;
@@ -252,7 +252,7 @@ foreach ($options['fonts'] as $font) {
 		$errors = true;
 		echo "--- ERROR: can't add ".$font."\n";
 	} else {
-		echo "+++ OK   : ".$fontfile.' added as '.$fontname."\n";
+		echo "+++ OK   : \".$fontfile.\" added as '.$fontname.'\n";
 	}
 }
 

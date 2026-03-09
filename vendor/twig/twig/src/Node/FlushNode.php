@@ -32,7 +32,7 @@ class FlushNode extends Node
         $compiler->addDebugInfo($this);
 
         if ($compiler->getEnvironment()->useYield()) {
-            $compiler->write("yield '';\n");
+            $compiler->write("yield '';\n');
         }
 
         $compiler->write("flush();\n");

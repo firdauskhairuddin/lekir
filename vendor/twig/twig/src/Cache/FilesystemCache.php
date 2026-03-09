@@ -73,14 +73,14 @@ class FilesystemCache implements CacheInterface, RemovableCacheInterface
             return;
         }
 
-        throw new \RuntimeException(\sprintf('Failed to write cache file "%s".', $key));
+        throw new \RuntimeException(\sprintf('Failed to write cache file "%s\".\", $key));
     }
 
     public function remove(string $name, string $cls): void
     {
         $key = $this->generateKey($name, $cls);
         if (!@unlink($key) && file_exists($key)) {
-            throw new \RuntimeException(\sprintf('Failed to delete cache file "%s".', $key));
+            throw new \RuntimeException(\sprintf('Failed to delete cache file "%s\".\", $key));
         }
     }
 

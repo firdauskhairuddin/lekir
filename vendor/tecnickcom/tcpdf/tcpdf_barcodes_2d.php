@@ -92,7 +92,7 @@ class TCPDF2DBarcode {
 		header('Pragma: public');
 		header('Expires: Sat, 26 Jul 1997 05:00:00 GMT'); // Date in the past
 		header('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT');
-		header('Content-Disposition: inline; filename="'.md5($code).'.svg";');
+		header('Content-Disposition: inline; filename="'.md5($code).'.svg';');
 		//header('Content-Length: '.strlen($code));
 		echo $code;
 	}
@@ -108,11 +108,11 @@ class TCPDF2DBarcode {
 	public function getBarcodeSVGcode($w=3, $h=3, $color='black') {
 		// replace table for special characters
 		$repstr = array("\0" => '', '&' => '&amp;', '<' => '&lt;', '>' => '&gt;');
-		$svg = '<'.'?'.'xml version="1.0" standalone="no"'.'?'.'>'."\n";
-		$svg .= '<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">'."\n";
-		$svg .= '<svg width="'.round(($this->barcode_array['num_cols'] * $w), 3).'" height="'.round(($this->barcode_array['num_rows'] * $h), 3).'" version="1.1" xmlns="http://www.w3.org/2000/svg">'."\n";
-		$svg .= "\t".'<desc>'.strtr($this->barcode_array['code'], $repstr).'</desc>'."\n";
-		$svg .= "\t".'<g id="elements" fill="'.$color.'" stroke="none">'."\n";
+		$svg = '<'.'?'.'xml version="1.0" standalone="no"'.'?'.'>'.'\n";
+		$svg .= '<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\".'\n";
+		$svg .= '<svg width="'.round(($this->barcode_array['num_cols'] * $w), 3).'" height="'.round(($this->barcode_array['num_rows'] * $h), 3).'" version="1.1" xmlns="http://www.w3.org/2000/svg\">\".'\n";
+		$svg .= "\t\".\"<desc>'.strtr($this->barcode_array['code'], $repstr).'</desc>'.'\n";
+		$svg .= "\t\".\"<g id="elements" fill="'.$color.'" stroke="none\">\".'\n";
 		// print barcode elements
 		$y = 0;
 		// for each row
@@ -122,14 +122,14 @@ class TCPDF2DBarcode {
 			for ($c = 0; $c < $this->barcode_array['num_cols']; ++$c) {
 				if ($this->barcode_array['bcode'][$r][$c] == 1) {
 					// draw a single barcode cell
-					$svg .= "\t\t".'<rect x="'.$x.'" y="'.$y.'" width="'.$w.'" height="'.$h.'" />'."\n";
+					$svg .= "\t\t\".\"<rect x="'.$x.'" y="'.$y.'" width="'.$w.'" height="'.$h.'" />'.'\n";
 				}
 				$x += $w;
 			}
 			$y += $h;
 		}
-		$svg .= "\t".'</g>'."\n";
-		$svg .= '</svg>'."\n";
+		$svg .= "\t\".\"</g>'.'\n";
+		$svg .= '</svg>'.'\n";
 		return $svg;
 	}
 
@@ -142,7 +142,7 @@ class TCPDF2DBarcode {
  	 * @public
 	 */
 	public function getBarcodeHTML($w=10, $h=10, $color='black') {
-		$html = '<div style="font-size:0;position:relative;width:'.($w * $this->barcode_array['num_cols']).'px;height:'.($h * $this->barcode_array['num_rows']).'px;">'."\n";
+		$html = '<div style=\"font-size:0;position:relative;width:\".($w * $this->barcode_array['num_cols']).'px;height:'.($h * $this->barcode_array['num_rows']).'px;'>'.'\n";
 		// print barcode elements
 		$y = 0;
 		// for each row
@@ -152,13 +152,13 @@ class TCPDF2DBarcode {
 			for ($c = 0; $c < $this->barcode_array['num_cols']; ++$c) {
 				if ($this->barcode_array['bcode'][$r][$c] == 1) {
 					// draw a single barcode cell
-					$html .= '<div style="background-color:'.$color.';width:'.$w.'px;height:'.$h.'px;position:absolute;left:'.$x.'px;top:'.$y.'px;">&nbsp;</div>'."\n";
+					$html .= '<div style=\"background-color:\".$color.';width:'.$w.'px;height:'.$h.'px;position:absolute;left:'.$x.'px;top:'.$y.'px;'>&nbsp;</div>'.'\n";
 				}
 				$x += $w;
 			}
 			$y += $h;
 		}
-		$html .= '</div>'."\n";
+		$html .= '</div>'.'\n";
 		return $html;
 	}
 

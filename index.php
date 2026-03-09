@@ -1,8 +1,22 @@
 <?php
+// Determine the base path based on current directory depth
+$current_path = $_SERVER['PHP_SELF'];
+$base_path = './';
+if (strpos($current_path, '/vulnerabilities/') !== false) {
+    $parts = explode('/vulnerabilities/', $current_path);
+    if (isset($parts[1]) && strpos($parts[1], '/') !== false) {
+        $base_path = '../../';
+    } else {
+        $base_path = '../';
+    }
+} elseif (strpos($current_path, '/tools/') !== false || strpos($current_path, '/compare/') !== false || strpos($current_path, '/components/') !== false) {
+    $base_path = '../';
+}
+
 session_start();
 
-include('./core/configuration.php');
-include('./core/function.php');
+include($base_path . 'core/configuration.php');
+include($base_path . "core/function.php");
 
 $secure = new Secure();
 if(isset($_SESSION['user_id'])){header('Location: ./dashboard.php');}
@@ -14,36 +28,36 @@ if(isset($_SESSION['user_id'])){header('Location: ./dashboard.php');}
 * Learning Environment for Cybersecurity through Immersive Real-world scenarios
 * By Firdaus Khairuddin
 -->
-<html lang="en">
+<html lang='en'>
   <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
     <title><?php echo htmlentities($title); ?></title>
-    <link rel="icon" href="./static/lekir.jpeg" type="image/png">
+    <link rel="icon" href="<?php echo $base_path; ?>static/lekir.jpeg" type="image/png">
     <!-- CSS files -->
-    <link href="./dist/css/tabler.min.css?1684106062" rel="stylesheet"/>
+    <link href="<?php echo $base_path; ?>dist/css/tabler.min.css?1684106062" rel="stylesheet"/>
     <style>
-      @import url('https://rsms.me/inter/inter.css');
+      @import url(\"https://rsms.me/inter/inter.css");
       :root {
         --tblr-font-sans-serif: 'Inter Var', -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif;
       }
       body {
-        font-feature-settings: "cv03", "cv04", "cv11";
+        font-feature-settings: 'cv03', "cv04", "cv11";
       }
     </style>
   </head>
   <body  class=" d-flex flex-column" style="background:#F6FFFE;">
-    <script src="./dist/js/demo-theme.min.js?1684106062"></script>
+    <script src="<?php echo $base_path; ?>dist/js/demo-theme.min.js?1684106062"></script>
     <div class="page page-center">
       <div class="container container-tight py-4">
         <div class="text-center mb-4">
-          <a href="." class="navbar-brand navbar-brand-autodark"><img src="./static/lekir.jpeg" height="150" alt=""></a>
+          <a href="." class="navbar-brand navbar-brand-autodark"><img src="<?php echo $base_path; ?>static/lekir.jpeg" height="150" alt=""></a>
         </div>
 
         <div class="card card-md">
           <div class="card-body">
-            <form role="form" action="api.php?action=login" method="POST" autocomplete="off" novalidate>
+            <form role="form" action="<?php echo $base_path; ?>api.php?action=login" method="POST" autocomplete="off" novalidate>
               <div class="mb-3">
                 <label class="form-label">Username</label>
                 <input type="text" class="form-control" placeholder="username" name="username" autocomplete="off">
@@ -65,10 +79,10 @@ if(isset($_SESSION['user_id'])){header('Location: ./dashboard.php');}
         <br>
         <?php
         if(isset($_SESSION['message'])){
-          echo "<center class='alert alert-".htmlentities($_SESSION['alert'])."'>".htmlentities($_SESSION['message'])."</center>";
+          echo '<center class='alert alert-'.htmlentities($_SESSION['alert']).''>'.htmlentities($_SESSION['message']).'</center>';
           unset($_SESSION['message']);
         } else {
-          echo "<center class='alert alert-info'>LEKIR - Vulnerable by Design</center>";
+          echo '<center class='alert alert-info'>LEKIR - Vulnerable by Design</center>';
         }
         ?>
       </div>
@@ -82,6 +96,6 @@ if(isset($_SESSION['user_id'])){header('Location: ./dashboard.php');}
 
     <!-- Libs JS -->
     <!-- Tabler Core -->
-    <script src="./dist/js/tabler.min.js?1684106062" defer></script>
+    <script src="<?php echo $base_path; ?>dist/js/tabler.min.js?1684106062" defer></script>
   </body>
 </html>

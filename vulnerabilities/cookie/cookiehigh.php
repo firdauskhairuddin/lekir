@@ -1,0 +1,213 @@
+<?php
+// Determine the base path based on current directory depth
+$current_path = $_SERVER['PHP_SELF'];
+$base_path = './';
+if (strpos($current_path, '/vulnerabilities/') !== false) {
+    $parts = explode('/vulnerabilities/', $current_path);
+    if (isset($parts[1]) && strpos($parts[1], '/') !== false) {
+        $base_path = '../../';
+    } else {
+        $base_path = '../';
+    }
+} elseif (strpos($current_path, '/tools/') !== false || strpos($current_path, '/compare/') !== false || strpos($current_path, '/components/') !== false) {
+    $base_path = '../';
+}
+
+session_start();
+include($base_path . 'core/configuration.php');
+include($base_path . "core/function.php");
+
+$session = new Session();
+$session->check_invalid_session();
+
+$secure = new Secure();
+$level = new Level();
+
+function base64url_encode($data) {
+    return rtrim(strtr(base64_encode($data), \"+/", '-_'), '=');
+}
+
+function base64url_decode($data) {
+    return base64_decode(strtr($data, '-_', '+/'));
+}
+
+function create_signed_jwt($payload, $secret) {
+    $header = ['alg' => 'HS256', 'typ' => 'JWT'];
+    $header_encoded = base64url_encode(json_encode($header));
+    $payload_encoded = base64url_encode(json_encode($payload));
+    $signature = hash_hmac('sha256', '$header_encoded.$payload_encoded', $secret, true);
+    $signature_encoded = base64url_encode($signature);
+    return "$header_encoded.$payload_encoded.$signature_encoded";
+}
+
+function verify_signed_jwt($jwt, $secret) {
+    $parts = explode(\".", $jwt);
+    if (count($parts) !== 3) return false;
+    list($header_encoded, $payload_encoded, $signature_provided) = $parts;
+    $signature = base64url_encode(hash_hmac('sha256', '$header_encoded.$payload_encoded', $secret, true));
+    return hash_equals($signature, $signature_provided);
+}
+
+$secret = "lekirframework";
+
+if (!isset($_COOKIE['auth_token'])) {
+    $payload = ['role' => "user"];
+    $token = create_signed_jwt($payload, $secret);
+    setcookie("auth_token", $token, time() + 3600, "/");
+}
+?>
+<!doctype html>
+<!--
+* LEKIR - Vulnerable by design to learn common web vulnerability
+* Learning Environment for Cybersecurity through Immersive Real-world scenarios
+* By Firdaus Khairuddin
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title><?php echo htmlentities($title); ?></title>
+    <link rel="icon" href="<?php echo $base_path; ?>static/lekir.jpeg" type="image/png">
+    <!-- CSS files -->
+    <link href="<?php echo $base_path; ?>dist/css/tabler.min.css?1684106062" rel="stylesheet"/>
+    <link href="<?php echo $base_path; ?>dist/css/tabler-flags.min.css?1684106062" rel="stylesheet"/>
+    <link href="<?php echo $base_path; ?>dist/css/tabler-payments.min.css?1684106062" rel="stylesheet"/>
+    <link href="<?php echo $base_path; ?>dist/css/tabler-vendors.min.css?1684106062" rel="stylesheet"/>
+    <link href="<?php echo $base_path; ?>dist/css/demo.min.css?1684106062" rel="stylesheet"/>
+    <style>
+      @import url(\"https://rsms.me/inter/inter.css");
+      :root {
+      	--tblr-font-sans-serif: 'Inter Var', -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif;
+      }
+      body {
+      	font-feature-settings: 'cv03', "cv04", "cv11";
+      }
+    </style>
+  </head>
+  <body >
+    <script src="<?php echo $base_path; ?>dist/js/demo-theme.min.js?1684106062"></script>
+    <div class="page">
+      <!-- Navbar -->
+      
+
+      <?php include($base_path . "components/top_navbar.php"); ?>
+      <?php include($base_path . "components/header.php"); ?>
+
+      <div class="page-body">
+          <div class="container-xl">
+            <div class="row row-cards">
+
+              <div class="col-lg-8">
+                <div class="card card-lg">
+                  <div class="card-body">
+                        <div class="markdown">
+                            <div class="row g-2 align-items-center"> 
+                        </div>
+                        <center>
+                        <br>
+                        <p>
+                         <?php
+                      if (isset($_COOKIE['auth_token']) && verify_signed_jwt($_COOKIE['auth_token'], $secret)) {
+                          $parts = explode('.', $_COOKIE['auth_token']);
+                          $payload = json_decode(base64url_decode($parts[1]), true);
+                          $role = $payload['role'] ?? 'user';
+                          if ($role === 'admin') {
+                              echo "<h2 style='color:green;'">Welcome, Admin! You have full acces now.</h2>";
+                          } else {
+                              echo "<h2 style=\'color:red;\">You are a regular user. No admin access for you.</h2>";
+                          }
+                      } else {
+                          echo "<h2 style=\'color:orange;\">Invalid or tampered token.</h2>";
+                      }
+                      ?>
+                        </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class='col-lg-4'>
+                <div class="card">
+                  <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                      <div class="me-3">
+                        <!-- Download SVG icon from http://tabler-icons.io/i/scale -->
+                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-vaccine"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M17 3l4 4" /><path d="M19 5l-4.5 4.5" /><path d="M11.5 6.5l6 6" /><path d="M16.5 11.5l-6.5 6.5h-4v-4l6.5 -6.5" /><path d="M7.5 12.5l1.5 1.5" /><path d="M10.5 9.5l1.5 1.5" /><path d="M3 21l3 -3" /></svg>
+                      </div>
+                      <div>
+                        <small class="text-muted">Information</small>
+                        <h3 class="lh-1">Cookie Manipulation</h3>
+                      </div>
+                    </div>
+                    <ul class="list-unstyled space-y-1">
+                      <li><b>Level</b> : <font style="color:red;"><b>High</b></font></li>
+                      <li><b>Short Form</b> : Cookie Manipulation</li>
+                      <li><b>Injection Point</b> : Weak JWT token cookie</li>
+                      <li><b>Why this happen</b> : Static secret allows attacker to forge valid signed tokens.</li>
+                      <li><b>Read More</b> : <a href="https://firdauskhairuddin.gitbook.io/common-web-vulnerability-php/os-command-injection" target="_blank">Link</a></li>
+                      <li><b>Author</b> : Prof. Apokalips</li>
+                      <br>
+                      <a href="#" class="btn" data-bs-toggle="modal" data-bs-target="#modal-payloads">
+                      View Payload
+                      </a>
+                      <a href="#" class="btn" data-bs-toggle="modal" data-bs-target="#modal-simple">
+                      View Source
+                      </a>
+                    </ul>   
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      <?php include($base_path . "components/footer.php");?>
+
+      <div class="modal modal-blur fade" id="modal-simple" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-full-width modal-dialog-centered modal-dialog-scrollable" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Cookie Manipulation - Source Code</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" style="background-color: #E5E4E2;">
+              <?php
+              highlight_file($base_path . "sourcecode/cookiehighcode.txt");
+              ?>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+              <a href="<?php echo $base_path; ?>compare/cookiecodecompare.php" type="button" class="btn btn-primary">Compare All Level</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal modal-blur fade" id="modal-payloads" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-full-width modal-dialog-centered modal-dialog-scrollable" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Cookie Manipulation - Payload</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" style="background-color: #E5E4E2;">
+              <?php
+              highlight_file($base_path . "payloads/cookie_all_payload.txt");
+              ?>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+              <a href="<?php echo $base_path; ?>payloads/cookie_all_payload.txt" type="button" class="btn btn-primary" download>Download</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <!-- Libs JS -->
+    <!-- Tabler Core -->
+    <script src="<?php echo $base_path; ?>dist/js/tabler.min.js?1684106062" defer></script>
+    <script src="<?php echo $base_path; ?>dist/js/demo.min.js?1684106062" defer></script>
+  </body>
+</html>

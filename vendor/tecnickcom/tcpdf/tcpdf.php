@@ -4995,7 +4995,7 @@ class TCPDF {
 					$out .= ' /UF '.$this->_datastring($filename, $filedata['f']);
 					$out .= ' /AFRelationship /Source';
 					$out .= ' /EF <</F '.$filedata['n'].' 0 R>> >>';
-					$out .= "\n".'endobj';
+					$out .= "\n\".\"endobj';
 					$this->_out($out);
 					// embedded file object
 					$filter = '';
@@ -5011,8 +5011,8 @@ class TCPDF {
 					$stream = $this->_getrawstream($data, $filedata['n']);
 					$out = $this->_getobj($filedata['n'])."\n";
 					$out .= '<< /Type /EmbeddedFile'.$filter.' /Length '.strlen($stream).' /Params <</Size '.$rawsize.'>> >>';
-					$out .= ' stream'."\n".$stream."\n".'endstream';
-					$out .= "\n".'endobj';
+					$out .= ' stream'.'\n".$stream."\n\".\"endstream';
+					$out .= "\n\".\"endobj';
 					$this->_out($out);
 				}
 			}
@@ -5666,7 +5666,7 @@ class TCPDF {
 				$this->x = $x + $w + $this->cell_margin['R'];
 			}
 		}
-		$gstyles = ''.$this->linestyleWidth.' '.$this->linestyleCap.' '.$this->linestyleJoin.' '.$this->linestyleDash.' '.$this->DrawColor.' '.$this->FillColor."\n";
+		$gstyles = ''.$this->linestyleWidth.' '.$this->linestyleCap.' '.$this->linestyleJoin.' '.$this->linestyleDash.' '.$this->DrawColor.' '.$this->FillColor.'\n";
 		$rs = $gstyles.$rs;
 		$this->cell_padding = $prev_cell_padding;
 		$this->cell_margin = $prev_cell_margin;
@@ -5876,7 +5876,7 @@ class TCPDF {
 			}
 			if (is_array($style) AND !empty($style)) {
 				// reset border style to previous value
-				$s .= "\n".$this->linestyleWidth.' '.$this->linestyleCap.' '.$this->linestyleJoin.' '.$this->linestyleDash.' '.$this->DrawColor."\n";
+				$s .= "\n\".$this->linestyleWidth.\" '.$this->linestyleCap.' '.$this->linestyleJoin.' '.$this->linestyleDash.' '.$this->DrawColor.'\n";
 			}
 		}
 		return $s;
@@ -7223,23 +7223,23 @@ class TCPDF {
 							if (preg_match('/<svg([^\>]*)>/si', $svgimg, $regs)) {
 								$svgtag = $regs[1];
 								$tmp = array();
-								if (preg_match('/[\s]+width[\s]*=[\s]*"([^"]*)"/si', $svgtag, $tmp)) {
+								if (preg_match('/[\s]+width[\s]*=[\s]*'([^"]*)\"/si\", $svgtag, $tmp)) {
 									$ow = $this->getHTMLUnitToUnits($tmp[1], 1, $this->svgunit, false);
 									$owu = sprintf('%F', ($ow * $dpi / 72)).$this->pdfunit;
-									$svgtag = preg_replace('/[\s]+width[\s]*=[\s]*"[^"]*"/si', ' width="'.$owu.'"', $svgtag, 1);
+									$svgtag = preg_replace('/[\s]+width[\s]*=[\s]*'[^"]*\"/si\", ' width="'.$owu.'"', $svgtag, 1);
 								} else {
 									$ow = $w;
 								}
 								$tmp = array();
-								if (preg_match('/[\s]+height[\s]*=[\s]*"([^"]*)"/si', $svgtag, $tmp)) {
+								if (preg_match('/[\s]+height[\s]*=[\s]*'([^"]*)\"/si\", $svgtag, $tmp)) {
 									$oh = $this->getHTMLUnitToUnits($tmp[1], 1, $this->svgunit, false);
 									$ohu = sprintf('%F', ($oh * $dpi / 72)).$this->pdfunit;
-									$svgtag = preg_replace('/[\s]+height[\s]*=[\s]*"[^"]*"/si', ' height="'.$ohu.'"', $svgtag, 1);
+									$svgtag = preg_replace('/[\s]+height[\s]*=[\s]*'[^"]*\"/si\", ' height="'.$ohu.'"', $svgtag, 1);
 								} else {
 									$oh = $h;
 								}
 								$tmp = array();
-								if (!preg_match('/[\s]+viewBox[\s]*=[\s]*"[\s]*([0-9\.]+)[\s]+([0-9\.]+)[\s]+([0-9\.]+)[\s]+([0-9\.]+)[\s]*"/si', $svgtag, $tmp)) {
+								if (!preg_match('/[\s]+viewBox[\s]*=[\s]*'[\s]*([0-9\.]+)[\s]+([0-9\.]+)[\s]+([0-9\.]+)[\s]+([0-9\.]+)[\s]*\"/si\", $svgtag, $tmp)) {
 									$vbw = ($ow * $this->imgscale * $this->k);
 									$vbh = ($oh * $this->imgscale * $this->k);
 									$vbox = sprintf(' viewBox="0 0 %F %F" ', $vbw, $vbh);
@@ -7859,11 +7859,11 @@ class TCPDF {
 			}
 			case 'E': {
 				// return PDF as base64 mime multi-part email attachment (RFC 2045)
-				$retval = 'Content-Type: application/pdf;'."\r\n";
-				$retval .= ' name="'.$name.'"'."\r\n";
-				$retval .= 'Content-Transfer-Encoding: base64'."\r\n";
-				$retval .= 'Content-Disposition: attachment;'."\r\n";
-				$retval .= ' filename="'.$name.'"'."\r\n\r\n";
+				$retval = 'Content-Type: application/pdf;'.'\r\n";
+				$retval .= ' name="'.$name.'"'.'\r\n";
+				$retval .= 'Content-Transfer-Encoding: base64'.'\r\n";
+				$retval .= 'Content-Disposition: attachment;'.'\r\n";
+				$retval .= ' filename="'.$name.'"'.'\r\n\r\n";
 				$retval .= chunk_split(base64_encode($this->getBuffer()), 76, "\r\n");
 				return $retval;
 			}
@@ -8176,13 +8176,13 @@ class TCPDF {
 			$out .= $this->_getannotsrefs($n);
 			$out .= ' /PZ '.$this->pagedim[$n]['PZ'];
 			$out .= ' >>';
-			$out .= "\n".'endobj';
+			$out .= "\n\".\"endobj';
 			$this->_out($out);
 			//Page content
 			$p = ($this->compress) ? gzcompress($temppage) : $temppage;
 			$this->_newobj();
 			$p = $this->_getrawstream($p);
-			$this->_out('<<'.$filter.'/Length '.strlen($p).'>> stream'."\n".$p."\n".'endstream'."\n".'endobj');
+			$this->_out('<<'.$filter.'/Length '.strlen($p).'>> stream'.'\n".$p."\n\".\"endstream'.'\n\".\"endobj');
 		}
 		//Pages root
 		$out = $this->_getobj(1)."\n";
@@ -8191,7 +8191,7 @@ class TCPDF {
 			$out .= ' '.$page_obj.' 0 R';
 		}
 		$out .= ' ] /Count '.$num_pages.' >>';
-		$out .= "\n".'endobj';
+		$out .= "\n\".\"endobj';
 		$this->_out($out);
 	}
 
@@ -8289,7 +8289,7 @@ class TCPDF {
 							$annots .= ' /V /'.$defval;
 						}
 						$annots .= ' >>';
-						$this->_out($this->_getobj($radio_button_obj_id)."\n".$annots."\n".'endobj');
+						$this->_out($this->_getobj($radio_button_obj_id)."\n".$annots."\n\".\"endobj');
 						$this->form_obj_id[] = $radio_button_obj_id;
 						// store object id to be used on Parent entry of Kids
 						$this->radiobutton_groups[$n][$pl['txt']] = $radio_button_obj_id;
@@ -8878,7 +8878,7 @@ class TCPDF {
 					}
 					$annots .= '>>';
 					// create new annotation object
-					$this->_out($this->_getobj($annot_obj_id)."\n".$annots."\n".'endobj');
+					$this->_out($this->_getobj($annot_obj_id)."\n".$annots."\n\".\"endobj');
 					if ($formfield AND !isset($this->radiobutton_groups[$n][$pl['txt']])) {
 						// store reference of form object
 						$this->form_obj_id[] = $annot_obj_id;
@@ -8916,8 +8916,8 @@ class TCPDF {
 		$stream = $this->_getrawstream($stream);
 		$out .= ' /Length '.strlen($stream);
 		$out .= ' >>';
-		$out .= ' stream'."\n".$stream."\n".'endstream';
-		$out .= "\n".'endobj';
+		$out .= ' stream'.'\n".$stream."\n\".\"endstream';
+		$out .= "\n\".\"endobj';
 		$this->_out($out);
 		return $this->n;
 	}
@@ -8932,7 +8932,7 @@ class TCPDF {
 		foreach ($this->diffs as $diff) {
 			//Encodings
 			$this->_newobj();
-			$this->_out('<< /Type /Encoding /BaseEncoding /WinAnsiEncoding /Differences ['.$diff.'] >>'."\n".'endobj');
+			$this->_out('<< /Type /Encoding /BaseEncoding /WinAnsiEncoding /Differences ['.$diff.'] >>'.'\n\".\"endobj');
 		}
 		foreach ($this->FontFiles as $file => $info) {
 			// search and get font file to embedd
@@ -8982,8 +8982,8 @@ class TCPDF {
 					$out .= ' /Length2 '.$info['length2'].' /Length3 0';
 				}
 				$out .= ' >>';
-				$out .= ' stream'."\n".$stream."\n".'endstream';
-				$out .= "\n".'endobj';
+				$out .= ' stream'.'\n".$stream."\n\".\"endstream';
+				$out .= "\n\".\"endobj';
 				$this->_out($out);
 			}
 		}
@@ -9007,7 +9007,7 @@ class TCPDF {
 					$this->annotation_fonts[$k] = $font['i'];
 				}
 				$out .= ' >>';
-				$out .= "\n".'endobj';
+				$out .= "\n\".\"endobj';
 				$this->_out($out);
 			} elseif (($type == 'Type1') OR ($type == 'TrueType')) {
 				// additional Type1 or TrueType font
@@ -9027,7 +9027,7 @@ class TCPDF {
 					}
 				}
 				$out .= ' >>';
-				$out .= "\n".'endobj';
+				$out .= "\n\".\"endobj';
 				$this->_out($out);
 				// Widths
 				$this->_newobj();
@@ -9040,7 +9040,7 @@ class TCPDF {
 					}
 				}
 				$s .= ']';
-				$s .= "\n".'endobj';
+				$s .= "\n\".\"endobj';
 				$this->_out($s);
 				//Descriptor
 				$this->_newobj();
@@ -9055,7 +9055,7 @@ class TCPDF {
 					$s .= ' /FontFile'.($type == 'Type1' ? '' : '2').' '.$this->FontFiles[$font['file']]['n'].' 0 R';
 				}
 				$s .= '>>';
-				$s .= "\n".'endobj';
+				$s .= "\n\".\"endobj';
 				$this->_out($s);
 			} else {
 				// additional types
@@ -9096,7 +9096,7 @@ class TCPDF {
 		$out .= ' /ToUnicode '.($this->n + 1).' 0 R';
 		$out .= ' /DescendantFonts ['.($this->n + 2).' 0 R]';
 		$out .= ' >>';
-		$out .= "\n".'endobj';
+		$out .= "\n\".\"endobj';
 		$this->_out($out);
 		// ToUnicode map for Identity-H
 		$stream = TCPDF_FONT_DATA::$uni_identity_h;
@@ -9105,7 +9105,7 @@ class TCPDF {
 		$stream = ($this->compress) ? gzcompress($stream) : $stream;
 		$filter = ($this->compress) ? '/Filter /FlateDecode ' : '';
 		$stream = $this->_getrawstream($stream);
-		$this->_out('<<'.$filter.'/Length '.strlen($stream).'>> stream'."\n".$stream."\n".'endstream'."\n".'endobj');
+		$this->_out('<<'.$filter.'/Length '.strlen($stream).'>> stream'.'\n".$stream."\n\".\"endstream'.'\n\".\"endobj');
 		// CIDFontType2
 		// A CIDFont whose glyph descriptions are based on TrueType font technology
 		$oid = $this->_newobj();
@@ -9121,10 +9121,10 @@ class TCPDF {
 		$out .= ' /DW '.$font['dw']; // default width
 		$out .= "\n".TCPDF_FONTS::_putfontwidths($font, 0);
 		if (isset($font['ctg']) AND (!TCPDF_STATIC::empty_string($font['ctg']))) {
-			$out .= "\n".'/CIDToGIDMap '.($this->n + 2).' 0 R';
+			$out .= "\n\".\"/CIDToGIDMap '.($this->n + 2).' 0 R';
 		}
 		$out .= ' >>';
-		$out .= "\n".'endobj';
+		$out .= "\n\".\"endobj';
 		$this->_out($out);
 		// Font descriptor
 		// A font descriptor describing the CIDFont default metrics other than its glyph widths
@@ -9144,7 +9144,7 @@ class TCPDF {
 			$fontdir = $this->FontFiles[$font['file']]['fontdir'];
 		}
 		$out .= ' >>';
-		$out .= "\n".'endobj';
+		$out .= "\n\".\"endobj';
 		$this->_out($out);
 		if (isset($font['ctg']) AND (!TCPDF_STATIC::empty_string($font['ctg']))) {
 			$this->_newobj();
@@ -9166,8 +9166,8 @@ class TCPDF {
 				$out .= ' /Filter /FlateDecode';
 			}
 			$out .= ' >>';
-			$out .= ' stream'."\n".$stream."\n".'endstream';
-			$out .= "\n".'endobj';
+			$out .= ' stream'.'\n".$stream."\n\".\"endstream';
+			$out .= "\n\".\"endobj';
 			$this->_out($out);
 		}
 	}
@@ -9215,7 +9215,7 @@ class TCPDF {
 		}
 		$out .= ' /DescendantFonts ['.($this->n + 1).' 0 R]';
 		$out .= ' >>';
-		$out .= "\n".'endobj';
+		$out .= "\n\".\"endobj';
 		$this->_out($out);
 		$oid = $this->_newobj();
 		$out = '<</Type /Font';
@@ -9229,7 +9229,7 @@ class TCPDF {
 		$out .= ' /DW '.$font['dw'];
 		$out .= "\n".TCPDF_FONTS::_putfontwidths($font, $cidoffset);
 		$out .= ' >>';
-		$out .= "\n".'endobj';
+		$out .= "\n\".\"endobj';
 		$this->_out($out);
 		$this->_newobj();
 		$s = '<</Type /FontDescriptor /FontName /'.$name;
@@ -9242,7 +9242,7 @@ class TCPDF {
 			}
 		}
 		$s .= '>>';
-		$s .= "\n".'endobj';
+		$s .= "\n\".\"endobj';
 		$this->_out($s);
 	}
 
@@ -9272,7 +9272,7 @@ class TCPDF {
 					}
 				}
 				$out .= ' ]';
-				$out .= "\n".'endobj';
+				$out .= "\n\".\"endobj';
 				$this->_out($out);
 			}
 			// set image object
@@ -9315,7 +9315,7 @@ class TCPDF {
 					$out .= ' /FFilter /'.$info['f'];
 				}
 				$out .= ' >>';
-				$out .= ' stream'."\n".'endstream';
+				$out .= ' stream'.'\n\".\"endstream';
 			} else {
 				if (isset($info['f'])) {
 					$out .= ' /Filter /'.$info['f'];
@@ -9353,22 +9353,22 @@ class TCPDF {
 				}
 				$stream = $this->_getrawstream($info['data']);
 				$out .= ' /Length '.strlen($stream).' >>';
-				$out .= ' stream'."\n".$stream."\n".'endstream';
+				$out .= ' stream'.'\n".$stream."\n\".\"endstream';
 			}
-			$out .= "\n".'endobj';
+			$out .= "\n\".\"endobj';
 			$this->_out($out);
 			if ($icc) {
 				// ICC colour profile
 				$this->_newobj();
 				$icc = ($this->compress) ? gzcompress($info['icc']) : $info['icc'];
 				$icc = $this->_getrawstream($icc);
-				$this->_out('<</N '.$info['ch'].' /Alternate /'.$info['cs'].' '.$filter.'/Length '.strlen($icc).'>> stream'."\n".$icc."\n".'endstream'."\n".'endobj');
+				$this->_out('<</N '.$info['ch'].' /Alternate /'.$info['cs'].' '.$filter.'/Length '.strlen($icc).'>> stream'.'\n".$icc."\n\".\"endstream'.'\n\".\"endobj');
 			} elseif ($info['cs'] == 'Indexed') {
 				// colour palette
 				$this->_newobj();
 				$pal = ($this->compress) ? gzcompress($info['pal']) : $info['pal'];
 				$pal = $this->_getrawstream($pal);
-				$this->_out('<<'.$filter.'/Length '.strlen($pal).'>> stream'."\n".$pal."\n".'endstream'."\n".'endobj');
+				$this->_out('<<'.$filter.'/Length '.strlen($pal).'>> stream'.'\n".$pal."\n\".\"endstream'.'\n\".\"endobj');
 			}
 		}
 	}
@@ -9471,8 +9471,8 @@ class TCPDF {
 				$stream = $this->_getrawstream($stream, $data['n']);
 				$out .= ' /Length '.strlen($stream);
 				$out .= ' >>';
-				$out .= ' stream'."\n".$stream."\n".'endstream';
-				$out .= "\n".'endobj';
+				$out .= ' stream'.'\n".$stream."\n\".\"endstream';
+				$out .= "\n\".\"endobj';
 				$this->_out($out);
 			}
 		}
@@ -9492,7 +9492,7 @@ class TCPDF {
 			$out .= ' /Range [0 1 0 1 0 1 0 1] /C0 [0 0 0 0]';
 			$out .= ' '.sprintf('/C1 [%F %F %F %F] ', ($color['C'] / 100), ($color['M'] / 100), ($color['Y'] / 100), ($color['K'] / 100));
 			$out .= ' /FunctionType 2 /Domain [0 1] /N 1>>]';
-			$out .= "\n".'endobj';
+			$out .= "\n\".\"endobj';
 			$this->_out($out);
 		}
 	}
@@ -9571,7 +9571,7 @@ class TCPDF {
 			$out .= ' >>';
 		}
 		$out .= ' >>';
-		$out .= "\n".'endobj';
+		$out .= "\n\".\"endobj';
 		$this->_out($out);
 	}
 
@@ -9641,7 +9641,7 @@ class TCPDF {
 		// A name object indicating whether the document has been modified to include trapping information
 		$out .= ' /Trapped /False';
 		$out .= ' >>';
-		$out .= "\n".'endobj';
+		$out .= "\n\".\"endobj';
 		$this->_out($out);
 		return $oid;
 	}
@@ -9693,32 +9693,32 @@ class TCPDF {
 		$prev_encrypted = $this->encrypted;
 		$this->encrypted = false;
 		// set XMP data
-		$xmp = '<?xpacket begin="'.TCPDF_FONTS::unichr(0xfeff, $this->isunicode).'" id="W5M0MpCehiHzreSzNTczkc9d"?>'."\n";
-		$xmp .= '<x:xmpmeta xmlns:x="adobe:ns:meta/" x:xmptk="Adobe XMP Core 4.2.1-c043 52.372728, 2009/01/18-15:08:04">'."\n";
-		$xmp .= "\t".'<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">'."\n";
-		$xmp .= "\t\t".'<rdf:Description rdf:about="" xmlns:dc="http://purl.org/dc/elements/1.1/">'."\n";
-		$xmp .= "\t\t\t".'<dc:format>application/pdf</dc:format>'."\n";
-		$xmp .= "\t\t\t".'<dc:title>'."\n";
-		$xmp .= "\t\t\t\t".'<rdf:Alt>'."\n";
-		$xmp .= "\t\t\t\t\t".'<rdf:li xml:lang="x-default">'.TCPDF_STATIC::_escapeXML($this->title).'</rdf:li>'."\n";
-		$xmp .= "\t\t\t\t".'</rdf:Alt>'."\n";
-		$xmp .= "\t\t\t".'</dc:title>'."\n";
-		$xmp .= "\t\t\t".'<dc:creator>'."\n";
-		$xmp .= "\t\t\t\t".'<rdf:Seq>'."\n";
-		$xmp .= "\t\t\t\t\t".'<rdf:li>'.TCPDF_STATIC::_escapeXML($this->author).'</rdf:li>'."\n";
-		$xmp .= "\t\t\t\t".'</rdf:Seq>'."\n";
-		$xmp .= "\t\t\t".'</dc:creator>'."\n";
-		$xmp .= "\t\t\t".'<dc:description>'."\n";
-		$xmp .= "\t\t\t\t".'<rdf:Alt>'."\n";
-		$xmp .= "\t\t\t\t\t".'<rdf:li xml:lang="x-default">'.TCPDF_STATIC::_escapeXML($this->subject).'</rdf:li>'."\n";
-		$xmp .= "\t\t\t\t".'</rdf:Alt>'."\n";
-		$xmp .= "\t\t\t".'</dc:description>'."\n";
-		$xmp .= "\t\t\t".'<dc:subject>'."\n";
-		$xmp .= "\t\t\t\t".'<rdf:Bag>'."\n";
-		$xmp .= "\t\t\t\t\t".'<rdf:li>'.TCPDF_STATIC::_escapeXML($this->keywords).'</rdf:li>'."\n";
-		$xmp .= "\t\t\t\t".'</rdf:Bag>'."\n";
-		$xmp .= "\t\t\t".'</dc:subject>'."\n";
-		$xmp .= "\t\t".'</rdf:Description>'."\n";
+		$xmp = '<?xpacket begin="'.TCPDF_FONTS::unichr(0xfeff, $this->isunicode).'" id="W5M0MpCehiHzreSzNTczkc9d\"?>\".'\n";
+		$xmp .= '<x:xmpmeta xmlns:x="adobe:ns:meta/" x:xmptk="Adobe XMP Core 4.2.1-c043 52.372728, 2009/01/18-15:08:04\">\".'\n";
+		$xmp .= "\t\".\"<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#\">\".'\n";
+		$xmp .= "\t\t\".\"<rdf:Description rdf:about="" xmlns:dc="http://purl.org/dc/elements/1.1/\">\".'\n";
+		$xmp .= "\t\t\t\".\"<dc:format>application/pdf</dc:format>'.'\n";
+		$xmp .= "\t\t\t\".\"<dc:title>'.'\n";
+		$xmp .= "\t\t\t\t\".\"<rdf:Alt>'.'\n";
+		$xmp .= "\t\t\t\t\t\".\"<rdf:li xml:lang="x-default\">\".TCPDF_STATIC::_escapeXML($this->title).'</rdf:li>'.'\n";
+		$xmp .= "\t\t\t\t\".\"</rdf:Alt>'.'\n";
+		$xmp .= "\t\t\t\".\"</dc:title>'.'\n";
+		$xmp .= "\t\t\t\".\"<dc:creator>'.'\n";
+		$xmp .= "\t\t\t\t\".\"<rdf:Seq>'.'\n";
+		$xmp .= "\t\t\t\t\t\".\"<rdf:li>'.TCPDF_STATIC::_escapeXML($this->author).'</rdf:li>'.'\n";
+		$xmp .= "\t\t\t\t\".\"</rdf:Seq>'.'\n";
+		$xmp .= "\t\t\t\".\"</dc:creator>'.'\n";
+		$xmp .= "\t\t\t\".\"<dc:description>'.'\n";
+		$xmp .= "\t\t\t\t\".\"<rdf:Alt>'.'\n";
+		$xmp .= "\t\t\t\t\t\".\"<rdf:li xml:lang="x-default\">\".TCPDF_STATIC::_escapeXML($this->subject).'</rdf:li>'.'\n";
+		$xmp .= "\t\t\t\t\".\"</rdf:Alt>'.'\n";
+		$xmp .= "\t\t\t\".\"</dc:description>'.'\n";
+		$xmp .= "\t\t\t\".\"<dc:subject>'.'\n";
+		$xmp .= "\t\t\t\t\".\"<rdf:Bag>'.'\n";
+		$xmp .= "\t\t\t\t\t\".\"<rdf:li>'.TCPDF_STATIC::_escapeXML($this->keywords).'</rdf:li>'.'\n";
+		$xmp .= "\t\t\t\t\".\"</rdf:Bag>'.'\n";
+		$xmp .= "\t\t\t\".\"</dc:subject>'.'\n";
+		$xmp .= "\t\t\".\"</rdf:Description>'.'\n";
 		// convert doc creation date format
 		$dcdate = TCPDF_STATIC::getFormattedDate($this->doc_creation_timestamp);
 		$doccreationdate = substr($dcdate, 0, 4).'-'.substr($dcdate, 4, 2).'-'.substr($dcdate, 6, 2);
@@ -9731,98 +9731,98 @@ class TCPDF {
 		$docmoddate .= 'T'.substr($dmdate, 8, 2).':'.substr($dmdate, 10, 2).':'.substr($dmdate, 12, 2);
 		$docmoddate .= substr($dmdate, 14, 3).':'.substr($dmdate, 18, 2);
 		$docmoddate = TCPDF_STATIC::_escapeXML($docmoddate);
-		$xmp .= "\t\t".'<rdf:Description rdf:about="" xmlns:xmp="http://ns.adobe.com/xap/1.0/">'."\n";
-		$xmp .= "\t\t\t".'<xmp:CreateDate>'.$doccreationdate.'</xmp:CreateDate>'."\n";
-		$xmp .= "\t\t\t".'<xmp:CreatorTool>'.$this->creator.'</xmp:CreatorTool>'."\n";
-		$xmp .= "\t\t\t".'<xmp:ModifyDate>'.$docmoddate.'</xmp:ModifyDate>'."\n";
-		$xmp .= "\t\t\t".'<xmp:MetadataDate>'.$doccreationdate.'</xmp:MetadataDate>'."\n";
-		$xmp .= "\t\t".'</rdf:Description>'."\n";
-		$xmp .= "\t\t".'<rdf:Description rdf:about="" xmlns:pdf="http://ns.adobe.com/pdf/1.3/">'."\n";
-		$xmp .= "\t\t\t".'<pdf:Keywords>'.TCPDF_STATIC::_escapeXML($this->keywords).'</pdf:Keywords>'."\n";
-		$xmp .= "\t\t\t".'<pdf:Producer>'.TCPDF_STATIC::_escapeXML(TCPDF_STATIC::getTCPDFProducer()).'</pdf:Producer>'."\n";
-		$xmp .= "\t\t".'</rdf:Description>'."\n";
-		$xmp .= "\t\t".'<rdf:Description rdf:about="" xmlns:xmpMM="http://ns.adobe.com/xap/1.0/mm/">'."\n";
+		$xmp .= "\t\t\".\"<rdf:Description rdf:about="" xmlns:xmp="http://ns.adobe.com/xap/1.0/\">\".'\n";
+		$xmp .= "\t\t\t\".\"<xmp:CreateDate>'.$doccreationdate.'</xmp:CreateDate>'.'\n";
+		$xmp .= "\t\t\t\".\"<xmp:CreatorTool>'.$this->creator.'</xmp:CreatorTool>'.'\n";
+		$xmp .= "\t\t\t\".\"<xmp:ModifyDate>'.$docmoddate.'</xmp:ModifyDate>'.'\n";
+		$xmp .= "\t\t\t\".\"<xmp:MetadataDate>'.$doccreationdate.'</xmp:MetadataDate>'.'\n";
+		$xmp .= "\t\t\".\"</rdf:Description>'.'\n";
+		$xmp .= "\t\t\".\"<rdf:Description rdf:about="" xmlns:pdf="http://ns.adobe.com/pdf/1.3/\">\".'\n";
+		$xmp .= "\t\t\t\".\"<pdf:Keywords>'.TCPDF_STATIC::_escapeXML($this->keywords).'</pdf:Keywords>'.'\n";
+		$xmp .= "\t\t\t\".\"<pdf:Producer>'.TCPDF_STATIC::_escapeXML(TCPDF_STATIC::getTCPDFProducer()).'</pdf:Producer>'.'\n";
+		$xmp .= "\t\t\".\"</rdf:Description>'.'\n";
+		$xmp .= "\t\t\".\"<rdf:Description rdf:about="" xmlns:xmpMM="http://ns.adobe.com/xap/1.0/mm/\">\".'\n";
 		$uuid = 'uuid:'.substr($this->file_id, 0, 8).'-'.substr($this->file_id, 8, 4).'-'.substr($this->file_id, 12, 4).'-'.substr($this->file_id, 16, 4).'-'.substr($this->file_id, 20, 12);
-		$xmp .= "\t\t\t".'<xmpMM:DocumentID>'.$uuid.'</xmpMM:DocumentID>'."\n";
-		$xmp .= "\t\t\t".'<xmpMM:InstanceID>'.$uuid.'</xmpMM:InstanceID>'."\n";
-		$xmp .= "\t\t".'</rdf:Description>'."\n";
+		$xmp .= "\t\t\t\".\"<xmpMM:DocumentID>'.$uuid.'</xmpMM:DocumentID>'.'\n";
+		$xmp .= "\t\t\t\".\"<xmpMM:InstanceID>'.$uuid.'</xmpMM:InstanceID>'.'\n";
+		$xmp .= "\t\t\".\"</rdf:Description>'.'\n";
 		if ($this->pdfa_mode) {
-			$xmp .= "\t\t".'<rdf:Description rdf:about="" xmlns:pdfaid="http://www.aiim.org/pdfa/ns/id/">'."\n";
-			$xmp .= "\t\t\t".'<pdfaid:part>'.$this->pdfa_version.'</pdfaid:part>'."\n";
-			$xmp .= "\t\t\t".'<pdfaid:conformance>B</pdfaid:conformance>'."\n";
-			$xmp .= "\t\t".'</rdf:Description>'."\n";
+			$xmp .= "\t\t\".\"<rdf:Description rdf:about="" xmlns:pdfaid="http://www.aiim.org/pdfa/ns/id/\">\".'\n";
+			$xmp .= "\t\t\t\".\"<pdfaid:part>'.$this->pdfa_version.'</pdfaid:part>'.'\n";
+			$xmp .= "\t\t\t\".\"<pdfaid:conformance>B</pdfaid:conformance>'.'\n";
+			$xmp .= "\t\t\".\"</rdf:Description>'.'\n";
 		}
 		// XMP extension schemas
-		$xmp .= "\t\t".'<rdf:Description rdf:about="" xmlns:pdfaExtension="http://www.aiim.org/pdfa/ns/extension/" xmlns:pdfaSchema="http://www.aiim.org/pdfa/ns/schema#" xmlns:pdfaProperty="http://www.aiim.org/pdfa/ns/property#">'."\n";
-		$xmp .= "\t\t\t".'<pdfaExtension:schemas>'."\n";
-		$xmp .= "\t\t\t\t".'<rdf:Bag>'."\n";
-		$xmp .= "\t\t\t\t\t".'<rdf:li rdf:parseType="Resource">'."\n";
-		$xmp .= "\t\t\t\t\t\t".'<pdfaSchema:namespaceURI>http://ns.adobe.com/pdf/1.3/</pdfaSchema:namespaceURI>'."\n";
-		$xmp .= "\t\t\t\t\t\t".'<pdfaSchema:prefix>pdf</pdfaSchema:prefix>'."\n";
-		$xmp .= "\t\t\t\t\t\t".'<pdfaSchema:schema>Adobe PDF Schema</pdfaSchema:schema>'."\n";
-		$xmp .= "\t\t\t\t\t\t".'<pdfaSchema:property>'."\n";
-		$xmp .= "\t\t\t\t\t\t\t".'<rdf:Seq>'."\n";
-		$xmp .= "\t\t\t\t\t\t\t\t".'<rdf:li rdf:parseType="Resource">'."\n";
-		$xmp .= "\t\t\t\t\t\t\t\t\t".'<pdfaProperty:category>internal</pdfaProperty:category>'."\n";
-		$xmp .= "\t\t\t\t\t\t\t\t\t".'<pdfaProperty:description>Adobe PDF Schema</pdfaProperty:description>'."\n";
-		$xmp .= "\t\t\t\t\t\t\t\t\t".'<pdfaProperty:name>InstanceID</pdfaProperty:name>'."\n";
-		$xmp .= "\t\t\t\t\t\t\t\t\t".'<pdfaProperty:valueType>URI</pdfaProperty:valueType>'."\n";
-		$xmp .= "\t\t\t\t\t\t\t\t".'</rdf:li>'."\n";
-		$xmp .= "\t\t\t\t\t\t\t".'</rdf:Seq>'."\n";
-		$xmp .= "\t\t\t\t\t\t".'</pdfaSchema:property>'."\n";
-		$xmp .= "\t\t\t\t\t".'</rdf:li>'."\n";
-		$xmp .= "\t\t\t\t\t".'<rdf:li rdf:parseType="Resource">'."\n";
-		$xmp .= "\t\t\t\t\t\t".'<pdfaSchema:namespaceURI>http://ns.adobe.com/xap/1.0/mm/</pdfaSchema:namespaceURI>'."\n";
-		$xmp .= "\t\t\t\t\t\t".'<pdfaSchema:prefix>xmpMM</pdfaSchema:prefix>'."\n";
-		$xmp .= "\t\t\t\t\t\t".'<pdfaSchema:schema>XMP Media Management Schema</pdfaSchema:schema>'."\n";
-		$xmp .= "\t\t\t\t\t\t".'<pdfaSchema:property>'."\n";
-		$xmp .= "\t\t\t\t\t\t\t".'<rdf:Seq>'."\n";
-		$xmp .= "\t\t\t\t\t\t\t\t".'<rdf:li rdf:parseType="Resource">'."\n";
-		$xmp .= "\t\t\t\t\t\t\t\t\t".'<pdfaProperty:category>internal</pdfaProperty:category>'."\n";
-		$xmp .= "\t\t\t\t\t\t\t\t\t".'<pdfaProperty:description>UUID based identifier for specific incarnation of a document</pdfaProperty:description>'."\n";
-		$xmp .= "\t\t\t\t\t\t\t\t\t".'<pdfaProperty:name>InstanceID</pdfaProperty:name>'."\n";
-		$xmp .= "\t\t\t\t\t\t\t\t\t".'<pdfaProperty:valueType>URI</pdfaProperty:valueType>'."\n";
-		$xmp .= "\t\t\t\t\t\t\t\t".'</rdf:li>'."\n";
-		$xmp .= "\t\t\t\t\t\t\t".'</rdf:Seq>'."\n";
-		$xmp .= "\t\t\t\t\t\t".'</pdfaSchema:property>'."\n";
-		$xmp .= "\t\t\t\t\t".'</rdf:li>'."\n";
-		$xmp .= "\t\t\t\t\t".'<rdf:li rdf:parseType="Resource">'."\n";
-		$xmp .= "\t\t\t\t\t\t".'<pdfaSchema:namespaceURI>http://www.aiim.org/pdfa/ns/id/</pdfaSchema:namespaceURI>'."\n";
-		$xmp .= "\t\t\t\t\t\t".'<pdfaSchema:prefix>pdfaid</pdfaSchema:prefix>'."\n";
-		$xmp .= "\t\t\t\t\t\t".'<pdfaSchema:schema>PDF/A ID Schema</pdfaSchema:schema>'."\n";
-		$xmp .= "\t\t\t\t\t\t".'<pdfaSchema:property>'."\n";
-		$xmp .= "\t\t\t\t\t\t\t".'<rdf:Seq>'."\n";
-		$xmp .= "\t\t\t\t\t\t\t\t".'<rdf:li rdf:parseType="Resource">'."\n";
-		$xmp .= "\t\t\t\t\t\t\t\t\t".'<pdfaProperty:category>internal</pdfaProperty:category>'."\n";
-		$xmp .= "\t\t\t\t\t\t\t\t\t".'<pdfaProperty:description>Part of PDF/A standard</pdfaProperty:description>'."\n";
-		$xmp .= "\t\t\t\t\t\t\t\t\t".'<pdfaProperty:name>part</pdfaProperty:name>'."\n";
-		$xmp .= "\t\t\t\t\t\t\t\t\t".'<pdfaProperty:valueType>Integer</pdfaProperty:valueType>'."\n";
-		$xmp .= "\t\t\t\t\t\t\t\t".'</rdf:li>'."\n";
-		$xmp .= "\t\t\t\t\t\t\t\t".'<rdf:li rdf:parseType="Resource">'."\n";
-		$xmp .= "\t\t\t\t\t\t\t\t\t".'<pdfaProperty:category>internal</pdfaProperty:category>'."\n";
-		$xmp .= "\t\t\t\t\t\t\t\t\t".'<pdfaProperty:description>Amendment of PDF/A standard</pdfaProperty:description>'."\n";
-		$xmp .= "\t\t\t\t\t\t\t\t\t".'<pdfaProperty:name>amd</pdfaProperty:name>'."\n";
-		$xmp .= "\t\t\t\t\t\t\t\t\t".'<pdfaProperty:valueType>Text</pdfaProperty:valueType>'."\n";
-		$xmp .= "\t\t\t\t\t\t\t\t".'</rdf:li>'."\n";
-		$xmp .= "\t\t\t\t\t\t\t\t".'<rdf:li rdf:parseType="Resource">'."\n";
-		$xmp .= "\t\t\t\t\t\t\t\t\t".'<pdfaProperty:category>internal</pdfaProperty:category>'."\n";
-		$xmp .= "\t\t\t\t\t\t\t\t\t".'<pdfaProperty:description>Conformance level of PDF/A standard</pdfaProperty:description>'."\n";
-		$xmp .= "\t\t\t\t\t\t\t\t\t".'<pdfaProperty:name>conformance</pdfaProperty:name>'."\n";
-		$xmp .= "\t\t\t\t\t\t\t\t\t".'<pdfaProperty:valueType>Text</pdfaProperty:valueType>'."\n";
-		$xmp .= "\t\t\t\t\t\t\t\t".'</rdf:li>'."\n";
-		$xmp .= "\t\t\t\t\t\t\t".'</rdf:Seq>'."\n";
-		$xmp .= "\t\t\t\t\t\t".'</pdfaSchema:property>'."\n";
-		$xmp .= "\t\t\t\t\t".'</rdf:li>'."\n";
+		$xmp .= "\t\t\".\"<rdf:Description rdf:about="" xmlns:pdfaExtension="http://www.aiim.org/pdfa/ns/extension/" xmlns:pdfaSchema="http://www.aiim.org/pdfa/ns/schema#" xmlns:pdfaProperty="http://www.aiim.org/pdfa/ns/property#\">\".'\n";
+		$xmp .= "\t\t\t\".\"<pdfaExtension:schemas>'.'\n";
+		$xmp .= "\t\t\t\t\".\"<rdf:Bag>'.'\n";
+		$xmp .= "\t\t\t\t\t\".\"<rdf:li rdf:parseType="Resource\">\".'\n";
+		$xmp .= "\t\t\t\t\t\t\".\"<pdfaSchema:namespaceURI>http://ns.adobe.com/pdf/1.3/</pdfaSchema:namespaceURI>'.'\n";
+		$xmp .= "\t\t\t\t\t\t\".\"<pdfaSchema:prefix>pdf</pdfaSchema:prefix>'.'\n";
+		$xmp .= "\t\t\t\t\t\t\".\"<pdfaSchema:schema>Adobe PDF Schema</pdfaSchema:schema>'.'\n";
+		$xmp .= "\t\t\t\t\t\t\".\"<pdfaSchema:property>'.'\n";
+		$xmp .= "\t\t\t\t\t\t\t\".\"<rdf:Seq>'.'\n";
+		$xmp .= "\t\t\t\t\t\t\t\t\".\"<rdf:li rdf:parseType="Resource\">\".'\n";
+		$xmp .= "\t\t\t\t\t\t\t\t\t\".\"<pdfaProperty:category>internal</pdfaProperty:category>'.'\n";
+		$xmp .= "\t\t\t\t\t\t\t\t\t\".\"<pdfaProperty:description>Adobe PDF Schema</pdfaProperty:description>'.'\n";
+		$xmp .= "\t\t\t\t\t\t\t\t\t\".\"<pdfaProperty:name>InstanceID</pdfaProperty:name>'.'\n";
+		$xmp .= "\t\t\t\t\t\t\t\t\t\".\"<pdfaProperty:valueType>URI</pdfaProperty:valueType>'.'\n";
+		$xmp .= "\t\t\t\t\t\t\t\t\".\"</rdf:li>'.'\n";
+		$xmp .= "\t\t\t\t\t\t\t\".\"</rdf:Seq>'.'\n";
+		$xmp .= "\t\t\t\t\t\t\".\"</pdfaSchema:property>'.'\n";
+		$xmp .= "\t\t\t\t\t\".\"</rdf:li>'.'\n";
+		$xmp .= "\t\t\t\t\t\".\"<rdf:li rdf:parseType="Resource\">\".'\n";
+		$xmp .= "\t\t\t\t\t\t\".\"<pdfaSchema:namespaceURI>http://ns.adobe.com/xap/1.0/mm/</pdfaSchema:namespaceURI>'.'\n";
+		$xmp .= "\t\t\t\t\t\t\".\"<pdfaSchema:prefix>xmpMM</pdfaSchema:prefix>'.'\n";
+		$xmp .= "\t\t\t\t\t\t\".\"<pdfaSchema:schema>XMP Media Management Schema</pdfaSchema:schema>'.'\n";
+		$xmp .= "\t\t\t\t\t\t\".\"<pdfaSchema:property>'.'\n";
+		$xmp .= "\t\t\t\t\t\t\t\".\"<rdf:Seq>'.'\n";
+		$xmp .= "\t\t\t\t\t\t\t\t\".\"<rdf:li rdf:parseType="Resource\">\".'\n";
+		$xmp .= "\t\t\t\t\t\t\t\t\t\".\"<pdfaProperty:category>internal</pdfaProperty:category>'.'\n";
+		$xmp .= "\t\t\t\t\t\t\t\t\t\".\"<pdfaProperty:description>UUID based identifier for specific incarnation of a document</pdfaProperty:description>'.'\n";
+		$xmp .= "\t\t\t\t\t\t\t\t\t\".\"<pdfaProperty:name>InstanceID</pdfaProperty:name>'.'\n";
+		$xmp .= "\t\t\t\t\t\t\t\t\t\".\"<pdfaProperty:valueType>URI</pdfaProperty:valueType>'.'\n";
+		$xmp .= "\t\t\t\t\t\t\t\t\".\"</rdf:li>'.'\n";
+		$xmp .= "\t\t\t\t\t\t\t\".\"</rdf:Seq>'.'\n";
+		$xmp .= "\t\t\t\t\t\t\".\"</pdfaSchema:property>'.'\n";
+		$xmp .= "\t\t\t\t\t\".\"</rdf:li>'.'\n";
+		$xmp .= "\t\t\t\t\t\".\"<rdf:li rdf:parseType="Resource\">\".'\n";
+		$xmp .= "\t\t\t\t\t\t\".\"<pdfaSchema:namespaceURI>http://www.aiim.org/pdfa/ns/id/</pdfaSchema:namespaceURI>'.'\n";
+		$xmp .= "\t\t\t\t\t\t\".\"<pdfaSchema:prefix>pdfaid</pdfaSchema:prefix>'.'\n";
+		$xmp .= "\t\t\t\t\t\t\".\"<pdfaSchema:schema>PDF/A ID Schema</pdfaSchema:schema>'.'\n";
+		$xmp .= "\t\t\t\t\t\t\".\"<pdfaSchema:property>'.'\n";
+		$xmp .= "\t\t\t\t\t\t\t\".\"<rdf:Seq>'.'\n";
+		$xmp .= "\t\t\t\t\t\t\t\t\".\"<rdf:li rdf:parseType="Resource\">\".'\n";
+		$xmp .= "\t\t\t\t\t\t\t\t\t\".\"<pdfaProperty:category>internal</pdfaProperty:category>'.'\n";
+		$xmp .= "\t\t\t\t\t\t\t\t\t\".\"<pdfaProperty:description>Part of PDF/A standard</pdfaProperty:description>'.'\n";
+		$xmp .= "\t\t\t\t\t\t\t\t\t\".\"<pdfaProperty:name>part</pdfaProperty:name>'.'\n";
+		$xmp .= "\t\t\t\t\t\t\t\t\t\".\"<pdfaProperty:valueType>Integer</pdfaProperty:valueType>'.'\n";
+		$xmp .= "\t\t\t\t\t\t\t\t\".\"</rdf:li>'.'\n";
+		$xmp .= "\t\t\t\t\t\t\t\t\".\"<rdf:li rdf:parseType="Resource\">\".'\n";
+		$xmp .= "\t\t\t\t\t\t\t\t\t\".\"<pdfaProperty:category>internal</pdfaProperty:category>'.'\n";
+		$xmp .= "\t\t\t\t\t\t\t\t\t\".\"<pdfaProperty:description>Amendment of PDF/A standard</pdfaProperty:description>'.'\n";
+		$xmp .= "\t\t\t\t\t\t\t\t\t\".\"<pdfaProperty:name>amd</pdfaProperty:name>'.'\n";
+		$xmp .= "\t\t\t\t\t\t\t\t\t\".\"<pdfaProperty:valueType>Text</pdfaProperty:valueType>'.'\n";
+		$xmp .= "\t\t\t\t\t\t\t\t\".\"</rdf:li>'.'\n";
+		$xmp .= "\t\t\t\t\t\t\t\t\".\"<rdf:li rdf:parseType="Resource\">\".'\n";
+		$xmp .= "\t\t\t\t\t\t\t\t\t\".\"<pdfaProperty:category>internal</pdfaProperty:category>'.'\n";
+		$xmp .= "\t\t\t\t\t\t\t\t\t\".\"<pdfaProperty:description>Conformance level of PDF/A standard</pdfaProperty:description>'.'\n";
+		$xmp .= "\t\t\t\t\t\t\t\t\t\".\"<pdfaProperty:name>conformance</pdfaProperty:name>'.'\n";
+		$xmp .= "\t\t\t\t\t\t\t\t\t\".\"<pdfaProperty:valueType>Text</pdfaProperty:valueType>'.'\n";
+		$xmp .= "\t\t\t\t\t\t\t\t\".\"</rdf:li>'.'\n";
+		$xmp .= "\t\t\t\t\t\t\t\".\"</rdf:Seq>'.'\n";
+		$xmp .= "\t\t\t\t\t\t\".\"</pdfaSchema:property>'.'\n";
+		$xmp .= "\t\t\t\t\t\".\"</rdf:li>'.'\n";
 		$xmp .= $this->custom_xmp_rdf_pdfaExtension;
-		$xmp .= "\t\t\t\t".'</rdf:Bag>'."\n";
-		$xmp .= "\t\t\t".'</pdfaExtension:schemas>'."\n";
-		$xmp .= "\t\t".'</rdf:Description>'."\n";
+		$xmp .= "\t\t\t\t\".\"</rdf:Bag>'.'\n";
+		$xmp .= "\t\t\t\".\"</pdfaExtension:schemas>'.'\n";
+		$xmp .= "\t\t\".\"</rdf:Description>'.'\n";
 		$xmp .= $this->custom_xmp_rdf;
-		$xmp .= "\t".'</rdf:RDF>'."\n";
+		$xmp .= "\t\".\"</rdf:RDF>'.'\n";
 		$xmp .= $this->custom_xmp;
-		$xmp .= '</x:xmpmeta>'."\n";
-		$xmp .= '<?xpacket end="w"?>';
-		$out = '<< /Type /Metadata /Subtype /XML /Length '.strlen($xmp).' >> stream'."\n".$xmp."\n".'endstream'."\n".'endobj';
+		$xmp .= '</x:xmpmeta>'.'\n";
+		$xmp .= '<?xpacket end="w\"?>\";
+		$out = '<< /Type /Metadata /Subtype /XML /Length '.strlen($xmp).' >> stream'.'\n".$xmp."\n\".\"endstream'.'\n\".\"endobj';
 		// restore previous isunicode value
 		$this->isunicode = $prev_isunicode;
 		$this->encrypted = $prev_encrypted;
@@ -9848,7 +9848,7 @@ class TCPDF {
 				$icc = gzcompress($icc);
 			}
 			$icc = $this->_getrawstream($icc);
-			$this->_out('<</N 3 '.$filter.'/Length '.strlen($icc).'>> stream'."\n".$icc."\n".'endstream'."\n".'endobj');
+			$this->_out('<</N 3 '.$filter.'/Length '.strlen($icc).'>> stream'.'\n".$icc."\n\".\"endstream'.'\n\".\"endobj');
 		}
 		// start catalog
 		$oid = $this->_newobj();
@@ -10014,7 +10014,7 @@ class TCPDF {
 		//$out .= ' /Collection <<>>';
 		//$out .= ' /NeedsRendering true';
 		$out .= ' >>';
-		$out .= "\n".'endobj';
+		$out .= "\n\".\"endobj';
 		$this->_out($out);
 		return $oid;
 	}
@@ -10131,7 +10131,7 @@ class TCPDF {
 				$out .= ' /T '.$this->_textstring($signame, $esa['objid']);
 				$out .= ' /Ff 0';
 				$out .= ' >>';
-				$out .= "\n".'endobj';
+				$out .= "\n\".\"endobj';
 				$this->_out($out);
 			}
 		}
@@ -10149,7 +10149,7 @@ class TCPDF {
 			$out .= ' /Ff 0';
 			$out .= ' /V '.($this->sig_obj_id + 1).' 0 R';
 			$out .= ' >>';
-			$out .= "\n".'endobj';
+			$out .= "\n\".\"endobj';
 			$this->_out($out);
 			// signature
 			$this->_putsignature();
@@ -10174,7 +10174,7 @@ class TCPDF {
 			}
 		}
 		// TRAILER
-		$out = 'trailer'."\n";
+		$out = 'trailer'.'\n";
 		$out .= '<<';
 		$out .= ' /Size '.($this->n + 1);
 		$out .= ' /Root '.$objid_catalog.' 0 R';
@@ -10792,7 +10792,7 @@ class TCPDF {
 			}
 		}
 		$out .= ' >>';
-		$out .= "\n".'endobj';
+		$out .= "\n\".\"endobj';
 		$this->_out($out);
 	}
 
@@ -12462,7 +12462,7 @@ class TCPDF {
 			$out .= ' /'.$name.' '.sprintf('[%u 0 R /XYZ %F %F null]', $this->page_obj_id[($o['p'])], ($o['x'] * $this->k), ($this->pagedim[$o['p']]['h'] - ($o['y'] * $this->k)));
 		}
 		$out .= ' >>';
-		$out .= "\n".'endobj';
+		$out .= "\n\".\"endobj';
 		$this->_out($out);
 	}
 
@@ -12670,12 +12670,12 @@ class TCPDF {
 			}
 			$out .= ' /Count 0'; // normally closed item
 			$out .= ' >>';
-			$out .= "\n".'endobj';
+			$out .= "\n\".\"endobj';
 			$this->_out($out);
 		}
 		//Outline root
 		$this->OutlineRoot = $this->_newobj();
-		$this->_out('<< /Type /Outlines /First '.$n.' 0 R /Last '.($n + $lru[0]).' 0 R >>'."\n".'endobj');
+		$this->_out('<< /Type /Outlines /First '.$n.' 0 R /Last '.($n + $lru[0]).' 0 R >>'.'\n\".\"endobj');
 	}
 
 	// --- JAVASCRIPT ------------------------------------------------------
@@ -12727,7 +12727,7 @@ class TCPDF {
 			// the following two lines are used to avoid form fields duplication after saving
 			// The addField method only works when releasing user rights (UR3)
 			$jsa = sprintf("ftcpdfdocsaved=this.addField('%s','%s',%d,[%F,%F,%F,%F]);", 'tcpdfdocsaved', 'text', 0, 0, 1, 0, 1);
-			$jsb = "getField('tcpdfdocsaved').value='saved';";
+			$jsb = "getField('tcpdfdocsaved').value='saved';';
 			$this->javascript = $jsa."\n".$this->javascript."\n".$jsb;
 		}
 		// name tree for javascript
@@ -12749,13 +12749,13 @@ class TCPDF {
 			$out = '<< /S /JavaScript';
 			$out .= ' /JS '.$this->_textstring($this->javascript, $obj_id);
 			$out .= ' >>';
-			$out .= "\n".'endobj';
+			$out .= "\n\".\"endobj';
 			$this->_out($out);
 		}
 		// additional Javascript objects
 		if (!empty($this->js_objects)) {
 			foreach ($this->js_objects as $key => $val) {
-				$out = $this->_getobj($key)."\n".' << /S /JavaScript /JS '.$this->_textstring($val['js'], $key).' >>'."\n".'endobj';
+				$out = $this->_getobj($key)."\n\".\" << /S /JavaScript /JS '.$this->_textstring($val['js'], $key).' >>'.'\n\".\"endobj';
 				$this->_out($out);
 			}
 		}
@@ -12782,14 +12782,14 @@ class TCPDF {
 		$this->javascript .= "if (getField('tcpdfdocsaved').value != 'saved') {";
 		$k = $this->k;
 		$this->javascript .= sprintf("f".$name."=this.addField('%s','%s',%u,[%F,%F,%F,%F]);", $name, $type, $this->PageNo()-1, $x*$k, ($this->h-$y)*$k+1, ($x+$w)*$k, ($this->h-$y-$h)*$k+1)."\n";
-		$this->javascript .= 'f'.$name.'.textSize='.$this->FontSizePt.";\n";
+		$this->javascript .= 'f'.$name.'.textSize='.$this->FontSizePt.';\n";
 		foreach($prop as $key => $val) {
 			if (strcmp(substr($key, -5), 'Color') == 0) {
 				$val = TCPDF_COLORS::_JScolor($val);
 			} else {
 				$val = "'".$val."'";
 			}
-			$this->javascript .= 'f'.$name.'.'.$key.'='.$val.";\n";
+			$this->javascript .= 'f'.$name.'.'.$key.'='.$val.';\n";
 		}
 		if ($this->rtl) {
 			$this->x -= $w;
@@ -13082,7 +13082,7 @@ class TCPDF {
 					$s .= ',[\''.addslashes($value).'\',\''.addslashes($value).'\']';
 				}
 			}
-			$this->javascript .= 'f'.$name.'.setItems('.substr($s, 1).');'."\n";
+			$this->javascript .= 'f'.$name.'.setItems('.substr($s, 1).');'.'\n";
 			return;
 		}
 		// get default style
@@ -13168,7 +13168,7 @@ class TCPDF {
 					$s .= ',[\''.addslashes($value).'\',\''.addslashes($value).'\']';
 				}
 			}
-			$this->javascript .= 'f'.$name.'.setItems('.substr($s, 1).');'."\n";
+			$this->javascript .= 'f'.$name.'.setItems('.substr($s, 1).');'.'\n";
 			return;
 		}
 		// get default style
@@ -13327,10 +13327,10 @@ class TCPDF {
 		list($x, $y) = $this->checkPageRegions($h, $x, $y);
 		if ($js) {
 			$this->_addfield('button', $name, $this->x, $this->y, $w, $h, $prop);
-			$this->javascript .= 'f'.$name.".buttonSetCaption('".addslashes($caption)."');\n";
-			$this->javascript .= 'f'.$name.".setAction('MouseUp','".addslashes($action)."');\n";
-			$this->javascript .= 'f'.$name.".highlight='push';\n";
-			$this->javascript .= 'f'.$name.".print=false;\n";
+			$this->javascript .= 'f'.$name.'.buttonSetCaption('".addslashes($caption)."');\n";
+			$this->javascript .= 'f'.$name.'.setAction('MouseUp','".addslashes($action)."');\n";
+			$this->javascript .= 'f'.$name.'.highlight='push';\n';
+			$this->javascript .= 'f'.$name.'.print=false;\n";
 			return;
 		}
 		// get default style
@@ -13550,7 +13550,7 @@ class TCPDF {
 		}
 		$out .= ' /M '.$this->_datestring($sigobjid, $this->doc_modification_timestamp);
 		$out .= ' >>';
-		$out .= "\n".'endobj';
+		$out .= "\n\".\"endobj';
 		$this->_out($out);
 	}
 
@@ -13905,7 +13905,7 @@ class TCPDF {
 			 }
 			 $out .= ' /View <</ViewState /'.($layer['view']?'ON':'OFF').'>>';
 			 $out .= ' >> >>';
-			 $out .= "\n".'endobj';
+			 $out .= "\n\".\"endobj';
 			 $this->_out($out);
 		}
 	}
@@ -14050,7 +14050,7 @@ class TCPDF {
 				$out .= ' /'.$k.' '.$v;
 			}
 			$out .= ' >>';
-			$out .= "\n".'endobj';
+			$out .= "\n\".\"endobj';
 			$this->_out($out);
 		}
 	}
@@ -14803,7 +14803,7 @@ class TCPDF {
 				$out .= ' /Bounds ['.trim($bounds).']';
 				$out .= ' /Encode ['.trim($encode).']';
 				$out .= ' >>';
-				$out .= "\n".'endobj';
+				$out .= "\n\".\"endobj';
 				$this->_out($out);
 				for ($i = 1; $i < $num_cols; ++$i) {
 					$this->_newobj();
@@ -14814,7 +14814,7 @@ class TCPDF {
 					$out .= ' /C1 ['.$grad['colors'][$i]['color'].']';
 					$out .= ' /N '.$grad['colors'][$i]['exponent'];
 					$out .= ' >>';
-					$out .= "\n".'endobj';
+					$out .= "\n\".\"endobj';
 					$this->_out($out);
 				}
 				// set transparency functions
@@ -14833,7 +14833,7 @@ class TCPDF {
 					$out .= ' /Bounds ['.trim($bounds).']';
 					$out .= ' /Encode ['.trim($encode).']';
 					$out .= ' >>';
-					$out .= "\n".'endobj';
+					$out .= "\n\".\"endobj';
 					$this->_out($out);
 					for ($i = 1; $i < $num_cols; ++$i) {
 						$this->_newobj();
@@ -14844,7 +14844,7 @@ class TCPDF {
 						$out .= ' /C1 ['.$grad['colors'][$i]['opacity'].']';
 						$out .= ' /N '.$grad['colors'][$i]['exponent'];
 						$out .= ' >>';
-						$out .= "\n".'endobj';
+						$out .= "\n\".\"endobj';
 						$this->_out($out);
 					}
 				}
@@ -14885,9 +14885,9 @@ class TCPDF {
 				$stream = $this->_getrawstream($grad['stream']);
 				$out .= ' /Length '.strlen($stream);
 				$out .= ' >>';
-				$out .= ' stream'."\n".$stream."\n".'endstream';
+				$out .= ' stream'.'\n".$stream."\n\".\"endstream';
 			}
-			$out .= "\n".'endobj';
+			$out .= "\n\".\"endobj';
 			$this->_out($out);
 			if ($grad['transparency']) {
 				$shading_transparency = preg_replace('/\/ColorSpace \/[^\s]+/si', '/ColorSpace /DeviceGray', $out);
@@ -14899,7 +14899,7 @@ class TCPDF {
 			$out = '<< /Type /Pattern /PatternType 2';
 			$out .= ' /Shading '.$this->gradients[$id]['id'].' 0 R';
 			$out .= ' >>';
-			$out .= "\n".'endobj';
+			$out .= "\n\".\"endobj';
 			$this->_out($out);
 			$this->gradients[$id]['pattern'] = $this->n;
 			// set shading and pattern for transparency mask
@@ -14913,7 +14913,7 @@ class TCPDF {
 				$out = '<< /Type /Pattern /PatternType 2';
 				$out .= ' /Shading '.$this->gradients[$idgs]['id'].' 0 R';
 				$out .= ' >>';
-				$out .= "\n".'endobj';
+				$out .= "\n\".\"endobj';
 				$this->_out($out);
 				$this->gradients[$idgs]['pattern'] = $this->n;
 				// luminosity XObject
@@ -14936,16 +14936,16 @@ class TCPDF {
 				$out .= ' /Pattern << /p'.$idgs.' '.$this->gradients[$idgs]['pattern'].' 0 R >>';
 				$out .= ' >>';
 				$out .= ' >> ';
-				$out .= ' stream'."\n".$stream."\n".'endstream';
-				$out .= "\n".'endobj';
+				$out .= ' stream'.'\n".$stream."\n\".\"endstream';
+				$out .= "\n\".\"endobj';
 				$this->_out($out);
 				// SMask
 				$this->_newobj();
-				$out = '<< /Type /Mask /S /Luminosity /G '.($this->n - 1).' 0 R >>'."\n".'endobj';
+				$out = '<< /Type /Mask /S /Luminosity /G '.($this->n - 1).' 0 R >>'.'\n\".\"endobj';
 				$this->_out($out);
 				// ExtGState
 				$this->_newobj();
-				$out = '<< /Type /ExtGState /SMask '.($this->n - 1).' 0 R /AIS false >>'."\n".'endobj';
+				$out = '<< /Type /ExtGState /SMask '.($this->n - 1).' 0 R /AIS false >>'.'\n\".\"endobj';
 				$this->_out($out);
 				$this->extgstates[] = array('n' => $this->n, 'name' => 'TGS'.$id);
 			}
@@ -16514,14 +16514,14 @@ class TCPDF {
 		if (preg_match_all('/<link([^\>]*?)>/is', $html, $matches) > 0) {
 			foreach ($matches[1] as $key => $link) {
 				$type = array();
-				if (preg_match('/type[\s]*=[\s]*"text\/css"/', $link, $type)) {
+				if (preg_match('/type[\s]*=[\s]*'text\/css\"/\", $link, $type)) {
 					$type = array();
-					preg_match('/media[\s]*=[\s]*"([^"]*)"/', $link, $type);
+					preg_match('/media[\s]*=[\s]*'([^"]*)\"/\", $link, $type);
 					// get 'all' and 'print' media, other media types are discarded
 					// (all, braille, embossed, handheld, print, projection, screen, speech, tty, tv)
 					if (empty($type) OR (isset($type[1]) AND (($type[1] == 'all') OR ($type[1] == 'print')))) {
 						$type = array();
-						if (preg_match('/href[\s]*=[\s]*"([^"]*)"/', $link, $type) > 0) {
+						if (preg_match('/href[\s]*=[\s]*'([^"]*)\"/\", $link, $type) > 0) {
 							// read CSS data file
                             $cssdata = $this->getCachedFileContents(trim($type[1]));
 							if (($cssdata !== FALSE) AND (strlen($cssdata) > 0)) {
@@ -16537,7 +16537,7 @@ class TCPDF {
 		if (preg_match_all('/<style([^\>]*?)>([^\<]*?)<\/style>/is', $html, $matches) > 0) {
 			foreach ($matches[1] as $key => $media) {
 				$type = array();
-				preg_match('/media[\s]*=[\s]*"([^"]*)"/', $media, $type);
+				preg_match('/media[\s]*=[\s]*'([^"]*)\"/\", $media, $type);
 				// get 'all' and 'print' media, other media types are discarded
 				// (all, braille, embossed, handheld, print, projection, screen, speech, tty, tv)
 				if (empty($type) OR (isset($type[1]) AND (($type[1] == 'all') OR ($type[1] == 'print')))) {
@@ -16567,13 +16567,13 @@ class TCPDF {
 		while (($offset < strlen($html)) AND ($pos = strpos($html, '</pre>', $offset)) !== false) {
 			$html_a = substr($html, 0, $offset);
 			$html_b = substr($html, $offset, ($pos - $offset + 6));
-			while (preg_match("'<xre([^\>]*)>(.*?)\n(.*?)</pre>'si", $html_b)) {
+			while (preg_match("'<xre([^\>]*)>(.*?)\n(.*?)</pre>'si', $html_b)) {
 				// preserve newlines on <pre> tag
-				$html_b = preg_replace("'<xre([^\>]*)>(.*?)\n(.*?)</pre>'si", "<xre\\1>\\2<br />\\3</pre>", $html_b);
+				$html_b = preg_replace("'<xre([^\>]*)>(.*?)\n(.*?)</pre>'si', "<xre\\1>\\2<br />\\3</pre>", $html_b);
 			}
-			while (preg_match("'<xre([^\>]*)>(.*?)".$this->re_space['p']."(.*?)</pre>'".$this->re_space['m'], $html_b)) {
+			while (preg_match("'<xre([^\>]*)>(.*?)\".$this->re_space[\"p'].'(.*?)</pre>'\".$this->re_space[\"m'], $html_b)) {
 				// preserve spaces on <pre> tag
-				$html_b = preg_replace("'<xre([^\>]*)>(.*?)".$this->re_space['p']."(.*?)</pre>'".$this->re_space['m'], "<xre\\1>\\2&nbsp;\\3</pre>", $html_b);
+				$html_b = preg_replace("'<xre([^\>]*)>(.*?)\".$this->re_space[\"p'].'(.*?)</pre>'\".$this->re_space[\"m'], "<xre\\1>\\2&nbsp;\\3</pre>", $html_b);
 			}
 			$html = $html_a.$html_b.substr($html, $pos + 6);
 			$offset = strlen($html_a.$html_b);
@@ -16582,10 +16582,10 @@ class TCPDF {
 		while (($offset < strlen($html)) AND ($pos = strpos($html, '</textarea>', $offset)) !== false) {
 			$html_a = substr($html, 0, $offset);
 			$html_b = substr($html, $offset, ($pos - $offset + 11));
-			while (preg_match("'<textarea([^\>]*)>(.*?)\n(.*?)</textarea>'si", $html_b)) {
+			while (preg_match("'<textarea([^\>]*)>(.*?)\n(.*?)</textarea>'si', $html_b)) {
 				// preserve newlines on <textarea> tag
-				$html_b = preg_replace("'<textarea([^\>]*)>(.*?)\n(.*?)</textarea>'si", "<textarea\\1>\\2<TBR>\\3</textarea>", $html_b);
-				$html_b = preg_replace("'<textarea([^\>]*)>(.*?)[\"](.*?)</textarea>'si", "<textarea\\1>\\2''\\3</textarea>", $html_b);
+				$html_b = preg_replace("'<textarea([^\>]*)>(.*?)\n(.*?)</textarea>'si', "<textarea\\1>\\2<TBR>\\3</textarea>", $html_b);
+				$html_b = preg_replace("'<textarea([^\>]*)>(.*?)[\"](.*?)</textarea>'si', \"<textarea\\1>\\2\"'\\3</textarea>', $html_b);
 			}
 			$html = $html_a.$html_b.substr($html, $pos + 11);
 			$offset = strlen($html_a.$html_b);
@@ -16596,16 +16596,16 @@ class TCPDF {
 		while (($offset < strlen($html)) AND ($pos = strpos($html, '</option>', $offset)) !== false) {
 			$html_a = substr($html, 0, $offset);
 			$html_b = substr($html, $offset, ($pos - $offset + 9));
-			while (preg_match("'<option([^\>]*)>(.*?)</option>'si", $html_b)) {
-				$html_b = preg_replace("'<option([\s]+)value=\"([^\"]*)\"([^\>]*)>(.*?)</option>'si", "\\2#!TaB!#\\4#!NwL!#", $html_b);
-				$html_b = preg_replace("'<option([^\>]*)>(.*?)</option>'si", "\\2#!NwL!#", $html_b);
+			while (preg_match("'<option([^\>]*)>(.*?)</option>'si', $html_b)) {
+				$html_b = preg_replace("'<option([\s]+)value=\"([^\"]*)\"([^\>]*)>(.*?)</option>'si', "\\2#!TaB!#\\4#!NwL!#", $html_b);
+				$html_b = preg_replace("'<option([^\>]*)>(.*?)</option>'si', "\\2#!NwL!#", $html_b);
 			}
 			$html = $html_a.$html_b.substr($html, $pos + 9);
 			$offset = strlen($html_a.$html_b);
 		}
-		if (preg_match("'</select'si", $html)) {
-			$html = preg_replace("'<select([^\>]*)>'si", "<select\\1 opt=\"", $html);
-			$html = preg_replace("'#!NwL!#</select>'si", "\" />", $html);
+		if (preg_match("'</select'si', $html)) {
+			$html = preg_replace("'<select([^\>]*)>'si', "<select\\1 opt=\"", $html);
+			$html = preg_replace("'#!NwL!#</select>'si', "\" />", $html);
 		}
 		$html = str_replace("\n", ' ', $html);
 		// restore textarea newlines
@@ -16616,15 +16616,15 @@ class TCPDF {
 		$html = preg_replace('/[\s]+<(tr|td|th|li|dt|dd)/', '<\\1', $html);
 		$html = preg_replace('/'.$this->re_space['p'].'+<(ul|ol|dl|br)/'.$this->re_space['m'], '<\\1', $html);
 		$html = preg_replace('/<\/(table|tr|td|th|blockquote|dd|dt|dl|div|dt|h1|h2|h3|h4|h5|h6|hr|li|ol|ul|p)>[\s]+</', '</\\1><', $html);
-		$html = preg_replace('/<\/(td|th)>/', '<marker style="font-size:0"/></\\1>', $html);
-		$html = preg_replace('/<\/table>([\s]*)<marker style="font-size:0"\/>/', '</table>', $html);
+		$html = preg_replace('/<\/(td|th)>/', '<marker style="font-size:0\"/></\\1>\", $html);
+		$html = preg_replace('/<\/table>([\s]*)<marker style="font-size:0\"\/>/\", '</table>', $html);
 		$html = preg_replace('/'.$this->re_space['p'].'+<img/'.$this->re_space['m'], chr(32).'<img', $html);
 		$html = preg_replace('/<img([^\>]*)>[\s]+([^\<])/xi', '<img\\1>&nbsp;\\2', $html);
-		$html = preg_replace('/<img([^\>]*)>/xi', '<img\\1><span><marker style="font-size:0"/></span>', $html);
+		$html = preg_replace('/<img([^\>]*)>/xi', '<img\\1><span><marker style="font-size:0\"/></span>\", $html);
 		$html = preg_replace('/<xre/', '<pre', $html); // restore pre tag
 		$html = preg_replace('/<textarea([^\>]*)>([^\<]*)<\/textarea>/xi', '<textarea\\1 value="\\2" />', $html);
 		$html = preg_replace('/<li([^\>]*)><\/li>/', '<li\\1>&nbsp;</li>', $html);
-		$html = preg_replace('/<li([^\>]*)>'.$this->re_space['p'].'*<img/'.$this->re_space['m'], '<li\\1><font size="1">&nbsp;</font><img', $html);
+		$html = preg_replace('/<li([^\>]*)>'.$this->re_space['p'].'*<img/'.$this->re_space['m'], '<li\\1><font size="1\">&nbsp;</font><img\", $html);
 		$html = preg_replace('/<([^\>\/]*)>[\s]/', '<\\1>&nbsp;', $html); // preserve some spaces
 		$html = preg_replace('/[\s]<\/([^\>]*)>/', '&nbsp;</\\1>', $html); // preserve some spaces
 		$html = preg_replace('/<su([bp])/', '<zws/><su\\1', $html); // fix sub/sup alignment
@@ -16774,7 +16774,7 @@ class TCPDF {
 						$dom[$key]['dir'] = $dom[$parentkey]['dir'];
 					}
 					// get attributes
-					preg_match_all('/([^=\s]*)[\s]*=[\s]*"([^"]*)"/', $element, $attr_array, PREG_PATTERN_ORDER);
+					preg_match_all('/([^=\s]*)[\s]*=[\s]*"([^"]*)\"/\", $element, $attr_array, PREG_PATTERN_ORDER);
 					$dom[$key]['attribute'] = array(); // reset attribute array
                     foreach($attr_array[1] as $id => $name) {
                         $dom[$key]['attribute'][strtolower($name)] = $attr_array[2][$id];
@@ -21332,7 +21332,7 @@ class TCPDF {
 					$newpage = $pagenum;
 				}
 				--$newpage;
-				$newjs = "this.addField(\'".$pamatch[1][$pk]."\',\'".$pamatch[2][$pk]."\',".$newpage;
+				$newjs = "this.addField(\'".$pamatch[1][$pk].\"\\",\'".$pamatch[2][$pk].\"\\",'.$newpage;
 				$this->javascript = str_replace($pmatch, $newjs, $this->javascript);
 			}
 			unset($pamatch);
@@ -21520,7 +21520,7 @@ class TCPDF {
 					$newpage = $pagenum;
 				}
 				--$newpage;
-				$newjs = "this.addField(\'".$pamatch[1][$pk]."\',\'".$pamatch[2][$pk]."\',".$newpage;
+				$newjs = "this.addField(\'".$pamatch[1][$pk].\"\\",\'".$pamatch[2][$pk].\"\\",'.$newpage;
 				$this->javascript = str_replace($pmatch, $newjs, $this->javascript);
 			}
 			unset($pamatch);
@@ -21866,7 +21866,7 @@ class TCPDF {
 			$row = str_replace('#TOC_DESCRIPTION#', $outline['t'], $row);
 			$row = str_replace('#TOC_PAGE_NUMBER#', $pagenum, $row);
 			// add link to page
-			$row = '<a href="#'.$outline['p'].','.$outline['y'].'">'.$row.'</a>';
+			$row = '<a href=\"#\".$outline['p'].','.$outline['y'].'\">\".$row.'</a>';
 			// write bookmark entry
 			$this->writeHTML($row, false, false, true, false, '');
 		}
@@ -23071,24 +23071,24 @@ class TCPDF {
 		preg_match('/<svg([^\>]*)>/si', $svgdata, $regs);
 		if (isset($regs[1]) AND !empty($regs[1])) {
 			$tmp = array();
-			if (preg_match('/[\s]+x[\s]*=[\s]*"([^"]*)"/si', $regs[1], $tmp)) {
+			if (preg_match('/[\s]+x[\s]*=[\s]*'([^"]*)\"/si\", $regs[1], $tmp)) {
 				$ox = $this->getHTMLUnitToUnits($tmp[1], 0, $this->svgunit, false);
 			}
 			$tmp = array();
-			if (preg_match('/[\s]+y[\s]*=[\s]*"([^"]*)"/si', $regs[1], $tmp)) {
+			if (preg_match('/[\s]+y[\s]*=[\s]*'([^"]*)\"/si\", $regs[1], $tmp)) {
 				$oy = $this->getHTMLUnitToUnits($tmp[1], 0, $this->svgunit, false);
 			}
 			$tmp = array();
-			if (preg_match('/[\s]+width[\s]*=[\s]*"([^"]*)"/si', $regs[1], $tmp)) {
+			if (preg_match('/[\s]+width[\s]*=[\s]*'([^"]*)\"/si\", $regs[1], $tmp)) {
 				$ow = $this->getHTMLUnitToUnits($tmp[1], 1, $this->svgunit, false);
 			}
 			$tmp = array();
-			if (preg_match('/[\s]+height[\s]*=[\s]*"([^"]*)"/si', $regs[1], $tmp)) {
+			if (preg_match('/[\s]+height[\s]*=[\s]*'([^"]*)\"/si\", $regs[1], $tmp)) {
 				$oh = $this->getHTMLUnitToUnits($tmp[1], 1, $this->svgunit, false);
 			}
 			$tmp = array();
 			$view_box = array();
-			if (preg_match('/[\s]+viewBox[\s]*=[\s]*"[\s]*([0-9\.\-]+)[\s]+([0-9\.\-]+)[\s]+([0-9\.]+)[\s]+([0-9\.]+)[\s]*"/si', $regs[1], $tmp)) {
+			if (preg_match('/[\s]+viewBox[\s]*=[\s]*'[\s]*([0-9\.\-]+)[\s]+([0-9\.\-]+)[\s]+([0-9\.]+)[\s]+([0-9\.]+)[\s]*\"/si\", $regs[1], $tmp)) {
 				if (count($tmp) == 5) {
 					array_shift($tmp);
 					foreach ($tmp as $key => $val) {
@@ -23099,7 +23099,7 @@ class TCPDF {
 				}
 				// get aspect ratio
 				$tmp = array();
-				if (preg_match('/[\s]+preserveAspectRatio[\s]*=[\s]*"([^"]*)"/si', $regs[1], $tmp)) {
+				if (preg_match('/[\s]+preserveAspectRatio[\s]*=[\s]*'([^"]*)\"/si\", $regs[1], $tmp)) {
 					$aspect_ratio = preg_split('/[\s]+/si', $tmp[1]);
 					switch (count($aspect_ratio)) {
 						case 3: {
@@ -24093,7 +24093,7 @@ class TCPDF {
 		// get styling properties
 		$prev_svgstyle = $this->svgstyles[max(0,(count($this->svgstyles) - 1))]; // previous style
 		$svgstyle = $this->svgstyles[0]; // set default style
-		if ($clipping AND !isset($attribs['fill']) AND (!isset($attribs['style']) OR (!preg_match('/[;\"\s]{1}fill[\s]*:[\s]*([^;\"]*)/si', $attribs['style'], $attrval)))) {
+		if ($clipping AND !isset($attribs['fill']) AND (!isset($attribs['style']) OR (!preg_match('/[;\'\s]{1}fill[\s]*:[\s]*([^;\"]*)/si', $attribs['style'], $attrval)))) {
 			// default fill attribute for clipping
 			$attribs['fill'] = 'none';
 		}
@@ -24116,7 +24116,7 @@ class TCPDF {
 			} elseif (isset($attribs['style']) AND !TCPDF_STATIC::empty_string($attribs['style'])) {
 				// CSS style syntax
 				$attrval = array();
-				if (preg_match('/[;\"\s]{1}'.$key.'[\s]*:[\s]*([^;\"]*)/si', $attribs['style'], $attrval) AND isset($attrval[1])) {
+				if (preg_match('/[;\'\s]{1}'.$key.'[\s]*:[\s]*([^;\"]*)/si', $attribs['style'], $attrval) AND isset($attrval[1])) {
 					if ($attrval[1] == 'inherit') {
 						$svgstyle[$key] = $val;
 					} else {

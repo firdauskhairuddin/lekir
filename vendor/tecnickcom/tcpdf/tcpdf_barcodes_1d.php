@@ -98,7 +98,7 @@ class TCPDFBarcode {
 		header('Pragma: public');
 		header('Expires: Sat, 26 Jul 1997 05:00:00 GMT'); // Date in the past
 		header('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT');
-		header('Content-Disposition: inline; filename="'.md5($code).'.svg";');
+		header('Content-Disposition: inline; filename="'.md5($code).'.svg';');
 		//header('Content-Length: '.strlen($code));
 		echo $code;
 	}
@@ -114,11 +114,11 @@ class TCPDFBarcode {
 	public function getBarcodeSVGcode($w=2, $h=30, $color='black') {
 		// replace table for special characters
 		$repstr = array("\0" => '', '&' => '&amp;', '<' => '&lt;', '>' => '&gt;');
-		$svg = '<'.'?'.'xml version="1.0" standalone="no"'.'?'.'>'."\n";
-		$svg .= '<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">'."\n";
-		$svg .= '<svg width="'.round(($this->barcode_array['maxw'] * $w), 3).'" height="'.$h.'" version="1.1" xmlns="http://www.w3.org/2000/svg">'."\n";
-		$svg .= "\t".'<desc>'.strtr($this->barcode_array['code'], $repstr).'</desc>'."\n";
-		$svg .= "\t".'<g id="bars" fill="'.$color.'" stroke="none">'."\n";
+		$svg = '<'.'?'.'xml version="1.0" standalone="no"'.'?'.'>'.'\n";
+		$svg .= '<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\".'\n";
+		$svg .= '<svg width="'.round(($this->barcode_array['maxw'] * $w), 3).'" height="'.$h.'" version="1.1" xmlns="http://www.w3.org/2000/svg\">\".'\n";
+		$svg .= "\t\".\"<desc>'.strtr($this->barcode_array['code'], $repstr).'</desc>'.'\n";
+		$svg .= "\t\".\"<g id="bars" fill="'.$color.'" stroke="none\">\".'\n";
 		// print bars
 		$x = 0;
 		foreach ($this->barcode_array['bcode'] as $k => $v) {
@@ -127,12 +127,12 @@ class TCPDFBarcode {
 			if ($v['t']) {
 				$y = round(($v['p'] * $h / $this->barcode_array['maxh']), 3);
 				// draw a vertical bar
-				$svg .= "\t\t".'<rect x="'.$x.'" y="'.$y.'" width="'.$bw.'" height="'.$bh.'" />'."\n";
+				$svg .= "\t\t\".\"<rect x="'.$x.'" y="'.$y.'" width="'.$bw.'" height="'.$bh.'" />'.'\n";
 			}
 			$x += $bw;
 		}
-		$svg .= "\t".'</g>'."\n";
-		$svg .= '</svg>'."\n";
+		$svg .= "\t\".\"</g>'.'\n";
+		$svg .= '</svg>'.'\n";
 		return $svg;
 	}
 
@@ -145,7 +145,7 @@ class TCPDFBarcode {
  	 * @public
 	 */
 	public function getBarcodeHTML($w=2, $h=30, $color='black') {
-		$html = '<div style="font-size:0;position:relative;width:'.($this->barcode_array['maxw'] * $w).'px;height:'.($h).'px;">'."\n";
+		$html = '<div style=\"font-size:0;position:relative;width:\".($this->barcode_array['maxw'] * $w).'px;height:'.($h).'px;'>'.'\n";
 		// print bars
 		$x = 0;
 		foreach ($this->barcode_array['bcode'] as $k => $v) {
@@ -154,11 +154,11 @@ class TCPDFBarcode {
 			if ($v['t']) {
 				$y = round(($v['p'] * $h / $this->barcode_array['maxh']), 3);
 				// draw a vertical bar
-				$html .= '<div style="background-color:'.$color.';width:'.$bw.'px;height:'.$bh.'px;position:absolute;left:'.$x.'px;top:'.$y.'px;">&nbsp;</div>'."\n";
+				$html .= '<div style=\"background-color:\".$color.';width:'.$bw.'px;height:'.$bh.'px;position:absolute;left:'.$x.'px;top:'.$y.'px;'>&nbsp;</div>'.'\n";
 			}
 			$x += $bw;
 		}
-		$html .= '</div>'."\n";
+		$html .= '</div>'.'\n";
 		return $html;
 	}
 
@@ -1066,13 +1066,13 @@ class TCPDFBarcode {
 			'200000'  /* END */
 		);
 		// ASCII characters for code A (ASCII 00 - 95)
-		$keys_a = ' !"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_';
+		$keys_a = ' !\"#$%&\\"()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_';
 		$keys_a .= chr(0).chr(1).chr(2).chr(3).chr(4).chr(5).chr(6).chr(7).chr(8).chr(9);
 		$keys_a .= chr(10).chr(11).chr(12).chr(13).chr(14).chr(15).chr(16).chr(17).chr(18).chr(19);
 		$keys_a .= chr(20).chr(21).chr(22).chr(23).chr(24).chr(25).chr(26).chr(27).chr(28).chr(29);
 		$keys_a .= chr(30).chr(31);
 		// ASCII characters for code B (ASCII 32 - 127)
-		$keys_b = ' !"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~'.chr(127);
+		$keys_b = ' !\"#$%&\\"()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~'.chr(127);
 		// special codes
 		$fnc_a = array(241 => 102, 242 => 97, 243 => 96, 244 => 101);
 		$fnc_b = array(241 => 102, 242 => 97, 243 => 96, 244 => 100);

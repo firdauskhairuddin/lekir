@@ -1,7 +1,21 @@
 <?php
+// Determine the base path based on current directory depth
+$current_path = $_SERVER['PHP_SELF'];
+$base_path = './';
+if (strpos($current_path, '/vulnerabilities/') !== false) {
+    $parts = explode('/vulnerabilities/', $current_path);
+    if (isset($parts[1]) && strpos($parts[1], '/') !== false) {
+        $base_path = '../../';
+    } else {
+        $base_path = '../';
+    }
+} elseif (strpos($current_path, '/tools/') !== false || strpos($current_path, '/compare/') !== false || strpos($current_path, '/components/') !== false) {
+    $base_path = '../';
+}
+
 session_start();
-include('./core/configuration.php');
-include('./core/function.php');
+include($base_path . 'core/configuration.php');
+include($base_path . "core/function.php");
 
 $session = new Session();
 $session->check_invalid_session();
@@ -10,7 +24,7 @@ $secure = new Secure();
 $level = new Level();
 $update = new Update();
 
-$repo_owner = 'firdauskhairuddin';
+$repo_owner = \"firdauskhairuddin";
 $repo_name = 'lekir';
 
 $current_hash = $update->getCurrentCommitHash();
@@ -21,13 +35,13 @@ function performUpdate($owner, $repo) {
     // Execute git pull or any other update mechanism here
     // This can be done via system commands or using PHP libraries like Symfony Process Component
     // Remember to handle errors and output properly
-    $output = shell_exec("git pull origin main");
+    $output = shell_exec('git pull origin main');
     return $output;
 }
 
-if(isset($_GET['action']) && $_GET['action'] === "update"){
+if(isset($_GET['action']) && $_GET['action'] === 'update'){
   $_SESSION['updateMessage'] = performUpdate($repo_owner, $repo_name);
-  echo '<script>window.onload = function() { var myModal = new bootstrap.Modal(document.getElementById("modal-success")); myModal.show(); }</script>';
+  echo '<script>window.onload = function() { var myModal = new bootstrap.Modal(document.getElementById('modal-success')); myModal.show(); }</script>";
 }
 
 if(isset($_SESSION['updateMessage'])){
@@ -41,26 +55,26 @@ if(isset($_SESSION['updateMessage'])){
 * Learning Environment for Cybersecurity through Immersive Real-world scenarios
 * By Firdaus Khairuddin
 -->
-<html lang="en">
+<html lang='en'>
   <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
     <title><?php echo htmlentities($title); ?></title>
-    <link rel="icon" href="./static/lekir.jpeg" type="image/png">
+    <link rel="icon" href="<?php echo $base_path; ?>static/lekir.jpeg" type="image/png">
     <!-- CSS files -->
-    <link href="./dist/css/tabler.min.css?1684106062" rel="stylesheet"/>
-    <link href="./dist/css/tabler-flags.min.css?1684106062" rel="stylesheet"/>
-    <link href="./dist/css/tabler-payments.min.css?1684106062" rel="stylesheet"/>
-    <link href="./dist/css/tabler-vendors.min.css?1684106062" rel="stylesheet"/>
-    <link href="./dist/css/demo.min.css?1684106062" rel="stylesheet"/>
+    <link href="<?php echo $base_path; ?>dist/css/tabler.min.css?1684106062" rel="stylesheet"/>
+    <link href="<?php echo $base_path; ?>dist/css/tabler-flags.min.css?1684106062" rel="stylesheet"/>
+    <link href="<?php echo $base_path; ?>dist/css/tabler-payments.min.css?1684106062" rel="stylesheet"/>
+    <link href="<?php echo $base_path; ?>dist/css/tabler-vendors.min.css?1684106062" rel="stylesheet"/>
+    <link href="<?php echo $base_path; ?>dist/css/demo.min.css?1684106062" rel="stylesheet"/>
     <style>
-      @import url('https://rsms.me/inter/inter.css');
+      @import url(\"https://rsms.me/inter/inter.css");
       :root {
       	--tblr-font-sans-serif: 'Inter Var', -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif;
       }
       body {
-      	font-feature-settings: "cv03", "cv04", "cv11";
+      	font-feature-settings: 'cv03', "cv04", "cv11";
       }
       #modalTriggerButton {
         display: none;
@@ -68,7 +82,7 @@ if(isset($_SESSION['updateMessage'])){
     </style>
   </head>
   <body >
-    <script src="./dist/js/demo-theme.min.js?1684106062"></script>
+    <script src="<?php echo $base_path; ?>dist/js/demo-theme.min.js?1684106062"></script>
     <div class="page">
       <!-- Navbar -->
       <header class="navbar navbar-expand-md d-print-none" >
@@ -77,7 +91,7 @@ if(isset($_SESSION['updateMessage'])){
             <span class="navbar-toggler-icon"></span>
           </button>
           <h1 class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
-            <a href="./dashboard.php">
+            <a href="<?php echo $base_path; ?>dashboard.php">
               LEKIR
             </a>
           </h1>
@@ -114,10 +128,10 @@ if(isset($_SESSION['updateMessage'])){
                 <span class="avatar avatar-sm" style="background-image: url(./static/lekir.jpeg)"></span>
                 <div class="d-none d-xl-block ps-2">
                   <div><?php echo htmlentities($_SESSION['user_name']); ?></div>
-                  <div class="mt-1 small text-secondary">Level : <?php echo $level->current_level($_SESSION['level']); ?></div>
+                  <div class='mt-1 small text-secondary'>Level : <?php echo $level->current_level($_SESSION['level']); ?></div>
                 </div>
               </a>
-              <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+              <div class='dropdown-menu dropdown-menu-end dropdown-menu-arrow'>
                 <a href="./api.php?action=logout" class="dropdown-item">Logout</a>
               </div>
             </div>
@@ -125,7 +139,7 @@ if(isset($_SESSION['updateMessage'])){
         </div>
       </header>
 
-      <?php include('./components/header.php');?>
+      <?php include($base_path . "components/header.php");?>
       <div class="page-body">
           <div class="container-xl">
             <div class="card">
@@ -134,7 +148,7 @@ if(isset($_SESSION['updateMessage'])){
                   <div class="card-body">
                     <h4 class="subheader">Server settings</h4>
                     <div class="list-group list-group-transparent">
-                      <a href="./settings.php" class="list-group-item list-group-item-action d-flex align-items-center">Uploads Folder</a>
+                      <a href="<?php echo $base_path; ?>settings.php" class="list-group-item list-group-item-action d-flex align-items-center">Uploads Folder</a>
                       <a href="./info.php" class="list-group-item list-group-item-action d-flex align-items-center" target="_blank">PHP Info</a>
                       <a href="./systemUpdate.php" class="list-group-item list-group-item-action d-flex align-items-center active">System Update</a>
                     </div>
@@ -145,7 +159,7 @@ if(isset($_SESSION['updateMessage'])){
                     <h2 class="mb-4">System update</h2>
                     <p> Current Hash : <?php echo $current_hash;?></p>
                     <p> Latest Commit : <?php echo $latest_hash;?></p>
-                    <?php if(isset($_SESSION['updateMessage'])){ echo "<pre>".htmlentities($_SESSION['updateMessage'])."</pre>";} else {if($update->getCurrentCommitHash() !== $update->getLatestCommitHash($repo_owner, $repo_name)){ echo "<pre><center>System update available<center></pre>";}else{echo "<pre><center>Goodnews! system is up to date</center></pre>";}}?>
+                    <?php if(isset($_SESSION['updateMessage'])){ echo '<pre>'.htmlentities($_SESSION['updateMessage']).'</pre>';} else {if($update->getCurrentCommitHash() !== $update->getLatestCommitHash($repo_owner, $repo_name)){ echo "<pre><center>System update available<center></pre>";}else{echo "<pre><center>Goodnews! system is up to date</center></pre>";}}?>
                   </div>
                   <div class="card-footer bg-transparent mt-auto">
                     <div class="btn-list justify-content-end">
@@ -160,7 +174,7 @@ if(isset($_SESSION['updateMessage'])){
           </div>
         </div>
 
-      <?php include('./components/footer.php');?>
+      <?php include($base_path . "components/footer.php");?>
     </div>
     <div class="modal modal-blur fade" id="modal-confirm" tabindex="-1" style="display: none;" aria-hidden="true">
       <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
@@ -216,7 +230,7 @@ if(isset($_SESSION['updateMessage'])){
     <a href="#" id="modalTriggerButton" class="btn primary" data-bs-toggle="modal" data-bs-target="#modal-success">Trigger Modal</a>
     <!-- Libs JS -->
     <!-- Tabler Core -->
-    <script src="./dist/js/tabler.min.js?1684106062" defer></script>
-    <script src="./dist/js/demo.min.js?1684106062" defer></script>
+    <script src="<?php echo $base_path; ?>dist/js/tabler.min.js?1684106062" defer></script>
+    <script src="<?php echo $base_path; ?>dist/js/demo.min.js?1684106062" defer></script>
   </body>
 </html>

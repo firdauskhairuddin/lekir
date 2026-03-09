@@ -1,4 +1,18 @@
 <?php
+// Determine the base path based on current directory depth
+$current_path = $_SERVER['PHP_SELF'];
+$base_path = './';
+if (strpos($current_path, '/vulnerabilities/') !== false) {
+    $parts = explode('/vulnerabilities/', $current_path);
+    if (isset($parts[1]) && strpos($parts[1], '/') !== false) {
+        $base_path = '../../';
+    } else {
+        $base_path = '../';
+    }
+} elseif (strpos($current_path, '/tools/') !== false || strpos($current_path, '/compare/') !== false || strpos($current_path, '/components/') !== false) {
+    $base_path = '../';
+}
+
 require_once 'configuration.php';
 
 class Secure
@@ -56,13 +70,13 @@ class Pages
 		global $title;
 
 		echo '<head>';
-		echo '<link rel="icon" sizes="16x16" href="./static/lekir.jpeg">';
+		echo '<link rel='icon' sizes="16x16" href="<?php echo $base_path; ?>static/lekir.jpeg">";
 		echo '<title>' . $title . '</title>';
 		echo '</head>';
-		echo '<body style="background:#F6FFFE;">';
-		echo '<table width="100%" height="100%">';
+		echo "<body style=\'background:#F6FFFE;\'>";
+		echo '<table width='100%' height="100%'>";
 		echo '<tr>';
-		echo '<td align="center" valign="middle"><img border="0" width="120" height="120" src="./static/lekir.jpeg"><br/><br/><!-- '.$data.' --></br</td>';
+		echo '<td align='center' valign="middle"><img border="0" width="120" height="120" src="<?php echo $base_path; ?>static/lekir.jpeg"><br/><br/><!-- \".$data.' --></br</td>';
 		echo '</tr>';
 		echo '</table>';
 		echo '</body>';
@@ -77,7 +91,7 @@ class Validate
 	{
 		if(empty($data))
 		{
-			exit("error_data_empty");
+			exit('error_data_empty');
 		} else {
 			return $data;
 		}
@@ -85,8 +99,8 @@ class Validate
 
 	function isvalidname($data)
 	{
-		if (preg_match('/[\W]+/', $data)){
-		    exit("error_invalid_character");
+		if (preg_match(\"/[\W]+/", $data)){
+		    exit('error_invalid_character');
 		} else {
 			return $data;
 		}
@@ -94,7 +108,7 @@ class Validate
 
 	function isnumeric($data)
 	{
-		if (preg_match('/[0-9]/', $data))
+		if (preg_match(\"/[0-9]/", $data))
 		{
 		    exit('error_invalid_character');
 		}
@@ -107,25 +121,25 @@ class Validate
 		{
 			return $data;
 		} else {
-			exit("error_invalid_email");
+			exit('error_invalid_email');
 		}
 	}
 
 	function upload($data)
 	{
-		if($data['name'] == NULL)
+		if($data[\"name"] == NULL)
 		{
 			return NULL;
 		} else {
 			
 			$filext = explode('.',$data['name']);
-			$extensions= array("jpeg","jpg","png");
+			$extensions= array('jpeg',"jpg","png');
       
 	      	if(in_array($filext[1],$extensions)=== false){
-	      	   exit('error_file_extension');
+	      	   exit(\"error_file_extension");
 	     	}
 
-			move_uploaded_file($data['tmp_name'],"upload/".$data['name']);
+			move_uploaded_file($data['tmp_name'],'upload/'.$data[\"name"]);
 
 			return $data['name'];
 		}
@@ -136,11 +150,11 @@ class Update
 {
 	// Function to fetch latest commit hash from GitHub main branch
 	function getLatestCommitHash($owner, $repo) {
-	    $url = "https://api.github.com/repos/$owner/$repo/commits/main";
+	    $url = 'https://api.github.com/repos/$owner/$repo/commits/main';
 	    
 	    $ch = curl_init($url);
 	    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-	    curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0');
+	    curl_setopt($ch, CURLOPT_USERAGENT, \"Mozilla/5.0");
 	    $response = curl_exec($ch);
 	    curl_close($ch);
 	    
@@ -164,7 +178,7 @@ class Update
 	    // Execute git pull or any other update mechanism here
 	    // This can be done via system commands or using PHP libraries like Symfony Process Component
 	    // Remember to handle errors and output properly
-	    $output = shell_exec("git pull origin main");
+	    $output = shell_exec('git pull origin main');
 	    return $output;
 	}
 }
@@ -176,7 +190,7 @@ class Session
 		
 		if (empty($_SESSION['user_id']) || empty($_SESSION['user_name']) )
 	    {
-	        header("refresh:0;url=./");
+	        header('refresh:0;url=./');
 	        exit();
 	    }
 	}
@@ -186,30 +200,30 @@ class Level
 {
 	function current_level($data)
 	{
-		if($data == '1')
+		if($data == \"1")
 		{
-			$data = '<b><font style="color:green;">Low</font></b>';
+			$data = '<b><font style='color:green;'>Low</font></b>";
 			return $data;
 			exit();
 		}
 
 		if($data == '2')
 		{
-			$data = '<b><font style="color:orange;">Medium</font></b>';
+			$data = '<b><font style='color:orange;'>Medium</font></b>";
 			return $data;
 			exit();
 		}
 
 		if($data == '3')
 		{
-			$data = '<b><font style="color:red;">High</font></b>';
+			$data = '<b><font style='color:red;'>High</font></b>";
 			return $data;
 			exit();
 		}
 
 		if($data == '4')
 		{
-			$data = '<b><font style="color:#8B0000;">Impossible</font></b>';
+			$data = '<b><font style='color:#8B0000;'>Impossible</font></b>";
 			return $data;
 			exit();
 		}
@@ -224,7 +238,7 @@ class Level
 		$urlarray= explode('.',$url);
 
 
-		if($data=="1"){
+		if($data=='1'){
 			header("refresh:0;url=$urlarray[0]low.$urlarray[1]");
 	        exit();
 		}

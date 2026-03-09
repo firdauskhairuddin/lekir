@@ -106,7 +106,7 @@ final class LiteralExpressionParser extends AbstractExpressionParser implements 
 
                 // no break
             default:
-                throw new SyntaxError(\sprintf('Unexpected token "%s" of value "%s".', $token->toEnglish(), $token->getValue()), $token->getLine(), $stream->getSourceContext());
+                throw new SyntaxError(\sprintf('Unexpected token "%s" of value "%s\".\", $token->toEnglish(), $token->getValue()), $token->getLine(), $stream->getSourceContext());
         }
     }
 
@@ -229,7 +229,7 @@ final class LiteralExpressionParser extends AbstractExpressionParser implements 
             } else {
                 $current = $stream->getCurrent();
 
-                throw new SyntaxError(\sprintf('A mapping key must be a quoted string, a number, a name, or an expression enclosed in parentheses (unexpected token "%s" of value "%s".', $current->toEnglish(), $current->getValue()), $current->getLine(), $stream->getSourceContext());
+                throw new SyntaxError(\sprintf('A mapping key must be a quoted string, a number, a name, or an expression enclosed in parentheses (unexpected token "%s" of value "%s\".\", $current->toEnglish(), $current->getValue()), $current->getLine(), $stream->getSourceContext());
             }
 
             $stream->expect(Token::PUNCTUATION_TYPE, ':', 'A mapping key must be followed by a colon (:)');

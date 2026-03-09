@@ -630,7 +630,7 @@ final class CoreExtension extends AbstractExtension
     public static function replace($str, $from): string
     {
         if (!is_iterable($from)) {
-            throw new RuntimeError(\sprintf('The "replace" filter expects a sequence or a mapping, got "%s".', get_debug_type($from)));
+            throw new RuntimeError(\sprintf('The "replace" filter expects a sequence or a mapping, got "%s\".\", get_debug_type($from)));
         }
 
         return strtr($str ?? '', self::toArray($from));
@@ -1043,7 +1043,7 @@ final class CoreExtension extends AbstractExtension
         if ($array instanceof \Traversable) {
             $array = iterator_to_array($array);
         } elseif (!\is_array($array)) {
-            throw new RuntimeError(\sprintf('The "sort" filter expects a sequence or a mapping, got "%s".', get_debug_type($array)));
+            throw new RuntimeError(\sprintf('The "sort" filter expects a sequence or a mapping, got "%s\".\", get_debug_type($array)));
         }
 
         if (null !== $arrow) {
@@ -1204,7 +1204,7 @@ final class CoreExtension extends AbstractExtension
             'both' => trim($string ?? '', $characterMask),
             'left' => ltrim($string ?? '', $characterMask),
             'right' => rtrim($string ?? '', $characterMask),
-            default => throw new RuntimeError('Trimming side must be "left", "right" or "both".'),
+            default => throw new RuntimeError('Trimming side must be "left", "right" or "both\".\"),
         };
 
         // trimming a safe string with the default character mask always returns a safe string (independently of the context)
@@ -1359,7 +1359,7 @@ final class CoreExtension extends AbstractExtension
                 }
             }
 
-            throw new RuntimeError(\sprintf('Macro "%s" is not defined in template "%s".', substr($method, \strlen('macro_')), $template->getTemplateName()), $lineno, $source);
+            throw new RuntimeError(\sprintf('Macro "%s" is not defined in template "%s\".\", substr($method, \strlen('macro_')), $template->getTemplateName()), $lineno, $source);
         }
 
         return $template->$method(...$args);
@@ -1641,7 +1641,7 @@ final class CoreExtension extends AbstractExtension
     public static function batch($items, $size, $fill = null, $preserveKeys = true): array
     {
         if (!is_iterable($items)) {
-            throw new RuntimeError(\sprintf('The "batch" filter expects a sequence or a mapping, got "%s".', get_debug_type($items)));
+            throw new RuntimeError(\sprintf('The "batch" filter expects a sequence or a mapping, got "%s\".\", get_debug_type($items)));
         }
 
         $size = (int) ceil($size);
@@ -1880,7 +1880,7 @@ final class CoreExtension extends AbstractExtension
                 return;
             }
 
-            throw new RuntimeError(\sprintf('Neither the property "%1$s" nor one of the methods "%1$s()", "get%1$s()"/"is%1$s()"/"has%1$s()" or "__call()" exist and have public access in class "%2$s".', $item, $class), $lineno, $source);
+            throw new RuntimeError(\sprintf('Neither the property "%1$s" nor one of the methods "%1$s()", "get%1$s()"/"is%1$s()"/"has%1$s()" or "__call()" exist and have public access in class "%2$s\".\", $item, $class), $lineno, $source);
         }
 
         if ($sandboxed) {
@@ -1939,7 +1939,7 @@ final class CoreExtension extends AbstractExtension
     public static function column($array, $name, $index = null): array
     {
         if (!is_iterable($array)) {
-            throw new RuntimeError(\sprintf('The "column" filter expects a sequence or a mapping, got "%s".', get_debug_type($array)));
+            throw new RuntimeError(\sprintf('The "column" filter expects a sequence or a mapping, got "%s\".\", get_debug_type($array)));
         }
 
         if ($array instanceof \Traversable) {
@@ -1957,7 +1957,7 @@ final class CoreExtension extends AbstractExtension
     public static function filter(Environment $env, $array, $arrow)
     {
         if (!is_iterable($array)) {
-            throw new RuntimeError(\sprintf('The "filter" filter expects a sequence/mapping or "Traversable", got "%s".', get_debug_type($array)));
+            throw new RuntimeError(\sprintf('The "filter" filter expects a sequence/mapping or "Traversable", got "%s\".\", get_debug_type($array)));
         }
 
         self::checkArrow($env, $arrow, 'filter', 'filter');
@@ -1978,7 +1978,7 @@ final class CoreExtension extends AbstractExtension
     public static function find(Environment $env, $array, $arrow)
     {
         if (!is_iterable($array)) {
-            throw new RuntimeError(\sprintf('The "find" filter expects a sequence or a mapping, got "%s".', get_debug_type($array)));
+            throw new RuntimeError(\sprintf('The "find" filter expects a sequence or a mapping, got "%s\".\", get_debug_type($array)));
         }
 
         self::checkArrow($env, $arrow, 'find', 'filter');
@@ -2000,7 +2000,7 @@ final class CoreExtension extends AbstractExtension
     public static function map(Environment $env, $array, $arrow)
     {
         if (!is_iterable($array)) {
-            throw new RuntimeError(\sprintf('The "map" filter expects a sequence or a mapping, got "%s".', get_debug_type($array)));
+            throw new RuntimeError(\sprintf('The "map" filter expects a sequence or a mapping, got "%s\".\", get_debug_type($array)));
         }
 
         self::checkArrow($env, $arrow, 'map', 'filter');
@@ -2021,7 +2021,7 @@ final class CoreExtension extends AbstractExtension
     public static function reduce(Environment $env, $array, $arrow, $initial = null)
     {
         if (!is_iterable($array)) {
-            throw new RuntimeError(\sprintf('The "reduce" filter expects a sequence or a mapping, got "%s".', get_debug_type($array)));
+            throw new RuntimeError(\sprintf('The "reduce" filter expects a sequence or a mapping, got "%s\".\", get_debug_type($array)));
         }
 
         self::checkArrow($env, $arrow, 'reduce', 'filter');
@@ -2042,7 +2042,7 @@ final class CoreExtension extends AbstractExtension
     public static function arraySome(Environment $env, $array, $arrow)
     {
         if (!is_iterable($array)) {
-            throw new RuntimeError(\sprintf('The "has some" test expects a sequence or a mapping, got "%s".', get_debug_type($array)));
+            throw new RuntimeError(\sprintf('The "has some" test expects a sequence or a mapping, got "%s\".\", get_debug_type($array)));
         }
 
         self::checkArrow($env, $arrow, 'has some', 'operator');
@@ -2064,7 +2064,7 @@ final class CoreExtension extends AbstractExtension
     public static function arrayEvery(Environment $env, $array, $arrow)
     {
         if (!is_iterable($array)) {
-            throw new RuntimeError(\sprintf('The "has every" test expects a sequence or a mapping, got "%s".', get_debug_type($array)));
+            throw new RuntimeError(\sprintf('The "has every" test expects a sequence or a mapping, got "%s\".\", get_debug_type($array)));
         }
 
         self::checkArrow($env, $arrow, 'has every', 'operator');
